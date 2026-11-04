@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # --- Local PostgreSQL for Spacecraft Edge Storage ---
+  local_postgres:
+    image: postgres:16-alpine
+    container_name: trustline_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${LOCAL_POSTGRES_USER:-nebuvita_admin}
+      POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD:-secure_space_password}
+      POSTGRES_DB: ${LOCAL_POSTGRES_DB:-trustline_edge}
+    ports:
+      - "${LOCAL_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - trustline_net
+
+  # --- FastAPI Backend & Telemetry WebSockets ---
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../infrastructure/docker/Dockerfile.backend
+    container_name: trustline_backend
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    ports:
+      - "8000:8000"
+    depends_on:
+      - local_postgres
+    networks:
+      - trustline_net
+
+  # --- AI Engine & Multi-Agent Health Monitoring ---
+  ai_engine:
+    build:
+      context: ./ai-engine
+      dockerfile: ../infrastructure/docker/Dockerfile.ai
+    container_name: trustline_ai_engine
+    restart: unless-stopped
+    env_file:
+      - .env.example
+    depends_on:
+      - backend
+    networks:
+      - trustline_net
+
+  # --- Astronaut Digital Twin & Mission Control Frontend ---
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../infrastructure/docker/Dockerfile.frontend
+    container_name: trustline_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - trustline_net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  trustline_net:
+    driver: bridge
