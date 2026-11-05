@@ -1,0 +1,19 @@
+2026-11-05 01:28:31,922 - INFO - Initializing TRUSTLINE ML Optimization and Audit Pipeline
+2026-11-05 01:28:31,955 - INFO - Saved dataset_summary.csv
+2026-11-05 01:28:31,992 - INFO - Saved data_quality_report.csv
+2026-11-05 01:28:32,034 - INFO - Saved feature_audit.csv
+2026-11-05 01:28:32,056 - INFO - Saved feature_correlations.csv
+2026-11-05 01:28:32,057 - INFO - Saved selected_features.csv
+2026-11-05 01:28:33,794 - INFO - Saved personalized_baseline_results.csv
+2026-11-05 01:28:33,899 - INFO - Saved overall_metrics.csv and model_comparison.csv
+2026-11-05 01:28:33,901 - INFO - Saved confusion_matrices.csv
+2026-11-05 01:28:33,907 - INFO - Saved predictions.csv
+2026-11-05 01:28:33,915 - INFO - Saved anomaly_scores.csv
+2026-11-05 01:28:34,239 - INFO - Saved per_subject_metrics.csv
+2026-11-05 01:28:34,249 - INFO - Saved per_condition_metrics.csv
+2026-11-05 01:28:34,371 - INFO - Saved threshold_analysis.csv
+2026-11-05 01:28:35,359 - INFO - Saved feature_importance.csv
+2026-11-05 01:28:35,598 - INFO - Saved experiment_configuration.csv
+2026-11-05 01:28:35,598 - INFO - Saved final_model_summary.csv
+2026-11-05 01:28:47,220 - INFO - All 20 scientific figures generated in PNG and PDF.
+2026-11-05 01:28:47,220 - INFO - Pipeline completed successfully.

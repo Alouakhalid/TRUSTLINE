@@ -1,0 +1,10 @@
+Parameter,Value
+Sampling_Frequency_Hz,700
+Window_Size_Seconds,60
+Random_State,42
+Feature_Selection_Strategy,Core_Physiological_14
+Feature_Count,14
+IsolationForest_Trees,300
+Calibrated_Threshold_Percentile,85th_Percentile_Training_Baseline
+Personalized_Calibration_Windows,5
+Evaluation_Protocol,Strict_Subject_Independent_Leave_4_Subjects_Out

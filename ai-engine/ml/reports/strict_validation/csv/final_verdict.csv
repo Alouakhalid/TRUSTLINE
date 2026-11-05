@@ -1,0 +1,12 @@
+Model,Category,Reproduced_Recall,Reproduced_Precision,Reproduced_F1,Reproduced_Specificity,Reproduced_FAR,Evaluation_Validity,Audit_Verdict,Primary_Limitations
+HistGradientBoosting,Supervised (Core 14),0.9756,0.9302,0.9524,0.9605,0.0395,VALID,PASS,Evaluated on N=4 held-out subjects. Assumes availability of labeled training data.
+RandomForest_Supervised,Supervised (Core 14),0.9268,0.9048,0.9157,0.9474,0.0526,VALID,PASS,Slightly lower recall than HistGradientBoosting (3 missed stress windows vs 1).
+ExtraTrees_Supervised,Supervised (Core 14),0.8537,0.8537,0.8537,0.9211,0.0789,VALID,PASS,Randomized splits produce lower sensitivity on Subject S10 (Recall 0.7273).
+Calibrated_IsolationForest,Unsupervised (Core 14),0.9024,0.6981,0.7872,0.7895,0.2105,VALID,CONDITIONAL PASS,"Meets Recall (90.24%), Precision (69.81%), and F1 (78.72%), but FAR is 21.05% due to 8 baseline false alarms on Subject S4."
+LocalOutlierFactor,Unsupervised (Core 14),0.6098,0.8333,0.7042,0.9342,0.0658,VALID,FAIL,Insufficient sensitivity: misses 16 out of 41 stress windows (Recall 60.98% < 80% threshold).
+OneClassSVM,Unsupervised (Core 14),0.7317,0.6122,0.6667,0.75,0.25,VALID,FAIL,Recall below threshold (73.17% < 80%) and high false alarm rate (25.00% > 20%).
+EllipticEnvelope,Unsupervised (Top 6),0.0,0.0,0.0,1.0,0.0,VALID (Method) / COLLAPSED,FAIL,Catastrophic failure: detects 0 out of 41 stress windows due to invalid unimodal Gaussian assumption on multimodal data.
+Personalized_Baseline_Detector,Unsupervised (Core 14),0.4878,0.8696,0.625,0.9605,0.0395,INVALID EVALUATION,INVALID,Methodological flaw: calibration windows were not separated from evaluation data. Completely misses stress on S6 (0%) and S8 (0%).
+Ensemble_Anomaly_Detector,Unsupervised (Core 14),0.8049,0.8049,0.8049,0.8947,0.1053,INVALID METHODOLOGY,INVALID,"Critical flaw: threshold was computed on test scores (np.quantile(ensemble_scores, 0.65)). Also fused misaligned score vectors."
+IsolationForest_V1,Unsupervised (99 Full),0.2439,0.3846,0.2985,0.7895,0.2105,VALID,FAIL,Curse of dimensionality in 99-D space: misses 31 out of 41 stress windows.
+IsolationForest_V2,Unsupervised (69 Reduced),0.122,0.5,0.1961,0.9342,0.0658,VALID,FAIL,Severe under-detection: misses 36 out of 41 stress windows.

@@ -1,0 +1,16 @@
+subject_id,extracted_windows,skipped_windows,status
+S2,43,58,success
+S3,45,63,success
+S4,45,62,success
+S5,47,57,success
+S6,46,71,success
+S7,47,40,success
+S8,47,44,success
+S9,45,42,success
+S10,47,44,success
+S11,46,41,success
+S13,46,46,success
+S14,48,44,success
+S15,48,39,success
+S16,47,46,success
+S17,47,51,success

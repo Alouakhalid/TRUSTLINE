@@ -1,0 +1,23 @@
+Model,Metric,Point_Estimate,Subject_Macro_Mean,Subject_Std_Dev,Bootstrap_Mean,Bootstrap_CI_Lower_95,Bootstrap_CI_Upper_95,Assessment
+HistGradientBoosting,Recall,0.9756,0.9722,0.0556,0.9745,0.9189,1.0,High Stability
+HistGradientBoosting,Precision,0.9302,0.9464,0.1071,0.9327,0.8269,1.0,High Stability
+RandomForest_Supervised,Recall,0.9268,0.9167,0.1667,0.9276,0.7632,1.0,Moderate Stability
+RandomForest_Supervised,Precision,0.9048,0.9333,0.1333,0.9123,0.7818,1.0,High Stability
+ExtraTrees_Supervised,Recall,0.878,0.8611,0.2778,0.8672,0.6053,1.0,High Variance / Risk
+ExtraTrees_Supervised,Precision,0.878,0.9219,0.1562,0.8898,0.7414,1.0,High Stability
+Calibrated_IsolationForest,Recall,0.9024,0.899,0.0915,0.9023,0.8158,0.9756,High Stability
+Calibrated_IsolationForest,Precision,0.6981,0.7148,0.1846,0.7031,0.5345,0.8511,Moderate Stability
+LocalOutlierFactor,Recall,0.6098,0.5902,0.3183,0.6122,0.3158,0.8864,High Variance / Risk
+LocalOutlierFactor,Precision,0.8333,0.7875,0.2175,0.826,0.6,0.975,Moderate Stability
+OneClassSVM,Recall,0.7317,0.7326,0.1578,0.7342,0.6,0.8571,High Variance / Risk
+OneClassSVM,Precision,0.6122,0.6864,0.268,0.6331,0.4211,0.9,High Variance / Risk
+EllipticEnvelope,Recall,0.0,0.0,0.0,0.0,0.0,0.0,High Variance / Risk
+EllipticEnvelope,Precision,0.0,0.0,0.0,0.0,0.0,0.0,High Variance / Risk
+Personalized_Baseline_Detector,Recall,0.4878,0.5,0.5774,0.4928,0.0,1.0,High Variance / Risk
+Personalized_Baseline_Detector,Precision,0.8696,0.5,0.5774,0.807,0.0,1.0,High Variance / Risk
+Ensemble_Anomaly_Detector,Recall,0.8293,0.8295,0.2358,0.8304,0.6154,1.0,High Variance / Risk
+Ensemble_Anomaly_Detector,Precision,0.8293,0.8181,0.1752,0.8278,0.6486,0.913,Moderate Stability
+IsolationForest_V1,Recall,0.2683,0.2523,0.2797,0.2675,0.0526,0.5455,High Variance / Risk
+IsolationForest_V1,Precision,0.4231,0.5521,0.4682,0.4784,0.0667,0.9091,High Variance / Risk
+IsolationForest_V2,Recall,0.1707,0.1614,0.154,0.1733,0.0526,0.3023,High Variance / Risk
+IsolationForest_V2,Precision,0.7,0.575,0.4349,0.6868,0.3333,0.875,High Variance / Risk

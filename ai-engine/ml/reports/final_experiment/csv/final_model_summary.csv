@@ -1,0 +1,7 @@
+Category,Model,Accuracy,Recall,Precision,F1_Score,Specificity,FAR,ROC_AUC
+Unsupervised_Baseline_Original_V1,IsolationForest_V1,0.6154,0.2683,0.4231,0.3284,0.8026,0.1974,0.6062
+Unsupervised_Baseline_Reduced_V2,IsolationForest_V2,0.6838,0.1707,0.7,0.2745,0.9605,0.0395,0.6752
+Unsupervised_Optimized_Core14,Calibrated_IsolationForest_Core14,0.8291,0.9024,0.6981,0.7872,0.7895,0.2105,0.904
+Unsupervised_Density_Novelty,LocalOutlierFactor_Core14,0.8205,0.6098,0.8333,0.7042,0.9342,0.0658,0.9284
+Unsupervised_Personalized_Adaptive,Personalized_Baseline_Detector,0.7949,0.4878,0.8696,0.625,0.9605,0.0395,0.6377
+Supervised_Tree_Ensemble,RandomForest_Supervised_Core14,0.9402,0.8293,1.0,0.9067,1.0,0.0,0.9945

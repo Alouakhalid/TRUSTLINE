@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-11-04T23:28:35Z",
+  "python_version": "3.10.0rc2 (v3.10.0rc2:839d789394, Sep  7 2021, 11:16:15) [Clang 12.0.5 (clang-1205.0.22.11)]",
+  "train_subjects": [
+    "S11",
+    "S13",
+    "S14",
+    "S15",
+    "S16",
+    "S17",
+    "S2",
+    "S3",
+    "S5",
+    "S7",
+    "S9"
+  ],
+  "test_subjects": [
+    "S10",
+    "S4",
+    "S6",
+    "S8"
+  ],
+  "train_samples": 321,
+  "test_samples": 117,
+  "random_state": 42
+}

@@ -1,0 +1,2 @@
+Accuracy,Precision,Recall,F1_Score,Specificity,False_Alarm_Rate,ROC_AUC,True_Negatives,False_Positives,False_Negatives,True_Positives,Training_Baseline_Samples,Testing_Samples,Training_Subjects,Testing_Subjects
+0.6153846153846154,0.4230769230769231,0.2682926829268293,0.3283582089552239,0.8026315789473685,0.19736842105263158,0.6062259306803595,61,15,30,11,207,117,11,4

@@ -1,0 +1,27 @@
+[2026-11-05 02:28:49] Initiating TRUSTLINE Independent ML Research Audit.
+[2026-11-05 02:28:49] Loaded processed dataset with 694 total windows and 107 columns.
+[2026-11-05 02:28:49] Subject train count: 321 windows across 11 subjects.
+[2026-11-05 02:28:49] Subject test count: 117 windows across 4 subjects (76 Baseline, 41 Stress).
+[2026-11-05 02:28:49] Prepared verified aligned feature matrices.
+[2026-11-05 02:28:50] Reproduced raw predictions and anomaly scores for all 11 model pipelines.
+[2026-11-05 02:28:50] Generated reproduced_metrics.csv.
+[2026-11-05 02:28:50] Generated confusion_matrices.csv.
+[2026-11-05 02:28:51] Generated per_subject_metrics.csv with verified natural window alignment.
+[2026-11-05 02:28:51] Generated false_negative_analysis.csv and false_positive_analysis.csv.
+[2026-11-05 02:28:51] Generated threshold_validity.csv.
+[2026-11-05 02:28:51] Generated leakage_audit.csv.
+[2026-11-05 02:29:00] Generated statistical_uncertainty.csv with true subject-level bootstrap resampling.
+[2026-11-05 02:29:00] Generated acceptance_criteria.csv.
+[2026-11-05 02:29:00] Generated final_verdict.csv with individual model verdicts.
+[2026-11-05 02:29:00] Generating high-resolution audit figures...
+[2026-11-05 02:29:00] Generated 01_recall_comparison.png.
+[2026-11-05 02:29:01] Generated 02_precision_recall_comparison.png.
+[2026-11-05 02:29:01] Generated 03_per_subject_recall.png.
+[2026-11-05 02:29:01] Generated 04_per_subject_false_alarm_rate.png.
+[2026-11-05 02:29:02] Generated 05_confusion_matrices.png.
+[2026-11-05 02:29:03] Generated 06_threshold_analysis.png.
+[2026-11-05 02:29:03] Generated 07_prediction_distribution.png.
+[2026-11-05 02:29:03] Generated 08_confidence_intervals.png.
+[2026-11-05 02:29:03] Generated strict_audit_report.md.
+[2026-11-05 02:29:05] Generated PDF audit report at: /Users/alikhalidalikhalid/TRUSTLINE/ai-engine/ml/reports/strict_validation/strict_audit_report.pdf
+[2026-11-05 02:29:05] Strict ML Validation Audit completed successfully.

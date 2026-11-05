@@ -1,0 +1,15 @@
+Feature,Selection_Strategy,Domain,Selected
+hr_mean_bpm,Core_Physiological_14,hr,True
+hr_std_bpm,Core_Physiological_14,hr,True
+hrv_rmssd_ms,Core_Physiological_14,hrv,True
+hrv_sdnn_ms,Core_Physiological_14,hrv,True
+eda_mean,Core_Physiological_14,eda,True
+eda_std,Core_Physiological_14,eda,True
+eda_iqr,Core_Physiological_14,eda,True
+resp_rate_bpm,Core_Physiological_14,resp,True
+resp_std,Core_Physiological_14,resp,True
+temp_mean,Core_Physiological_14,temp,True
+temp_std,Core_Physiological_14,temp,True
+emg_rms,Core_Physiological_14,emg,True
+acc_magnitude_mean,Core_Physiological_14,acc,True
+acc_magnitude_std,Core_Physiological_14,acc,True

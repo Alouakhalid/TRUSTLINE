@@ -1,0 +1,2 @@
+Model,Original_Features,Valid_Features,Selected_Features,Training_Baseline_Samples,Testing_Samples,Accuracy,Precision,Recall,F1_Score,Specificity,False_Alarm_Rate,ROC_AUC,TN,FP,FN,TP
+IsolationForest_v2_ReducedFeatures,99,98,69,207,117,0.6837606837606838,0.7,0.17073170731707318,0.27450980392156865,0.9605263157894737,0.039473684210526314,0.675224646983312,73,3,34,7

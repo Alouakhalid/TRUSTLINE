@@ -1,0 +1,16 @@
+[
+  "hr_mean_bpm",
+  "hr_std_bpm",
+  "hrv_rmssd_ms",
+  "hrv_sdnn_ms",
+  "eda_mean",
+  "eda_std",
+  "eda_iqr",
+  "resp_rate_bpm",
+  "resp_std",
+  "temp_mean",
+  "temp_std",
+  "emg_rms",
+  "acc_magnitude_mean",
+  "acc_magnitude_std"
+]

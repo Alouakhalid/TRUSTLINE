@@ -1,0 +1,12 @@
+Model,TN,FP,FN,TP,Total_Windows
+IsolationForest_V1,61,15,30,11,117
+IsolationForest_V2,73,3,34,7,117
+Calibrated_IsolationForest_Core14,60,16,4,37,117
+LocalOutlierFactor_Core14,71,5,16,25,117
+OneClassSVM_Core14,57,19,11,30,117
+EllipticEnvelope_Top6,76,0,41,0,117
+RandomForest_Supervised_Core14,72,4,3,38,117
+ExtraTrees_Supervised_Core14,70,6,6,35,117
+HistGradientBoosting_Supervised_Core14,73,3,1,40,117
+Personalized_Baseline_Detector,73,3,21,20,117
+Ensemble_Anomaly_Detector,68,8,8,33,117

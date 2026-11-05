@@ -1,0 +1,12 @@
+Model,Train_Test_Isolation,Preprocessing_Isolation,Threshold_Isolation,Calibration_Isolation,Leakage_Detected,Severity
+HistGradientBoosting,PASSED (Fit on 11 train subjects only),PASSED (Scaler and imputer fit on train only),PASSED (Canonical 0.50 cutoff),NOT APPLICABLE (Global model),NONE,CLEAN
+RandomForest_Supervised,PASSED (Fit on 11 train subjects only),PASSED (Scaler and imputer fit on train only),PASSED (Canonical 0.50 cutoff),NOT APPLICABLE (Global model),NONE,CLEAN
+ExtraTrees_Supervised,PASSED (Fit on 11 train subjects only),PASSED (Scaler and imputer fit on train only),PASSED (Canonical 0.50 cutoff),NOT APPLICABLE (Global model),NONE,CLEAN
+Calibrated_IsolationForest,PASSED (Fit on 11 train subjects only),PASSED (Scaler and imputer fit on train only),PASSED (Threshold derived from train baselines),NOT APPLICABLE (Global model),NONE,CLEAN
+LocalOutlierFactor,PASSED (Novelty fit on train baselines only),PASSED (Fit on train only),PASSED (Default training offset),NOT APPLICABLE (Global model),NONE,CLEAN
+OneClassSVM,PASSED (Fit on train baselines only),PASSED (Fit on train only),PASSED (Margin derived on train only),NOT APPLICABLE (Global model),NONE,CLEAN
+EllipticEnvelope,PASSED (Fit on train baselines only),PASSED (Fit on train only),PASSED (FastMCD on train only),NOT APPLICABLE (Global model),NONE,CLEAN
+Personalized_Baseline_Detector,PASSED (Train subjects determine threshold),PASSED (No global scaler used),PASSED (90th quantile of train strain),LEAKAGE (Calibration windows included in test evaluation),YES (Self-evaluation on first 5 baseline windows),MODERATE METHODOLOGICAL FLAW
+Ensemble_Anomaly_Detector,FAILED (Threshold computed on test set quantile),PASSED,"FAILED (Threshold set via np.quantile(test_scores, 0.65))",FAILED (Inherits personalized baseline calibration leakage),YES (Test-set threshold tuning & score alignment error),CRITICAL METHODOLOGICAL FLAW (INVALID)
+IsolationForest_V1,PASSED,PASSED,PASSED,NOT APPLICABLE,NONE,CLEAN
+IsolationForest_V2,PASSED,PASSED,PASSED,NOT APPLICABLE,NONE,CLEAN

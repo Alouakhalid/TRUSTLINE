@@ -1,0 +1,12 @@
+Model,Threshold_Value,Selection_Dataset,Selection_Method,Valid_For_Deployment,Comments
+HistGradientBoosting,0.5000,Canonical Probability Cutoff,Bayesian Equal Cost Threshold (Standard Binary),VALID,No test-label tuning. Uses canonical class posterior cutoff.
+RandomForest_Supervised,0.5000,Canonical Probability Cutoff,Standard Binary Decision Threshold,VALID,No test-label tuning. Standard 50% majority probability.
+ExtraTrees_Supervised,0.5000,Canonical Probability Cutoff,Standard Binary Decision Threshold,VALID,No test-label tuning. Standard binary threshold.
+Calibrated_IsolationForest,0.47488,Training Baseline Cohort Only (S11..S9),85th Percentile of Training Inlier Scores,VALID,Threshold derived strictly on training subjects. Zero test leakage.
+LocalOutlierFactor,1.0000 (sklearn default offset),Training Baseline Cohort Only,Sklearn novelty default boundary,VALID,Default density threshold from training baseline fit.
+OneClassSVM,0.0000 (hyperplane offset),Training Baseline Cohort Only,RBF Support Vector margin (nu=0.15),VALID,Derived strictly from support vectors of training data.
+EllipticEnvelope,FastMCD Mahalanobis Distance,Training Baseline Cohort Only,Robust Covariance Contamination (0.15),VALID (Methodologically) / FAILED (Empirically),Unimodal Gaussian assumption mathematically collapses on multimodal data.
+Personalized_Baseline_Detector,3.4120,Training Baseline Subjects (S11..S9),90th Percentile of Training Z-Score Strain,CONDITIONAL,"Global threshold is valid, but test evaluation included the 5 calibration windows in test evaluation."
+Ensemble_Anomaly_Detector,0.3976,"HELD-OUT TEST SET (S10, S4, S6, S8)",65th Percentile of Test Set Anomaly Scores (np.quantile),INVALID,Direct violation of audit principles: threshold tuned on test data.
+IsolationForest_V1,Sklearn 'auto' contamination,Training Baseline Cohort (99 features),Default tree depth offset,VALID (Methodologically) / FAILED (Empirically),Suffers from extreme curse of dimensionality in 99-D space.
+IsolationForest_V2,Sklearn 'auto' contamination,Training Baseline Cohort (69 features),Default tree depth offset,VALID (Methodologically) / FAILED (Empirically),Inadequate sensitivity due to uncalibrated default threshold.

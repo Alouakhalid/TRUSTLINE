@@ -1,0 +1,11 @@
+Metric,Value
+Total_Subjects,15
+Training_Subjects_Count,11
+Testing_Subjects_Count,4
+Total_Windows_Extracted,694
+Total_Physiological_Features,99
+Total_Metadata_Columns,8
+Baseline_Windows_Total,283
+Stress_Windows_Total,155
+Amusement_Windows_Total,82
+Meditation_Windows_Total,174
