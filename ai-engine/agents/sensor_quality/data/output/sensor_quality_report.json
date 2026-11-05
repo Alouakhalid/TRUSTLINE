@@ -1,0 +1,276 @@
+{
+  "agent": "sensor_quality_agent",
+  "report_version": "1.0",
+  "astronaut_id": "AST-001",
+  "session_id": "SESSION-001",
+  "recording_id": "REC-001",
+  "execution_timestamp": "2026-11-05T17:35:43.007920+00:00",
+  "overall_quality": {
+    "score": 0.9639,
+    "status": "VALID",
+    "valid_sensors_count": 6,
+    "total_sensors_count": 6,
+    "degraded_sensors": [],
+    "rejected_sensors": []
+  },
+  "sensors": {
+    "ECG": {
+      "sensor": "ECG",
+      "quality_score": 0.9808,
+      "status": "VALID",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0099,
+        "flatline_ratio": 0.0,
+        "noise_index": 0.1149,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0,
+        "continuity_score": 1.0
+      },
+      "issues": [
+        {
+          "reason_code": "SIGNAL_SPIKES",
+          "sensor": "ECG",
+          "severity": "MODERATE",
+          "time_interval": null,
+          "evidence": [
+            {
+              "metric_name": "spike_ratio",
+              "measured_value": 0.00980952380952381,
+              "threshold_value": 0.005,
+              "units": "ratio",
+              "confidence": 0.9,
+              "additional_context": {
+                "spike_count": 412,
+                "z_threshold": 4.5
+              }
+            }
+          ],
+          "method": "Median Absolute Deviation (MAD) modified Z-score",
+          "explanation": "High-amplitude impulsive spikes detected (412 samples, 0.98%).",
+          "recommended_handling": "Apply median filter or segment around spike intervals."
+        },
+        {
+          "reason_code": "ECG_HIGH_FREQUENCY_NOISE",
+          "sensor": "ECG",
+          "severity": "LOW",
+          "time_interval": null,
+          "evidence": [
+            {
+              "metric_name": "high_frequency_noise_ratio",
+              "measured_value": 0.5282115340232849,
+              "threshold_value": 0.35,
+              "units": "ratio",
+              "confidence": 0.85,
+              "additional_context": {}
+            }
+          ],
+          "method": "High-band spectral density evaluation (>45 Hz)",
+          "explanation": "High frequency electromyographic noise contamination detected (52.82% power).",
+          "recommended_handling": "Apply low-pass filter at 40 Hz cutoff."
+        }
+      ],
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "sampling_rate": 700.0,
+      "total_samples_analyzed": 42000,
+      "duration_seconds": 60.0
+    },
+    "EDA": {
+      "sensor": "EDA",
+      "quality_score": 0.9858,
+      "status": "VALID",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0333,
+        "flatline_ratio": 0.0,
+        "noise_index": 0.05,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0083,
+        "continuity_score": 1.0
+      },
+      "issues": [
+        {
+          "reason_code": "SIGNAL_SPIKES",
+          "sensor": "EDA",
+          "severity": "MODERATE",
+          "time_interval": null,
+          "evidence": [
+            {
+              "metric_name": "spike_ratio",
+              "measured_value": 0.025,
+              "threshold_value": 0.005,
+              "units": "ratio",
+              "confidence": 0.9,
+              "additional_context": {
+                "spike_count": 6,
+                "z_threshold": 4.5
+              }
+            }
+          ],
+          "method": "Median Absolute Deviation (MAD) modified Z-score",
+          "explanation": "High-amplitude impulsive spikes detected (6 samples, 2.50%).",
+          "recommended_handling": "Apply median filter or segment around spike intervals."
+        }
+      ],
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "sampling_rate": 4.0,
+      "total_samples_analyzed": 240,
+      "duration_seconds": 60.0
+    },
+    "RESP": {
+      "sensor": "RESP",
+      "quality_score": 0.9925,
+      "status": "VALID",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0,
+        "flatline_ratio": 0.0,
+        "noise_index": 0.05,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0,
+        "continuity_score": 1.0
+      },
+      "issues": [],
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "sampling_rate": 700.0,
+      "total_samples_analyzed": 42000,
+      "duration_seconds": 60.0
+    },
+    "EMG": {
+      "sensor": "EMG",
+      "quality_score": 0.982,
+      "status": "VALID",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0525,
+        "flatline_ratio": 0.0,
+        "noise_index": 0.05,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0,
+        "continuity_score": 1.0
+      },
+      "issues": [
+        {
+          "reason_code": "SIGNAL_SPIKES",
+          "sensor": "EMG",
+          "severity": "MODERATE",
+          "time_interval": null,
+          "evidence": [
+            {
+              "metric_name": "spike_ratio",
+              "measured_value": 0.05245238095238095,
+              "threshold_value": 0.005,
+              "units": "ratio",
+              "confidence": 0.9,
+              "additional_context": {
+                "spike_count": 2203,
+                "z_threshold": 4.5
+              }
+            }
+          ],
+          "method": "Median Absolute Deviation (MAD) modified Z-score",
+          "explanation": "High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
+          "recommended_handling": "Apply median filter or segment around spike intervals."
+        }
+      ],
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "sampling_rate": 700.0,
+      "total_samples_analyzed": 42000,
+      "duration_seconds": 60.0
+    },
+    "ACC": {
+      "sensor": "ACC",
+      "quality_score": 0.9925,
+      "status": "VALID",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0001,
+        "flatline_ratio": 0.0,
+        "noise_index": 0.05,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0,
+        "continuity_score": 1.0
+      },
+      "issues": [],
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "sampling_rate": 700.0,
+      "total_samples_analyzed": 42000,
+      "duration_seconds": 60.0
+    },
+    "TEMP": {
+      "sensor": "TEMP",
+      "quality_score": 0.85,
+      "status": "ACCEPTABLE_WITH_WARNING",
+      "metrics": {
+        "valid_sample_ratio": 1.0,
+        "missing_sample_ratio": 0.0,
+        "artifact_ratio": 0.0001,
+        "flatline_ratio": 0.0,
+        "noise_index": 1.0,
+        "timestamp_integrity": 1.0,
+        "saturation_ratio": 0.0001,
+        "continuity_score": 1.0
+      },
+      "issues": [
+        {
+          "reason_code": "TEMP_IMPLAUSIBLE_RATE_OF_CHANGE",
+          "sensor": "TEMP",
+          "severity": "HIGH",
+          "time_interval": null,
+          "evidence": [
+            {
+              "metric_name": "max_temp_rate_of_change",
+              "measured_value": 20.740127563476562,
+              "threshold_value": 0.5,
+              "units": "C/sec",
+              "confidence": 0.95,
+              "additional_context": {}
+            }
+          ],
+          "method": "Thermal derivative inspection",
+          "explanation": "Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s).",
+          "recommended_handling": "Verify thermal sensor surface contact."
+        }
+      ],
+      "recommendation": "ACCEPT_WITH_WARNING",
+      "critical_failure": false,
+      "sampling_rate": 700.0,
+      "total_samples_analyzed": 42000,
+      "duration_seconds": 60.0
+    }
+  },
+  "processing_decision": {
+    "can_proceed": true,
+    "warnings": [
+      "[ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
+      "[ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
+      "[EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
+      "[EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
+      "[TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s)."
+    ],
+    "rejected_sensors": [],
+    "next_agent": "personal_health_agent"
+  },
+  "visualizations": [
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_ecg.png",
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_eda.png",
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_resp.png",
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_emg.png",
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_acc.png",
+    "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_temp.png"
+  ],
+  "llm_explanation": {
+    "source": "groq_direct_synthesizer",
+    "briefing": "**Executive Briefing: AST-001 / SESSION-001 Telemetry Quality Assessment**\n\nThe overall telemetry integrity for Astronaut AST-001 is confirmed as **VALID** with a composite quality score of 0.9639. All six monitored physiological channels (ECG, EDA, RESP, EMG, ACC, and TEMP) have passed the primary validation threshold, resulting in a 6/6 sensor pass rate. While five sensors achieved full \"VALID\" status with \"ACCEPT\" recommendations, the thermal sensor (TEMP) is flagged as \"ACCEPTABLE_WITH_WARNING.\" Consequently, the session data is cleared for downstream analysis, but the thermal channel requires specific handling due to its lower confidence score of 0.8500.\n\nSensor-specific diagnostics indicate that the primary source of noise across the ECG, EDA, and EMG channels is **SIGNAL_SPIKES** (moderate severity), likely attributable to transient motion artifacts or minor electrode-skin impedance fluctuations common in active physiological monitoring. The ECG channel also exhibits low-level high-frequency noise, which is typical of environmental electromagnetic interference. The most critical finding is in the TEMP channel, which reports a **HIGH** severity issue of **TEMP_IMPLAUSIBLE_RATE_OF_CHANGE**. This suggests a rapid, physically inconsistent shift in temperature readings, potentially caused by a loose sensor contact, a sudden environmental change not yet stabilized, or a transient hardware glitch, rather than a genuine physiological event.\n\nFor downstream processing, it is recommended to apply standard median or moving-average filtering to the ECG, EDA, and EMG streams to mitigate the moderate signal spikes without distorting the underlying physiological waveforms. For the TEMP channel, immediate **sensor recalibration** or a manual verification of the sensor’s physical placement is advised before integrating this data into long-term health trends. If the implausible rate of change persists after recalibration, the thermal data should be isolated and flagged for hardware inspection, while the remaining five channels can proceed directly to clinical or performance analysis pipelines."
+  }
+}
