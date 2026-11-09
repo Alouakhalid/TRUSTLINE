@@ -1,0 +1,8 @@
+sensor,reported_score,recalculated_score,delta,is_match
+ECG,0.9808,0.9808,0.0,True
+EDA,0.9858,0.9858,0.0,True
+RESP,0.9925,0.9925,0.0,True
+EMG,0.982,0.982,0.0,True
+ACC,0.9925,0.9925,0.0,True
+TEMP,0.85,0.85,0.0,True
+OVERALL,0.9639,0.9639,0.0,True

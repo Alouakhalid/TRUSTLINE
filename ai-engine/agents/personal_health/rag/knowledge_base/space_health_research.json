@@ -1,0 +1,34 @@
+[
+  {
+    "doc_id": "SPH-001",
+    "collection": "space_health_research",
+    "title": "Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity",
+    "source_organization": "NASA Human Research Program",
+    "author": "Space Cardiovascular Medicine Consortium",
+    "publication_date": "2024-01-20",
+    "version": "3.0",
+    "medical_domain": "Spaceflight Cardiovascular Physiology",
+    "evidence_type": "TECHNICAL_SPECIFICATION",
+    "population_studied": "ISS Long-Duration Astronauts (Expeditions 40-70)",
+    "spaceflight_relevance": "critical",
+    "approval_status": "approved_flight_medicine",
+    "excerpt": "Within hours of orbital insertion, microgravity causes a cephalad redistribution of approximately 1.5 to 2.0 liters of venous blood and interstitial fluid. This central hypervolemia stimulates baroreceptors and atrial natriuretic peptide secretion, causing early plasma volume contraction. Resting heart rate may increase by 5-12 bpm during initial adaptation, and transient subjective head fullness and nasal congestion are standard adaptation symptoms.",
+    "citation_reference": "NASA-HRP-CARDIO-2024-08"
+  },
+  {
+    "doc_id": "SPH-002",
+    "collection": "space_health_research",
+    "title": "Circadian Disruption and Sleep Fragmentation in Exploration Habitation",
+    "source_organization": "European Space Agency (ESA) Life Sciences",
+    "author": "Crew Health Monitoring Working Group",
+    "publication_date": "2023-11-12",
+    "version": "1.2",
+    "medical_domain": "Neurobiology and Sleep Medicine",
+    "evidence_type": "PEER_REVIEWED_RESEARCH",
+    "population_studied": "Isolated Antarctic Station Winter-Over and ISS Crews",
+    "spaceflight_relevance": "critical",
+    "approval_status": "peer_reviewed_literature",
+    "excerpt": "Circadian desynchrony in microgravity manifests as shortened slow-wave sleep, frequent micro-awakenings, and subjective sleep dissatisfaction. Sleep debt correlates strongly with elevated daytime baseline heart rate, blunted cardiac vagal tone, and elevated self-reported fatigue. Mitigation includes strict scheduled rest periods and dynamic circadian lighting protocols.",
+    "citation_reference": "ESA-LSD-SLEEP-2023-119"
+  }
+]

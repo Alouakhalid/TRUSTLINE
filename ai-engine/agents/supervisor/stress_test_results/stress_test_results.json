@@ -1,0 +1,196 @@
+{
+  "test_run_metadata": {
+    "system_name": "TRUSTLINE Multi-Agent Supervisor Orchestrator",
+    "timestamp_utc": "2026-11-09T13:24:00Z",
+    "environment": {
+      "os": "macOS (darwin)",
+      "python_version": "3.10.0rc2",
+      "pytest_version": "9.1.1",
+      "langgraph_version": "0.6.8",
+      "pydantic_version": "2.13"
+    },
+    "test_suite_path": "ai-engine/agents/supervisor/tests/",
+    "stress_suite_path": "ai-engine/agents/supervisor/tests/stress/",
+    "overall_release_verdict": "PASS",
+    "regulatory_and_clinical_posture": "Non-commercial exploratory research prototype only. Zero clinical validation, zero diagnostic clearance, and zero NASA operational flight certification."
+  },
+  "summary_metrics": {
+    "total_tests_executed": 74,
+    "total_passed": 74,
+    "total_failed": 0,
+    "total_skipped": 0,
+    "pass_rate_percentage": 100.0,
+    "total_execution_duration_seconds": 69.64
+  },
+  "scenario_breakdown": {
+    "SCENARIO_01_MISSING_SENSOR_DATA": {
+      "description": "Validation of pipeline resilience under selective, combined, and total sensor omission without fabricating health or misattributing coverage.",
+      "tests_total": 8,
+      "tests_passed": 8,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_missing_ecg_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_02_missing_eda_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_03_missing_resp_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_04_missing_emg_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_05_missing_acc_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_06_missing_temp_telemetry_stream", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_07_multiple_sensors_missing_simultaneously", "status": "PASSED", "duration_approx_s": 0.5},
+        {"name": "test_08_all_sensors_missing_complete_telemetry_blackout", "status": "PASSED", "duration_approx_s": 0.5}
+      ]
+    },
+    "SCENARIO_02_INVALID_CORRUPTED_TELEMETRY": {
+      "description": "DSP quality engine boundary testing under NaN, Inf, empty arrays, flatlines, duplicate/non-monotonic timestamps, impulsive spikes, and zero HRV variance quarantine.",
+      "tests_total": 8,
+      "tests_passed": 8,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_nan_and_infinity_in_signal_buffer", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_02_empty_signal_arrays", "status": "PASSED", "duration_approx_s": 0.1},
+        {"name": "test_03_constant_flatline_signals", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_04_zero_length_timestamps", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_05_duplicate_timestamps", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_06_non_monotonic_timestamps", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_07_extreme_impulsive_spikes", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_08_zero_variance_rr_rmssd_quarantined", "status": "PASSED", "duration_approx_s": 0.3}
+      ]
+    },
+    "SCENARIO_03_SYMPTOMS_AND_COMMUNICATION": {
+      "description": "Symptom intelligence verification, multilingual Arabic red-lines, severe chest pain/respiratory emergency triggers, and safe astronaut communication.",
+      "tests_total": 6,
+      "tests_passed": 6,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_no_symptoms_submitted_never_interpreted_as_no_symptoms", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_02_explicitly_submitted_severe_chest_pain_triggers_emergency_escalation", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_03_shortness_of_breath_triggers_escalation", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_04_arabic_red_line_symptom_triggers_escalation", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_05_dizziness_and_headache_handled_without_unauthorized_diagnosis", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_06_ambiguous_and_malformed_symptom_handling", "status": "PASSED", "duration_approx_s": 0.4}
+      ]
+    },
+    "SCENARIO_04_PERSONAL_HEALTH_FAILURE": {
+      "description": "Personal Health Agent isolation under simulated timeouts, feature extraction crashes, ML inference exceptions, and RAG retrieval failures.",
+      "tests_total": 5,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_pha_timeout_capture", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_02_feature_extraction_exception_isolated", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_03_ml_inference_exception_gracefully_degrades", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_04_rag_retrieval_failure_handled_gracefully", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_05_workflow_isolates_pha_failure_and_preserves_sqr", "status": "PASSED", "duration_approx_s": 0.4}
+      ]
+    },
+    "SCENARIO_05_RISK_ASSESSMENT_FAILURE": {
+      "description": "Risk Assessment Agent failure isolation, rule engine exception handling preventing LOW risk defaults, and quarantined evidence rejection.",
+      "tests_total": 4,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_ra_timeout_isolated_cleanly", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_02_ra_rule_engine_exception_does_not_default_to_low_risk", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_03_missing_escalation_fields_safely_handled", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_04_claims_referencing_quarantined_evidence_fail_validation", "status": "PASSED", "duration_approx_s": 0.3}
+      ]
+    },
+    "SCENARIO_06_EVIDENCE_TRACEABILITY": {
+      "description": "Evidence Registry provenance verification, sentence-by-sentence communication grounding, and rejection of ungrounded causal/protective claims.",
+      "tests_total": 5,
+      "tests_passed": 5,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_trace_claims_rejects_unsupported_protective_factors", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_02_trace_claims_rejects_missing_data_equaling_normal_health", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_03_trace_claims_rejects_invented_environmental_explanations", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_04_trace_claims_marks_metadata_claims_as_insufficient_evidence", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_05_astronaut_communication_sentence_by_sentence_grounding", "status": "PASSED", "duration_approx_s": 0.3}
+      ]
+    },
+    "SCENARIO_07_CONFLICTING_AGENT_OUTPUTS": {
+      "description": "Inter-agent conflict arbitration: SQ INVALID status quarantines downstream PHA metrics; symptom red-lines override nominal vitals; PHA INSUFFICIENT_EVIDENCE preserves conflict.",
+      "tests_total": 3,
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_sqr_marks_ecg_invalid_quarantines_pha_cardiac_telemetry", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_02_symptom_concern_overrides_nominal_telemetry_in_escalation", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_03_pha_insufficient_evidence_preserves_conflict_against_low_risk", "status": "PASSED", "duration_approx_s": 0.2}
+      ]
+    },
+    "SCENARIO_08_PERSISTENCE_AND_RECOVERY": {
+      "description": "Fault-tolerant persistence handling SQLite outages, read-only file systems, workflow degradation on disk failure, and idempotent duplicate executions.",
+      "tests_total": 4,
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_sqlite_unavailable_records_warning_without_crash", "status": "PASSED", "duration_approx_s": 0.1},
+        {"name": "test_02_json_write_failure_handled_safely", "status": "PASSED", "duration_approx_s": 0.1},
+        {"name": "test_03_persistence_failure_degrades_workflow_completion_status", "status": "PASSED", "duration_approx_s": 0.2},
+        {"name": "test_04_duplicate_workflow_execution_idempotency", "status": "PASSED", "duration_approx_s": 0.1}
+      ]
+    },
+    "SCENARIO_09_TIMEOUT_CONCURRENCY": {
+      "description": "Multi-threaded concurrent workflow execution, shared state isolation, simultaneous multi-agent failures, and multi-session isolation for the same astronaut.",
+      "tests_total": 3,
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_concurrent_workflows_maintain_state_isolation", "status": "PASSED", "duration_approx_s": 0.4},
+        {"name": "test_02_simultaneous_multi_agent_failures_handled_gracefully", "status": "PASSED", "duration_approx_s": 0.3},
+        {"name": "test_03_same_astronaut_multiple_sessions_isolated", "status": "PASSED", "duration_approx_s": 0.4}
+      ]
+    },
+    "REGRESSION_SUITE_SUPERVISOR_CORE": {
+      "description": "Existing baseline supervisor test suites verifying node execution, safety constraints, state schemas, and workflow routers.",
+      "tests_total": 28,
+      "tests_passed": 28,
+      "tests_failed": 0,
+      "test_cases": [
+        {"name": "test_01_four_agent_end_to_end_integration_live", "status": "PASSED", "module": "test_supervisor_e2e_integration.py"},
+        {"name": "test_01_intake_node_initializes_workflow_state", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_02_input_validation_node_accepts_valid_ids", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_03_input_validation_node_rejects_missing_astronaut_id", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_04_input_validation_node_rejects_missing_session_id", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_05_evidence_validation_node_audits_and_quarantines_invalid_hrv", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_06_final_synthesis_node_compiles_assessment_and_response", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_07_persistence_node_writes_output", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_08_final_response_node_records_completed_timestamp", "status": "PASSED", "module": "test_supervisor_nodes.py"},
+        {"name": "test_01_no_trigger_detected_semantics_never_claims_total_health", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_02_insufficient_data_semantics_never_converts_to_low_risk", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_03_missing_symptoms_never_converted_to_negative_symptoms", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_04_evidence_provenance_preserved_across_all_registered_items", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_05_astronaut_communication_contains_required_safety_disclaimers", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_06_astronaut_communication_strictly_grounds_hrv_rmssd_without_sensor_artifact_speculation", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_07_astronaut_communication_strictly_grounds_temperature_without_ambient_conditions_speculation", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_08_astronaut_communication_strictly_grounds_cardiac_and_respiration_metrics", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_09_astronaut_communication_uses_configured_monitoring_domains_terminology", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_10_astronaut_communication_preserves_unsubmitted_symptom_distinction", "status": "PASSED", "module": "test_supervisor_safety.py"},
+        {"name": "test_01_state_initialization_and_serialization", "status": "PASSED", "module": "test_supervisor_state.py"},
+        {"name": "test_02_request_schema_validation", "status": "PASSED", "module": "test_supervisor_state.py"},
+        {"name": "test_03_final_assessment_schema_contracts", "status": "PASSED", "module": "test_supervisor_state.py"},
+        {"name": "test_01_router_branches_to_evidence_validation_on_validation_failure", "status": "PASSED", "module": "test_supervisor_workflow.py"},
+        {"name": "test_02_workflow_runner_handles_invalid_astronaut_identity", "status": "PASSED", "module": "test_supervisor_workflow.py"},
+        {"name": "test_03_workflow_runner_handles_missing_sensor_data_gracefully", "status": "PASSED", "module": "test_supervisor_workflow.py"},
+        {"name": "test_04_workflow_runner_handles_upstream_pha_failure", "status": "PASSED", "module": "test_supervisor_workflow.py"},
+        {"name": "test_05_workflow_runner_handles_upstream_ra_failure", "status": "PASSED", "module": "test_supervisor_workflow.py"},
+        {"name": "test_06_workflow_runner_handles_persistence_warning", "status": "PASSED", "module": "test_supervisor_workflow.py"}
+      ]
+    }
+  },
+  "workflow_timing_audit": {
+    "audit_method": "Wall-clock time isolation distinguishing total workflow duration from pure supervisor overhead",
+    "metrics_ms": {
+      "workflow_total_execution_time_ms": 13365.4,
+      "supervisor_overhead_time_ms": 4.2,
+      "sensor_quality_execution_time_ms": 2647.9,
+      "personal_health_execution_time_ms": 7126.7,
+      "risk_assessment_execution_time_ms": 3586.6,
+      "evidence_validation_time_ms": 0.2,
+      "final_synthesis_time_ms": 0.2,
+      "persistence_time_ms": 0.0
+    },
+    "subagent_total_ms": 13361.2,
+    "overhead_percentage_of_total": 0.031
+  }
+}

@@ -1,0 +1,85 @@
+test_id,category,target,status,message
+INPUT-META-002,INPUT_VALIDATION,astronaut_id,PASSED,Valid astronaut identifier: AST-001
+INPUT-META-003,INPUT_VALIDATION,session_id,PASSED,Valid session identifier: SESSION-001
+INPUT-FS-VALID,INPUT_VALIDATION,ECG,PASSED,Valid sampling rate: 700.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,ECG,PASSED,Approved unit of measurement: mV
+INPUT-FILE-EXISTS,INPUT_VALIDATION,ECG,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,ECG,PASSED,"Signal array valid. Samples: 42000, Dtype: float32, Shape: (42000,)"
+INPUT-FS-VALID,INPUT_VALIDATION,EDA,PASSED,Valid sampling rate: 4.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,EDA,PASSED,Approved unit of measurement: uS
+INPUT-FILE-EXISTS,INPUT_VALIDATION,EDA,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,EDA,PASSED,"Signal array valid. Samples: 240, Dtype: float32, Shape: (240,)"
+INPUT-FS-VALID,INPUT_VALIDATION,RESP,PASSED,Valid sampling rate: 700.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,RESP,PASSED,Approved unit of measurement: mV
+INPUT-FILE-EXISTS,INPUT_VALIDATION,RESP,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,RESP,PASSED,"Signal array valid. Samples: 42000, Dtype: float32, Shape: (42000,)"
+INPUT-FS-VALID,INPUT_VALIDATION,EMG,PASSED,Valid sampling rate: 700.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,EMG,PASSED,Approved unit of measurement: mV
+INPUT-FILE-EXISTS,INPUT_VALIDATION,EMG,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,EMG,PASSED,"Signal array valid. Samples: 42000, Dtype: float32, Shape: (42000,)"
+INPUT-FS-VALID,INPUT_VALIDATION,ACC,PASSED,Valid sampling rate: 700.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,ACC,PASSED,Approved unit of measurement: g
+INPUT-FILE-EXISTS,INPUT_VALIDATION,ACC,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,ACC,PASSED,"Signal array valid. Samples: 42000, Dtype: float32, Shape: (42000, 3)"
+INPUT-FS-VALID,INPUT_VALIDATION,TEMP,PASSED,Valid sampling rate: 700.0 Hz
+INPUT-UNIT-VALID,INPUT_VALIDATION,TEMP,PASSED,Approved unit of measurement: C
+INPUT-FILE-EXISTS,INPUT_VALIDATION,TEMP,PASSED,Signal file located and readable.
+INPUT-ARRAY-VALID,INPUT_VALIDATION,TEMP,PASSED,"Signal array valid. Samples: 42000, Dtype: float32, Shape: (42000,)"
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,ECG,PASSED,Quality score within bounded domain: 0.9808
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,ECG,PASSED,Status is valid enum value: VALID
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,ECG,PASSED,Recommendation matches status definition.
+SENSOR-WARNING-MASKED,SENSOR_OUTPUT,ECG,WARNING,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,EDA,PASSED,Quality score within bounded domain: 0.9858
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,EDA,PASSED,Status is valid enum value: VALID
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,EDA,PASSED,Recommendation matches status definition.
+SENSOR-WARNING-MASKED,SENSOR_OUTPUT,EDA,WARNING,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,RESP,PASSED,Quality score within bounded domain: 0.9925
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,RESP,PASSED,Status is valid enum value: VALID
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,RESP,PASSED,Recommendation matches status definition.
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,EMG,PASSED,Quality score within bounded domain: 0.982
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,EMG,PASSED,Status is valid enum value: VALID
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,EMG,PASSED,Recommendation matches status definition.
+SENSOR-WARNING-MASKED,SENSOR_OUTPUT,EMG,WARNING,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,ACC,PASSED,Quality score within bounded domain: 0.9925
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,ACC,PASSED,Status is valid enum value: VALID
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,ACC,PASSED,Recommendation matches status definition.
+SENSOR-SCORE-BOUNDS,SENSOR_OUTPUT,TEMP,PASSED,Quality score within bounded domain: 0.85
+SENSOR-STATUS-ENUM,SENSOR_OUTPUT,TEMP,PASSED,Status is valid enum value: ACCEPTABLE_WITH_WARNING
+SENSOR-STATUS-REC-CONSISTENT,SENSOR_OUTPUT,TEMP,PASSED,Recommendation matches status definition.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,ECG,PASSED,Score 0.9808 reproduces formula identically.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,EDA,PASSED,Score 0.9858 reproduces formula identically.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,RESP,PASSED,Score 0.9925 reproduces formula identically.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,EMG,PASSED,Score 0.9820 reproduces formula identically.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,ACC,PASSED,Score 0.9925 reproduces formula identically.
+SCORE-SENSOR-REPRODUCED,QUALITY_SCORE,TEMP,PASSED,Score 0.8500 reproduces formula identically.
+SCORE-OVERALL-REPRODUCED,QUALITY_SCORE,OVERALL,PASSED,Overall session score (0.9639) matches arithmetic mean (0.9639).
+SIG-SPIKE-EVIDENCE-CONFIRMED,SIGNAL_PROCESSING,ECG,PASSED,Raw array confirms presence of 412 outlier spikes (MAD Z > 4.5).
+SIG-ISSUE-GENERIC-VERIFIED,SIGNAL_PROCESSING,ECG,PASSED,Issue ECG_HIGH_FREQUENCY_NOISE has corresponding evidence attached.
+FILTER-RECOMMENDATION-JUSTIFIED,FILTERING_INTEGRITY,ECG,PASSED,Filter directive for SIGNAL_SPIKES ('Apply median filter or segment around spike intervals.') is scientifically defensible.
+FILTER-RECOMMENDATION-JUSTIFIED,FILTERING_INTEGRITY,ECG,PASSED,Filter directive for ECG_HIGH_FREQUENCY_NOISE ('Apply low-pass filter at 40 Hz cutoff.') is scientifically defensible.
+SIG-SPIKE-EVIDENCE-CONFIRMED,SIGNAL_PROCESSING,EDA,PASSED,Raw array confirms presence of 6 outlier spikes (MAD Z > 4.5).
+FILTER-RECOMMENDATION-JUSTIFIED,FILTERING_INTEGRITY,EDA,PASSED,Filter directive for SIGNAL_SPIKES ('Apply median filter or segment around spike intervals.') is scientifically defensible.
+SIG-SPIKE-EVIDENCE-CONFIRMED,SIGNAL_PROCESSING,EMG,PASSED,Raw array confirms presence of 2203 outlier spikes (MAD Z > 4.5).
+FILTER-RECOMMENDATION-JUSTIFIED,FILTERING_INTEGRITY,EMG,PASSED,Filter directive for SIGNAL_SPIKES ('Apply median filter or segment around spike intervals.') is scientifically defensible.
+SIG-ISSUE-GENERIC-VERIFIED,SIGNAL_PROCESSING,TEMP,PASSED,Issue TEMP_IMPLAUSIBLE_RATE_OF_CHANGE has corresponding evidence attached.
+SIG-TEMP-ROC-CONFIRMED,SIGNAL_PROCESSING,TEMP,WARNING,"Confirmed peak thermal rate of change (20.74 C/s = 1244.4 C/min) at interval [55.87s, 55.87s]. Classified as: OVERSAMPLED_DISCRETIZATION_NOISE."
+SCORE_STATUS_CONSISTENCY_ECG,CROSS_VALIDATION,ECG,PASSED,"ECG score=0.9808, status=VALID, rec=ACCEPT"
+SCORE_STATUS_CONSISTENCY_EDA,CROSS_VALIDATION,EDA,PASSED,"EDA score=0.9858, status=VALID, rec=ACCEPT"
+SCORE_STATUS_CONSISTENCY_RESP,CROSS_VALIDATION,RESP,PASSED,"RESP score=0.9925, status=VALID, rec=ACCEPT"
+SCORE_STATUS_CONSISTENCY_EMG,CROSS_VALIDATION,EMG,PASSED,"EMG score=0.982, status=VALID, rec=ACCEPT"
+SCORE_STATUS_CONSISTENCY_ACC,CROSS_VALIDATION,ACC,PASSED,"ACC score=0.9925, status=VALID, rec=ACCEPT"
+SCORE_STATUS_CONSISTENCY_TEMP,CROSS_VALIDATION,TEMP,PASSED,"TEMP score=0.85, status=ACCEPTABLE_WITH_WARNING, rec=ACCEPT_WITH_WARNING"
+ISSUE_EVIDENCE_INTEGRITY_ECG,CROSS_VALIDATION,ECG,PASSED,All issues backed by quantified evidence
+ISSUE_EVIDENCE_INTEGRITY_EDA,CROSS_VALIDATION,EDA,PASSED,All issues backed by quantified evidence
+ISSUE_EVIDENCE_INTEGRITY_RESP,CROSS_VALIDATION,RESP,PASSED,"RESP has 0 issues, status clean"
+ISSUE_EVIDENCE_INTEGRITY_EMG,CROSS_VALIDATION,EMG,PASSED,All issues backed by quantified evidence
+ISSUE_EVIDENCE_INTEGRITY_ACC,CROSS_VALIDATION,ACC,PASSED,"ACC has 0 issues, status clean"
+ISSUE_EVIDENCE_INTEGRITY_TEMP,CROSS_VALIDATION,TEMP,PASSED,All issues backed by quantified evidence
+LLM_CONSISTENCY_OVERALL_SCORE,CROSS_VALIDATION,llm_explanation,PASSED,Overall score 0.9639 mentioned in LLM briefing
+LLM_CONSISTENCY_MENTION_ECG,CROSS_VALIDATION,llm_explanation,PASSED,Degraded/flagged sensor ECG mentioned in LLM narrative
+LLM_CONSISTENCY_MENTION_EDA,CROSS_VALIDATION,llm_explanation,PASSED,Degraded/flagged sensor EDA mentioned in LLM narrative
+LLM_CONSISTENCY_MENTION_EMG,CROSS_VALIDATION,llm_explanation,PASSED,Degraded/flagged sensor EMG mentioned in LLM narrative
+LLM_CONSISTENCY_MENTION_TEMP,CROSS_VALIDATION,llm_explanation,PASSED,Degraded/flagged sensor TEMP mentioned in LLM narrative
+LLM_CONSISTENCY_NO_HALLUCINATIONS,CROSS_VALIDATION,llm_explanation,PASSED,No hallucinated sensor failures detected in LLM text
+DECISION_CRITICAL_FAILURE_INVARIANT,CROSS_VALIDATION,processing_decision,PASSED,Critical sensor failure invariant respected
+DECISION_MINIMUM_SCORE_INVARIANT,CROSS_VALIDATION,processing_decision,PASSED,Session overall score invariant respected

@@ -1,0 +1,214 @@
+{
+  "verdict": "CONDITIONAL PASS",
+  "checks_run": 84,
+  "checks_passed": 80,
+  "checks_warned": 4,
+  "checks_failed": 0,
+  "critical_issues": [],
+  "sensor_summaries": {
+    "ECG": {
+      "sensor": "ECG",
+      "quality_score": 0.9808,
+      "status": "VALID",
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "issue_count": 2,
+      "verdict": "PASSED",
+      "notes": "Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING)."
+    },
+    "EDA": {
+      "sensor": "EDA",
+      "quality_score": 0.9858,
+      "status": "VALID",
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "issue_count": 1,
+      "verdict": "PASSED",
+      "notes": "Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING)."
+    },
+    "RESP": {
+      "sensor": "RESP",
+      "quality_score": 0.9925,
+      "status": "VALID",
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "issue_count": 0,
+      "verdict": "PASSED",
+      "notes": "All checks passed."
+    },
+    "EMG": {
+      "sensor": "EMG",
+      "quality_score": 0.982,
+      "status": "VALID",
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "issue_count": 1,
+      "verdict": "PASSED",
+      "notes": "Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING)."
+    },
+    "ACC": {
+      "sensor": "ACC",
+      "quality_score": 0.9925,
+      "status": "VALID",
+      "recommendation": "ACCEPT",
+      "critical_failure": false,
+      "issue_count": 0,
+      "verdict": "PASSED",
+      "notes": "All checks passed."
+    },
+    "TEMP": {
+      "sensor": "TEMP",
+      "quality_score": 0.85,
+      "status": "ACCEPTABLE_WITH_WARNING",
+      "recommendation": "ACCEPT_WITH_WARNING",
+      "critical_failure": false,
+      "issue_count": 1,
+      "verdict": "PASSED",
+      "notes": "All checks passed."
+    }
+  },
+  "score_audits": [
+    {
+      "sensor": "ECG",
+      "reported_score": 0.9808,
+      "recalculated_score": 0.9808,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.198,
+        "noise_component": 0.1328,
+        "continuity_component": 0.1,
+        "raw_score": 0.9808,
+        "expected_final": 0.9808
+      }
+    },
+    {
+      "sensor": "EDA",
+      "reported_score": 0.9858,
+      "recalculated_score": 0.9858,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.1933,
+        "noise_component": 0.1425,
+        "continuity_component": 0.1,
+        "raw_score": 0.9858,
+        "expected_final": 0.9858
+      }
+    },
+    {
+      "sensor": "RESP",
+      "reported_score": 0.9925,
+      "recalculated_score": 0.9925,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.2,
+        "noise_component": 0.1425,
+        "continuity_component": 0.1,
+        "raw_score": 0.9925,
+        "expected_final": 0.9925
+      }
+    },
+    {
+      "sensor": "EMG",
+      "reported_score": 0.982,
+      "recalculated_score": 0.982,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.1895,
+        "noise_component": 0.1425,
+        "continuity_component": 0.1,
+        "raw_score": 0.982,
+        "expected_final": 0.982
+      }
+    },
+    {
+      "sensor": "ACC",
+      "reported_score": 0.9925,
+      "recalculated_score": 0.9925,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.2,
+        "noise_component": 0.1425,
+        "continuity_component": 0.1,
+        "raw_score": 0.9925,
+        "expected_final": 0.9925
+      }
+    },
+    {
+      "sensor": "TEMP",
+      "reported_score": 0.85,
+      "recalculated_score": 0.85,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "valid_component": 0.3,
+        "timestamp_component": 0.25,
+        "artifact_component": 0.2,
+        "noise_component": 0.0,
+        "continuity_component": 0.1,
+        "raw_score": 0.85,
+        "expected_final": 0.85
+      }
+    },
+    {
+      "sensor": "OVERALL",
+      "reported_score": 0.9639,
+      "recalculated_score": 0.9639,
+      "delta": 0.0,
+      "is_match": true,
+      "component_breakdown": {
+        "sensor_count": 6.0,
+        "recalculated_mean": 0.9639
+      }
+    }
+  ],
+  "temperature_investigation": {
+    "sensor": "TEMP",
+    "unit": "C",
+    "sampling_rate": 700.0,
+    "total_samples": 42000,
+    "max_instantaneous_rate_c_per_sec": 20.7401,
+    "max_instantaneous_rate_c_per_min": 1244.41,
+    "max_smoothed_rate_0_5s_c_per_sec": 0.0679,
+    "max_smoothed_rate_0_5s_c_per_min": 4.07,
+    "max_smoothed_rate_1_0s_c_per_sec": 0.0299,
+    "max_smoothed_rate_1_0s_c_per_min": 1.79,
+    "decimated_4hz_max_rate_c_per_sec": 0.0869,
+    "decimated_4hz_max_rate_c_per_min": 5.22,
+    "threshold_used_c_per_sec": 0.5,
+    "threshold_used_c_per_min": 30.0,
+    "max_instantaneous_rate_of_change": 20.7401,
+    "max_smoothed_rate_of_change_0_5s": 0.0679,
+    "max_point_rate_c_per_sec": 20.7401,
+    "max_smoothed_rate_c_per_sec": 0.0679,
+    "biologically_plausible_when_smoothed": true,
+    "peak_interval": [
+      55.8729,
+      55.8743
+    ],
+    "peak_interval_seconds": {
+      "start": 55.8729,
+      "end": 55.8743
+    },
+    "classification": "OVERSAMPLED_DISCRETIZATION_NOISE",
+    "threshold_justification": "Standard conversion: 1 C/s = 60 C/min. Operational threshold is 0.50 C/s (30.0 C/min). Human basal skin temperature drift is 0.1 to 0.5 C/min (0.0017 to 0.0083 C/s), while vigorous vasomotor or physical transients reach up to 1.0 to 3.0 C/min (0.017 to 0.050 C/s). The unsmoothed peak of 20.74 C/s (1244.4 C/min) reflects a single ADC bit flip (0.03 C) over a 1.43 ms interval on 700 Hz data. Smoothing over 0.5s reduces the rate to 0.0679 C/s (4.07 C/min), and at 1.0s smoothing to 0.0299 C/s (1.79 C/min), both well below the 0.50 C/s threshold."
+  },
+  "llm_consistency": {
+    "status": "EVALUATED",
+    "cross_checks_count": 20
+  }
+}

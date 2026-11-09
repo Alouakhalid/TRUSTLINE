@@ -1,0 +1,550 @@
+{
+  "audit_metadata": {
+    "audit_id": "RAA-FINAL-INTEGRITY-2026-11-08",
+    "target_session": "SESSION-001",
+    "target_astronaut": "AST-001",
+    "assessment_id": "RA-CB2493BA",
+    "timestamp": "2026-11-08T14:58:34Z",
+    "audit_scope": "Full 10-Domain Evidence Traceability & Eligibility Gating",
+    "auditor_role": "Senior Biomedical Signal Processing Engineer & Safety-Critical Software Auditor"
+  },
+  "overall_summary": {
+    "total_domains": 10,
+    "evaluated_domains_count": 5,
+    "unevaluated_domains_count": 5,
+    "domain_coverage_ratio": 0.5,
+    "coverage_status": "PARTIAL",
+    "overall_risk": "INSUFFICIENT_DATA",
+    "overall_confidence": "MODERATE",
+    "evaluated_domains_risk": "LOW",
+    "assessment_status": "PARTIALLY_COMPLETED",
+    "escalation_state": "NO_TRIGGER_DETECTED",
+    "escalation_urgency": "NOMINAL",
+    "protective_factors_count": 1,
+    "identified_concerns_count": 0,
+    "uncertainties_and_limitations_count": 12
+  },
+  "domains": [
+    {
+      "domain_index": 1,
+      "domain": "CARDIOVASCULAR",
+      "evaluation_status": "EVALUATED",
+      "risk_status": "LOW",
+      "confidence": "MODERATE",
+      "confidence_calculation_rationale": "Initial high confidence attenuated to MODERATE due to EV-PHY-HRV-RMSSD having validity_status=INVALID (ZERO_VARIABILITY artifact). Resting heart rate (72.0 bpm) is valid, but autonomic cardiac regulation cannot be assessed.",
+      "evidence_ids": [
+        "EV-PHY-HR-MEAN",
+        "EV-PHY-HRV-RMSSD"
+      ],
+      "eligible_evidence_count": 1,
+      "excluded_evidence_count": 1,
+      "eligible_evidence_items": [
+        {
+          "evidence_id": "EV-PHY-HR-MEAN",
+          "metric_name": "heart_rate_mean",
+          "observed_value": 72.04116638078902,
+          "unit": "bpm",
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true,
+          "relevance": "Resting mean heart rate within nominal limits (50-100 bpm)."
+        }
+      ],
+      "excluded_evidence_items": [
+        {
+          "evidence_id": "EV-PHY-HRV-RMSSD",
+          "metric_name": "hrv_rmssd",
+          "observed_value": 0.0,
+          "unit": "ms",
+          "validity_status": "INVALID",
+          "quality_status": "VALID",
+          "evidence_classification": "DATA_INTEGRITY_ARTIFACT",
+          "is_eligible_for_risk": false,
+          "exclusion_reason": "HRVStatus.ZERO_VARIABILITY represents an algorithmic or signal artifact with constant RR intervals; invalid telemetry cannot support physiological health inference."
+        }
+      ],
+      "rules_evaluated": [
+        {
+          "rule_id": "RR-EMERG-CHEST-PAIN",
+          "rule_name": "Red-Line Trigger: Acute Severe Chest Pain Complaint",
+          "triggered": false,
+          "reason": "Missing required observational variables: ['symptom_chest_pain']."
+        },
+        {
+          "rule_id": "RR-CARDIO-TACHY-EXTREME",
+          "rule_name": "Red-Line Trigger: Extreme Resting Tachycardia",
+          "triggered": false,
+          "reason": "Resting heart rate (72.0 bpm) does not exceed 160.0 bpm."
+        },
+        {
+          "rule_id": "RR-CARDIO-BRADY-EXTREME",
+          "rule_name": "Red-Line Trigger: Extreme Resting Bradycardia",
+          "triggered": false,
+          "reason": "Resting heart rate (72.0 bpm) is not below 40.0 bpm."
+        },
+        {
+          "rule_id": "RR-CARDIO-TACHY-MODERATE",
+          "rule_name": "Resting Moderate Tachycardia",
+          "triggered": false,
+          "reason": "Resting heart rate is not between 100 and 160 bpm."
+        }
+      ],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "protective_factor_exclusion_reason": "PROT-CARDIO-01 blocked because has_invalid_hrv=True (ZERO_VARIABILITY artifact). Nominal heart rate alone cannot form a protective factor when autonomic regulation telemetry is invalid.",
+      "limitations": [
+        "Cardiac autonomic HRV evidence (RMSSD) is INVALID (ZERO_VARIABILITY artifact); autonomic regulation cannot be confirmed from HRV."
+      ]
+    },
+    {
+      "domain_index": 2,
+      "domain": "RESPIRATORY",
+      "evaluation_status": "EVALUATED",
+      "risk_status": "LOW",
+      "confidence": "HIGH",
+      "confidence_calculation_rationale": "High confidence maintained: RESP sensor quality score 0.9925 (VALID), resting respiration rate 15.0 breaths/min is within standard reference limits (10-20 breaths/min), and zero data degradation.",
+      "evidence_ids": [
+        "EV-PHY-RESP-RATE"
+      ],
+      "eligible_evidence_count": 1,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [
+        {
+          "evidence_id": "EV-PHY-RESP-RATE",
+          "metric_name": "respiratory_rate",
+          "observed_value": 15.0,
+          "unit": "breaths/min",
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true,
+          "relevance": "Resting respiratory rate within NASA-STD-3001 limits."
+        }
+      ],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [
+        {
+          "rule_id": "RR-RESP-DYSPNEA-ALERT",
+          "rule_name": "Respiratory Distress Complaint",
+          "triggered": false,
+          "reason": "Missing required observational variables: ['symptom_dyspnea']."
+        },
+        {
+          "rule_id": "RR-RESP-TACHYPNEA",
+          "rule_name": "Resting Tachypnea",
+          "triggered": false,
+          "reason": "Respiration rate does not exceed 26.0 breaths/min."
+        },
+        {
+          "rule_id": "RR-ENV-CABIN-CO2-ELEVATED",
+          "rule_name": "Elevated Atmospheric Carbon Dioxide Concentration",
+          "triggered": false,
+          "reason": "Missing required observational variables: ['cabin_co2_percent']."
+        }
+      ],
+      "rules_triggered": [],
+      "protective_factors": [
+        {
+          "factor_id": "PROT-RESP-01",
+          "criterion": "NASA-STD-3001-VOL-1 Nominal Resting Respiration (10-20 breaths/min)",
+          "explanation": "Resting respiration rate (15.0 breaths/min) verified nominal within standard reference limits."
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "domain_index": 3,
+      "domain": "NEUROLOGICAL",
+      "evaluation_status": "NOT_EVALUATED",
+      "risk_status": "UNKNOWN",
+      "confidence": "UNDETERMINED",
+      "confidence_calculation_rationale": "Undetermined confidence: zero observational telemetry, neuro-vestibular surveys, or EEG recordings provided.",
+      "evidence_ids": [],
+      "eligible_evidence_count": 0,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "limitations": [
+        "No telemetry or subjective observations provided for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms)."
+      ]
+    },
+    {
+      "domain_index": 4,
+      "domain": "SLEEP_AND_FATIGUE",
+      "evaluation_status": "NOT_EVALUATED",
+      "risk_status": "UNKNOWN",
+      "confidence": "UNDETERMINED",
+      "confidence_calculation_rationale": "Undetermined confidence: zero sleep telemetry, sleep logs (actual_sleep_hours), or actigraphy data provided.",
+      "evidence_ids": [],
+      "eligible_evidence_count": 0,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [
+        {
+          "rule_id": "RR-FATIGUE-ACUTE-DEPRIVATION",
+          "rule_name": "Acute Sleep Curtailment",
+          "triggered": false,
+          "reason": "Missing required observational variables: ['actual_sleep_hours']."
+        }
+      ],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "limitations": [
+        "No telemetry or subjective observations provided for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy)."
+      ]
+    },
+    {
+      "domain_index": 5,
+      "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
+      "evaluation_status": "EVALUATED",
+      "risk_status": "LOW",
+      "confidence": "MODERATE",
+      "confidence_calculation_rationale": "Confidence capped at MODERATE: domain relies on peripheral EDA (sympathetic arousal) and an experimental laboratory ML classifier (WESAD); validated clinical psychiatric and cognitive test batteries are absent.",
+      "evidence_ids": [
+        "EV-PHY-EDA-MEAN",
+        "EV-ML-WESAD-1"
+      ],
+      "eligible_evidence_count": 1,
+      "excluded_evidence_count": 1,
+      "eligible_evidence_items": [
+        {
+          "evidence_id": "EV-PHY-EDA-MEAN",
+          "metric_name": "eda_mean",
+          "observed_value": 4.68982271750768,
+          "unit": "uS",
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true,
+          "relevance": "Skin conductance level (4.69 uS) indicates non-elevated sympathetic arousal."
+        }
+      ],
+      "excluded_evidence_items": [
+        {
+          "evidence_id": "EV-ML-WESAD-1",
+          "metric_name": "experimental_lab_stress_probability",
+          "observed_value": 0.1201,
+          "unit": "probability",
+          "validity_status": "VALID",
+          "quality_status": null,
+          "evidence_classification": "EXPERIMENTAL_CONTEXT",
+          "is_eligible_for_risk": false,
+          "exclusion_reason": "WESAD is a non-clinical laboratory benchmark stress classifier; cannot be used as an independent clinical risk factor or protective factor."
+        }
+      ],
+      "rules_evaluated": [],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "protective_factor_exclusion_reason": "PROT-PSYCH-01 eliminated because experimental WESAD ML model cannot establish psychological resilience or absence of psychiatric distress.",
+      "limitations": [
+        "Psychological assessment limited to peripheral autonomic electrodermal activity (EDA) and experimental laboratory ML benchmark; validated clinical psychiatric and cognitive testing is unavailable."
+      ]
+    },
+    {
+      "domain_index": 6,
+      "domain": "THERMOREGULATORY",
+      "evaluation_status": "EVALUATED",
+      "risk_status": "LOW",
+      "confidence": "MODERATE",
+      "confidence_calculation_rationale": "Confidence attenuated to MODERATE due to: (1) sensor TEMP quality status is ACCEPTABLE_WITH_WARNING (DEGRADED, 0.8500), and (2) measurement is peripheral skin surface temperature (34.27 °C), not core internal body temperature.",
+      "evidence_ids": [
+        "EV-PHY-TEMP-MEAN"
+      ],
+      "eligible_evidence_count": 1,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [
+        {
+          "evidence_id": "EV-PHY-TEMP-MEAN",
+          "metric_name": "temperature_mean",
+          "observed_value": 34.2694465856098,
+          "unit": "°C",
+          "validity_status": "DEGRADED",
+          "quality_status": "ACCEPTABLE_WITH_WARNING",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true,
+          "relevance": "Peripheral skin surface temperature recorded at 34.27 °C."
+        }
+      ],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [
+        {
+          "rule_id": "RR-THERM-HYPERTHERMIA",
+          "rule_name": "Sustained Elevated Core Temperature",
+          "triggered": false,
+          "reason": "Core body temperature measurement unavailable; peripheral skin surface temperature cannot be evaluated against core hyperthermia thresholds without validated conversion model."
+        }
+      ],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "protective_factor_exclusion_reason": "PROT-THERM-01 eliminated because skin surface temperature cannot verify core body thermal homeostasis.",
+      "limitations": [
+        "Thermoregulatory telemetry reflects peripheral skin surface temperature (34.27 °C) with ACCEPTABLE_WITH_WARNING quality; core body temperature is not directly monitored."
+      ]
+    },
+    {
+      "domain_index": 7,
+      "domain": "HYDRATION_AND_FLUID_BALANCE",
+      "evaluation_status": "NOT_EVALUATED",
+      "risk_status": "UNKNOWN",
+      "confidence": "UNDETERMINED",
+      "confidence_calculation_rationale": "Undetermined confidence: zero fluid intake/output logs, mass tracking, or hydration biomarkers provided.",
+      "evidence_ids": [],
+      "eligible_evidence_count": 0,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "limitations": [
+        "No telemetry or subjective observations provided for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers)."
+      ]
+    },
+    {
+      "domain_index": 8,
+      "domain": "MUSCULOSKELETAL",
+      "evaluation_status": "NOT_EVALUATED",
+      "risk_status": "UNKNOWN",
+      "confidence": "UNDETERMINED",
+      "confidence_calculation_rationale": "Undetermined confidence: zero electromyography (EMG), exercise logs, or musculoskeletal complaint telemetry provided.",
+      "evidence_ids": [],
+      "eligible_evidence_count": 0,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "limitations": [
+        "No telemetry or subjective observations provided for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry)."
+      ]
+    },
+    {
+      "domain_index": 9,
+      "domain": "GENERAL_PHYSIOLOGICAL",
+      "evaluation_status": "NOT_EVALUATED",
+      "risk_status": "UNKNOWN",
+      "confidence": "UNDETERMINED",
+      "confidence_calculation_rationale": "Undetermined confidence: zero eligible observational evidence or confirmed symptom assessments submitted. Missing symptoms are treated as UNKNOWN symptom status, not negative findings.",
+      "evidence_ids": [
+        "EV-SYM-UNSUBMITTED"
+      ],
+      "eligible_evidence_count": 0,
+      "excluded_evidence_count": 1,
+      "eligible_evidence_items": [],
+      "excluded_evidence_items": [
+        {
+          "evidence_id": "EV-SYM-UNSUBMITTED",
+          "metric_name": "symptom_status_unsubmitted",
+          "observed_value": "no_symptoms_submitted",
+          "unit": null,
+          "validity_status": "NOT_AVAILABLE",
+          "quality_status": null,
+          "evidence_classification": "UNSUBMITTED_STATUS",
+          "is_eligible_for_risk": false,
+          "exclusion_reason": "Absence of a submitted symptom report does not establish clinical absence of symptoms or disease; excluded from positive risk classification."
+        }
+      ],
+      "rules_evaluated": [],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "protective_factor_exclusion_reason": "PROT-SYM-DENIAL-01 blocked because symptoms were unsubmitted, not explicitly denied during structured review.",
+      "limitations": [
+        "No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status."
+      ]
+    },
+    {
+      "domain_index": 10,
+      "domain": "DATA_QUALITY_RELATED",
+      "evaluation_status": "EVALUATED",
+      "risk_status": "LOW",
+      "confidence": "MODERATE",
+      "confidence_calculation_rationale": "Confidence attenuated to MODERATE because 1 of 6 active sensor channels (TEMP) is DEGRADED / ACCEPTABLE_WITH_WARNING (score: 0.8500).",
+      "evidence_ids": [
+        "EV-SQ-ECG",
+        "EV-SQ-EDA",
+        "EV-SQ-RESP",
+        "EV-SQ-EMG",
+        "EV-SQ-ACC",
+        "EV-SQ-TEMP"
+      ],
+      "eligible_evidence_count": 6,
+      "excluded_evidence_count": 0,
+      "eligible_evidence_items": [
+        {
+          "evidence_id": "EV-SQ-ECG",
+          "metric_name": "ECG_quality_score",
+          "observed_value": 0.9808,
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        },
+        {
+          "evidence_id": "EV-SQ-EDA",
+          "metric_name": "EDA_quality_score",
+          "observed_value": 0.9858,
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        },
+        {
+          "evidence_id": "EV-SQ-RESP",
+          "metric_name": "RESP_quality_score",
+          "observed_value": 0.9925,
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        },
+        {
+          "evidence_id": "EV-SQ-EMG",
+          "metric_name": "EMG_quality_score",
+          "observed_value": 0.982,
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        },
+        {
+          "evidence_id": "EV-SQ-ACC",
+          "metric_name": "ACC_quality_score",
+          "observed_value": 0.9925,
+          "validity_status": "VALID",
+          "quality_status": "VALID",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        },
+        {
+          "evidence_id": "EV-SQ-TEMP",
+          "metric_name": "TEMP_quality_score",
+          "observed_value": 0.85,
+          "validity_status": "DEGRADED",
+          "quality_status": "ACCEPTABLE_WITH_WARNING",
+          "evidence_classification": "CLINICAL_OBSERVATION",
+          "is_eligible_for_risk": true
+        }
+      ],
+      "excluded_evidence_items": [],
+      "rules_evaluated": [
+        {
+          "rule_id": "RR-DATA-SENSOR-CRITICAL-FAIL",
+          "rule_name": "Critical Physiological Sensor Telemetry Failure",
+          "triggered": false,
+          "reason": "ECG sensor telemetry is not classified as INVALID."
+        }
+      ],
+      "rules_triggered": [],
+      "protective_factors": [],
+      "protective_factor_exclusion_reason": "PROT-DATA-QUALITY-01 blocked because not all sensor channels are VALID (TEMP is ACCEPTABLE_WITH_WARNING / DEGRADED).",
+      "limitations": []
+    }
+  ],
+  "evidence_eligibility_trace_matrix": [
+    {
+      "evidence_id": "EV-SQ-ECG",
+      "domain": "DATA_QUALITY_RELATED",
+      "source_status": "VALID (0.9808)",
+      "normalized_validity": "VALID",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "SensorQualityReport -> EvidenceNormalizationService:L63-L82 -> RiskEngine:L104-L108"
+    },
+    {
+      "evidence_id": "EV-SQ-TEMP",
+      "domain": "DATA_QUALITY_RELATED",
+      "source_status": "ACCEPTABLE_WITH_WARNING (0.8500)",
+      "normalized_validity": "DEGRADED",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "SensorQualityReport -> EvidenceNormalizationService:L60-L82 -> RiskEngine:L232-L235 (Attenuates confidence to MODERATE)"
+    },
+    {
+      "evidence_id": "EV-PHY-HR-MEAN",
+      "domain": "CARDIOVASCULAR",
+      "source_status": "VALID (72.0 bpm)",
+      "normalized_validity": "VALID",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:core_features:hr_mean_bpm -> EvidenceNormalizationService:L94-L109 -> RiskEngine:L278-L292"
+    },
+    {
+      "evidence_id": "EV-PHY-HRV-RMSSD",
+      "domain": "CARDIOVASCULAR",
+      "source_status": "INVALID (0.0 ms, ZERO_VARIABILITY)",
+      "normalized_validity": "INVALID",
+      "classification": "DATA_INTEGRITY_ARTIFACT",
+      "is_eligible_for_risk": false,
+      "contributes_to_nominal_classification": false,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:hrv_diagnostics:ZERO_VARIABILITY -> EvidenceNormalizationService:L117-L146 -> RiskEngine:L104-L108 (Excluded from dom_eligible_evidence, excluded from supporting_evidence_ids, forces CARDIOVASCULAR confidence to MODERATE)"
+    },
+    {
+      "evidence_id": "EV-PHY-EDA-MEAN",
+      "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
+      "source_status": "VALID (4.69 uS)",
+      "normalized_validity": "VALID",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:core_features:eda_mean -> EvidenceNormalizationService:L152-L167 -> RiskEngine:L250-L265 (Forces PSYCHOLOGICAL confidence to MODERATE)"
+    },
+    {
+      "evidence_id": "EV-PHY-TEMP-MEAN",
+      "domain": "THERMOREGULATORY",
+      "source_status": "DEGRADED (34.27 °C, SKIN_SURFACE_TEMPERATURE)",
+      "normalized_validity": "DEGRADED",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:core_features:temp_mean -> EvidenceNormalizationService:L173-L195 -> RuleRegistry:L270-L272 (Blocks core hyperthermia rule) -> RiskEngine:L266-L277 (Attenuates confidence to MODERATE)"
+    },
+    {
+      "evidence_id": "EV-PHY-RESP-RATE",
+      "domain": "RESPIRATORY",
+      "source_status": "VALID (15.0 breaths/min)",
+      "normalized_validity": "VALID",
+      "classification": "CLINICAL_OBSERVATION",
+      "is_eligible_for_risk": true,
+      "contributes_to_nominal_classification": true,
+      "contributes_to_protective_factors": true,
+      "provenance_trace": "PersonalHealthAssessment:core_features:resp_rate_bpm -> EvidenceNormalizationService:L201-L216 -> RiskEngine:L313-L326 (Forms PROT-RESP-01)"
+    },
+    {
+      "evidence_id": "EV-ML-WESAD-1",
+      "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
+      "source_status": "VALID (0.1201 probability, NORMAL)",
+      "normalized_validity": "VALID",
+      "classification": "EXPERIMENTAL_CONTEXT",
+      "is_eligible_for_risk": false,
+      "contributes_to_nominal_classification": false,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:ml_findings:HistGradientBoosting -> EvidenceNormalizationService:L218-L240 -> RiskEngine:L104-L108 (Excluded from dom_eligible_evidence, prohibited from PROT-PSYCH-01)"
+    },
+    {
+      "evidence_id": "EV-SYM-UNSUBMITTED",
+      "domain": "GENERAL_PHYSIOLOGICAL",
+      "source_status": "NOT_AVAILABLE (no_symptoms_submitted)",
+      "normalized_validity": "NOT_AVAILABLE",
+      "classification": "UNSUBMITTED_STATUS",
+      "is_eligible_for_risk": false,
+      "contributes_to_nominal_classification": false,
+      "contributes_to_protective_factors": false,
+      "provenance_trace": "PersonalHealthAssessment:symptom_assessment_status:NO_SYMPTOMS_REPORTED -> EvidenceNormalizationService:L301-L320 -> RiskEngine:L154-L178 (Domain transitions to NOT_EVALUATED / UNKNOWN / UNDETERMINED)"
+    }
+  ]
+}

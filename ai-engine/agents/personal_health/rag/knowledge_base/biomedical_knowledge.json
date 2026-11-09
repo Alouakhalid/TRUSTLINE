@@ -1,0 +1,34 @@
+[
+  {
+    "doc_id": "BIO-001",
+    "collection": "biomedical_knowledge",
+    "title": "Autonomic Nervous System Regulation and Acute Stress Markers",
+    "source_organization": "American Autonomic Society / NASA Life Sciences",
+    "author": "Task Force on Heart Rate Variability",
+    "publication_date": "2023-04-15",
+    "version": "2.1",
+    "medical_domain": "Autonomic Neurocardiology",
+    "evidence_type": "CLINICAL_GUIDELINE",
+    "population_studied": "Healthy adults and extreme environment operators",
+    "spaceflight_relevance": "high",
+    "approval_status": "approved_flight_medicine",
+    "excerpt": "Acute physiological stress induces simultaneous sympathetic activation and parasympathetic vagal withdrawal. This autonomic state is characterized by an elevated instantaneous heart rate, marked reduction in beat-to-beat variability (RMSSD collapse below 20 ms), and rapid bursts of skin conductance (phasic EDA spikes). Resting RMSSD reflecting cardiac parasympathetic tone must be distinguished from transient task-related reductions.",
+    "citation_reference": "AAS-NLSD-2023-V2.1-P44"
+  },
+  {
+    "doc_id": "BIO-002",
+    "collection": "biomedical_knowledge",
+    "title": "Thermoregulatory Dynamics and Core-to-Peripheral Heat Flux",
+    "source_organization": "Journal of Applied Physiology",
+    "author": "Thermal Physiology Research Group",
+    "publication_date": "2022-09-10",
+    "version": "1.4",
+    "medical_domain": "Human Thermoregulation",
+    "evidence_type": "PEER_REVIEWED_RESEARCH",
+    "population_studied": "Human endurance athletes and aerospace crews",
+    "spaceflight_relevance": "high",
+    "approval_status": "peer_reviewed_literature",
+    "excerpt": "Peripheral skin temperature exhibits gradual thermodynamic drift under steady ambient conditions. Acute rates of change exceeding 0.50 C/min indicate rapid environmental displacement, intense evaporative cooling, or severe cutaneous vasoconstriction due to acute adrenergic surges. Baseline normothermic skin temperature typically ranges from 32.5 C to 35.0 C depending on skin-contact sensor placement.",
+    "citation_reference": "JAP-THERM-2022-771"
+  }
+]

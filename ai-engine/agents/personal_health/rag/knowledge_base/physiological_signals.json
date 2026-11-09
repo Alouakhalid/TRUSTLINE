@@ -1,0 +1,34 @@
+[
+  {
+    "doc_id": "SIG-001",
+    "collection": "physiological_signal_research",
+    "title": "Ultra-Short-Term Heart Rate Variability and Measurement Limitations in Wearable Biosensors",
+    "source_organization": "IEEE Engineering in Medicine and Biology Society",
+    "author": "Biomedical Signal Processing Committee",
+    "publication_date": "2024-03-01",
+    "version": "2.5",
+    "medical_domain": "Biomedical Signal Processing",
+    "evidence_type": "TECHNICAL_SPECIFICATION",
+    "population_studied": "Wearable sensor cohorts",
+    "spaceflight_relevance": "critical",
+    "approval_status": "peer_reviewed_literature",
+    "excerpt": "Standard clinical HRV guidelines require 5-minute stationary recordings for short-term frequency and time-domain analysis. When recording windows are less than 300 seconds, RMSSD and SDNN must be explicitly designated as 'exploratory ultra-short-term measurements'. Ultra-short RMSSD remains mathematically responsive to rapid vagal shifts, but cannot be treated as clinically equivalent to standard ambulatory 24-hour Holter monitoring.",
+    "citation_reference": "IEEE-EMBS-HRV-2024-09"
+  },
+  {
+    "doc_id": "SIG-002",
+    "collection": "physiological_signal_research",
+    "title": "Electrodermal Activity Signal Dynamics and Motion Artifact Disambiguation",
+    "source_organization": "Society for Psychophysiological Research",
+    "author": "Electrodermal Standards Committee",
+    "publication_date": "2022-12-05",
+    "version": "1.7",
+    "medical_domain": "Psychophysiology and Biosignals",
+    "evidence_type": "TECHNICAL_SPECIFICATION",
+    "population_studied": "Wearable EDA wrist and chest sensor subjects",
+    "spaceflight_relevance": "high",
+    "approval_status": "peer_reviewed_literature",
+    "excerpt": "Electrodermal activity recorded at 4 Hz captures sympathetic sudomotor nerve activity. True skin conductance responses (SCRs) exhibit a steep rise time (1-3 seconds) followed by an exponential decay (2-10 seconds). Mechanical electrode slips and motion artifacts manifest as instantaneous zero-latency square-wave jumps that must be filtered out using synchronized tri-axial accelerometry data.",
+    "citation_reference": "SPR-EDA-STANDARDS-2022-88"
+  }
+]

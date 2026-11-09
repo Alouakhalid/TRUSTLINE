@@ -23,6 +23,7 @@ Thumbs.db
 *.log
 !ai-engine/ml/reports/**/*.log
 *.sqlite3
+*.db
 
 # Datasets
 ai-engine/ml/data/raw/

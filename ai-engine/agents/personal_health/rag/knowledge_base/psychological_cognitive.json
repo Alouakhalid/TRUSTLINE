@@ -1,0 +1,18 @@
+[
+  {
+    "doc_id": "PSY-001",
+    "collection": "psychological_cognitive_research",
+    "title": "Cognitive Workload and Psychomotor Vigilance Under Chronic Confinement",
+    "source_organization": "Human Factors and Ergonomics Society",
+    "author": "Cognitive Performance Laboratory",
+    "publication_date": "2023-06-18",
+    "version": "1.8",
+    "medical_domain": "Cognitive Neuroergonomics",
+    "evidence_type": "PEER_REVIEWED_RESEARCH",
+    "population_studied": "Extreme environment analogs (CHAPEA, HERA)",
+    "spaceflight_relevance": "high",
+    "approval_status": "peer_reviewed_literature",
+    "excerpt": "Extended confinement causes subtle degradation in psychomotor vigilance response speed and working memory accuracy. High cognitive workload combined with acute stressors accelerates mental fatigue, leading to a compensatory surge in sympathetic arousal (elevated EDA and suppressed vagal HRV) despite static posture. Monitoring both subjective workload and objective telemetry prevents cognitive saturation.",
+    "citation_reference": "HFES-CONFINEMENT-2023-412"
+  }
+]

@@ -1,0 +1,172 @@
+[
+  {
+    "claim_id": "CLM-001",
+    "paragraph_index": 1,
+    "claim_text": "The assessment status is **PARTIALLY_COMPLETED**, with a domain coverage ratio of 0.50, indicating that only five of the ten physiological domains were evaluated.",
+    "evidence_ids": [],
+    "evidence_validity": "VALID",
+    "provenance": "Deterministic Risk Engine",
+    "evidence_supports_claim": false,
+    "validation_method": "PROGRAMMATIC_CLAUSE_CHECK",
+    "validation_result": "INSUFFICIENT_EVIDENCE",
+    "rejection_reason": "Operational state metadata assertion; no primary biosensor telemetry evidence item.",
+    "automated_validator_executed": true,
+    "evaluation_type": "OPERATIONAL_STATE_CHECK"
+  },
+  {
+    "claim_id": "CLM-002",
+    "paragraph_index": 1,
+    "claim_text": "No configured automated alert or escalation rule was triggered by the available valid evidence (ESCALATION STATE: NO_TRIGGER_DETECTED); however, this status does not confirm the clinical absence of disease, complete assessment coverage, or nominal physiological status across the unassessed domains.",
+    "evidence_ids": [],
+    "evidence_validity": "VALID",
+    "provenance": "Deterministic Risk Engine",
+    "evidence_supports_claim": false,
+    "validation_method": "PROGRAMMATIC_CLAUSE_CHECK",
+    "validation_result": "INSUFFICIENT_EVIDENCE",
+    "rejection_reason": "Deterministic escalation rule evaluation assertion; negative finding not supported by positive telemetry.",
+    "automated_validator_executed": true,
+    "evaluation_type": "OPERATIONAL_STATE_CHECK"
+  },
+  {
+    "claim_id": "CLM-003",
+    "paragraph_index": 1,
+    "claim_text": "The limited coverage and specific data quality limitations prevent a definitive low-risk determination for the astronaut\u2019s overall physiological state.",
+    "evidence_ids": [
+      "EV-SQ-ECG"
+    ],
+    "evidence_validity": "VALID",
+    "provenance": "Sensor Quality Agent (Signal QC)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-004",
+    "paragraph_index": 2,
+    "claim_text": "All observed variables within these evaluated domains were within established reference limits, resulting in a LOW risk classification for each.",
+    "evidence_ids": [],
+    "evidence_validity": "VALID",
+    "provenance": "Deterministic Risk Engine",
+    "evidence_supports_claim": false,
+    "validation_method": "PROGRAMMATIC_CLAUSE_CHECK",
+    "validation_result": "FAIL",
+    "rejection_reason": "Synthesis improperly claims all physiological variables are nominal or valid when telemetry is invalid or degraded.",
+    "automated_validator_executed": true,
+    "evaluation_type": "OPERATIONAL_STATE_CHECK"
+  },
+  {
+    "claim_id": "CLM-005",
+    "paragraph_index": 2,
+    "claim_text": "However, evidential confidence is attenuated to MODERATE in the CARDIOVASCULAR, THERMOREGULATORY, and DATA_QUALITY_RELATED domains due to specific data quality issues.",
+    "evidence_ids": [
+      "EV-PHY-HR-MEAN",
+      "EV-PHY-TEMP-MEAN",
+      "EV-SQ-ECG"
+    ],
+    "evidence_validity": "DEGRADED",
+    "provenance": "Sensor Quality Agent (Signal QC)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-006",
+    "paragraph_index": 2,
+    "claim_text": "Notably, Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY), which limits the assessment of autonomic cardiac regulation, and Thermoregulatory telemetry reflects peripheral skin temperature rather than core body temperature.",
+    "evidence_ids": [
+      "EV-PHY-HRV-RMSSD",
+      "EV-PHY-HR-MEAN",
+      "EV-PHY-TEMP-MEAN"
+    ],
+    "evidence_validity": "DEGRADED",
+    "provenance": "Personal Health Agent (Skin TEMP telemetry)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-007",
+    "paragraph_index": 2,
+    "claim_text": "The remaining five domains\u2014NEUROLOGICAL, SLEEP_AND_FATIGUE, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, and GENERAL_PHYSIOLOGICAL\u2014remain **UNKNOWN** with UNDETERMINED confidence due to the absence of eligible telemetry or confirmed symptom assessments.",
+    "evidence_ids": [
+      "EV-SYM-UNSUBMITTED"
+    ],
+    "evidence_validity": "DATA_GAP",
+    "provenance": "Coverage Verification Engine (Unmonitored Telemetry)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-008",
+    "paragraph_index": 3,
+    "claim_text": "Additionally, subjective symptoms were not submitted for this session; therefore, the absence of reports does not establish the clinical absence of symptoms.",
+    "evidence_ids": [
+      "EV-SYM-UNSUBMITTED"
+    ],
+    "evidence_validity": "NOT_AVAILABLE",
+    "provenance": "Personal Health Agent (Symptom Telemetry)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-009",
+    "paragraph_index": 3,
+    "claim_text": "The psychological domain lacks validated clinical psychiatric testing, capping its confidence at MODERATE.",
+    "evidence_ids": [],
+    "evidence_validity": "DATA_GAP",
+    "provenance": "Deterministic Uncertainty Engine",
+    "evidence_supports_claim": false,
+    "validation_method": "PROGRAMMATIC_CLAUSE_CHECK",
+    "validation_result": "INSUFFICIENT_EVIDENCE",
+    "rejection_reason": "Observational data gap declaration; clinical psychiatric telemetry is uncollected.",
+    "automated_validator_executed": true,
+    "evaluation_type": "OPERATIONAL_STATE_CHECK"
+  },
+  {
+    "claim_id": "CLM-010",
+    "paragraph_index": 3,
+    "claim_text": "In accordance with the deterministic risk engine\u2019s output, the only recommended action is **[ACT-NOM-001]** (Priority: ROUTINE): Continue routine health telemetry acquisition for monitored parameters.",
+    "evidence_ids": [
+      "ACT-NOM-001"
+    ],
+    "evidence_validity": "VALID",
+    "provenance": "Risk Escalation Service (Routine Monitoring)",
+    "evidence_supports_claim": true,
+    "validation_method": "DETERMINISTIC_EVIDENCE_CORRELATION",
+    "validation_result": "PASS",
+    "rejection_reason": null,
+    "automated_validator_executed": true,
+    "evaluation_type": "EMPIRICAL_EVIDENCE_MATCHING"
+  },
+  {
+    "claim_id": "CLM-011",
+    "paragraph_index": 3,
+    "claim_text": "This action applies strictly to currently monitored parameters and does not address the data gaps in the unevaluated domains, which remain observational DATA_GAPs requiring future data collection for comprehensive risk assessment.",
+    "evidence_ids": [],
+    "evidence_validity": "VALID",
+    "provenance": "Deterministic Risk Engine",
+    "evidence_supports_claim": false,
+    "validation_method": "PROGRAMMATIC_CLAUSE_CHECK",
+    "validation_result": "INSUFFICIENT_EVIDENCE",
+    "rejection_reason": "Procedural guidance regarding data collection gaps; not supported by empirical telemetry.",
+    "automated_validator_executed": true,
+    "evaluation_type": "OPERATIONAL_STATE_CHECK"
+  }
+]

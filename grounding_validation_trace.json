@@ -1,0 +1,182 @@
+{
+  "investigation_metadata": {
+    "audit_id": "RAA-GROUNDING-TRACE-2026-11-08",
+    "target_assessment_id": "RA-D9E05251",
+    "target_session_id": "SESSION-001",
+    "target_astronaut_id": "AST-001",
+    "investigation_timestamp": "2026-11-08T20:56:00Z",
+    "investigation_status": "ROOT_CAUSE_ISOLATED",
+    "observed_pipeline_result": "LLM_GROUNDING_FAILED",
+    "auditor": "Senior Safety-Critical Software Auditor & Biomedical AI Validation Engineer"
+  },
+  "pipeline_execution_trace": {
+    "step_1_input_preparation": {
+      "source_file": "ai-engine/agents/risk_assessment/agent/agent.py",
+      "function": "RiskAssessmentAgent.assess",
+      "line_range": "L67-L115",
+      "inputs": {
+        "overall_risk": "INSUFFICIENT_DATA",
+        "overall_confidence": "MODERATE",
+        "evaluated_domains": ["CARDIOVASCULAR", "RESPIRATORY", "PSYCHOLOGICAL_AND_COGNITIVE", "THERMOREGULATORY", "DATA_QUALITY_RELATED"],
+        "unevaluated_domains": ["NEUROLOGICAL", "SLEEP_AND_FATIGUE", "HYDRATION_AND_FLUID_BALANCE", "MUSCULOSKELETAL", "GENERAL_PHYSIOLOGICAL"],
+        "coverage_ratio": 0.50,
+        "escalation_state": "NO_TRIGGER_DETECTED",
+        "protective_factor_details": ["PROT-RESP-01"],
+        "allowed_protective_domains": ["RESPIRATORY"],
+        "symptoms_explicitly_denied": false,
+        "uncertainties_count": 12
+      }
+    },
+    "step_2_prompt_construction": {
+      "source_file": "ai-engine/agents/risk_assessment/agent/prompts.py",
+      "functions": ["RISK_ASSESSMENT_SYSTEM_PROMPT", "build_risk_user_prompt"],
+      "line_range": "L4-L66",
+      "system_prompt_tokens_approx": 350,
+      "user_prompt_tokens_approx": 650,
+      "instructions_provided": [
+        "Preserve deterministic overall risk and domain classifications",
+        "Do not diagnose clinical diseases",
+        "Acknowledge unmonitored domains and state coverage ratio (0.50)",
+        "Never upgrade invalid HRV or treat unsubmitted symptoms as denied symptoms",
+        "Generate 3-paragraph structured briefing"
+      ]
+    },
+    "step_3_llm_generation": {
+      "source_file": "ai-engine/agents/risk_assessment/services/llm_interpretation_service.py",
+      "function": "LLMInterpretationService.generate_explanation",
+      "line_range": "L97-L113",
+      "model": "llama-3.3-70b-versatile",
+      "provider": "Groq",
+      "temperature": 0.1,
+      "max_tokens": 1024,
+      "observed_behavior": "LLM synthesizes evidence; minor sampling variations occur across calls."
+    },
+    "step_4_claim_grounding_validation": {
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "function": "ClaimGroundingValidator.validate_synthesis",
+      "line_range": "L29-L170",
+      "exact_call": "ClaimGroundingValidator.validate_synthesis(text=raw_text, overall_risk=overall_risk, escalation_state=escalation_state, mission_day_supplied=False, assessment_status='PARTIALLY_COMPLETED', unevaluated_domains=unevaluated_domains, symptoms_explicitly_denied=False, allowed_protective_domains=['RESPIRATORY'])",
+      "validator_result": "is_valid=False, violations > 0"
+    },
+    "step_5_decision_and_fallback_substitution": {
+      "source_file": "ai-engine/agents/risk_assessment/services/llm_interpretation_service.py",
+      "function": "LLMInterpretationService.generate_explanation",
+      "line_range": "L124-L126",
+      "code": "if not is_valid: return fallback_text, 'LLM_GROUNDING_FAILED'",
+      "action_taken": "Raw LLM output discarded; fallback_text substituted without secondary validation."
+    }
+  },
+  "root_cause_failure_catalog": [
+    {
+      "failure_id": "RC-01-SUBSTRING-NEGATION-INVERSION",
+      "category": "FALSE POSITIVE (Validator Regex Vulnerability)",
+      "target_rule": "Unsubmitted Symptoms Denial Check",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_range": "L96-L106",
+      "problematic_code": "'confirmed absence of symptoms' in lower or 'denies symptoms' in lower or 'reported no symptoms' in lower",
+      "mechanism": "Naive substring search does not evaluate syntactic negation. When the LLM correctly writes 'unsubmitted symptom questionnaires represent an unknown status, not a confirmed absence of symptoms or pathology', the validator detects 'confirmed absence of symptoms' in the text and flags a false violation.",
+      "observed_trigger_text": "unsubmitted symptom questionnaires and missing telemetry represent an unknown status, not a confirmed absence of symptoms or pathology.",
+      "validator_rejection_reason": "Synthesis asserts unconfirmed symptom denial ('reported no symptoms' or 'denies symptoms') when symptoms were only unsubmitted."
+    },
+    {
+      "failure_id": "RC-02-UNBOUNDED-GREEDY-REGEX",
+      "category": "FALSE POSITIVE (Validator Regex Vulnerability)",
+      "target_rule": "Overall Risk INSUFFICIENT_DATA Contradiction Check",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_range": "L66-L79",
+      "problematic_code": "re.search(r'overall\\s+(?:physiological\\s+|clinical\\s+)?risk\\b[^.\\n]*\\blow\\b', lower)",
+      "mechanism": "The character class [^.\\n]* greedily consumes across clauses within a sentence. If the LLM mentions 'overall risk' at the beginning of a clause and then mentions 'low' in a subsequent dependent clause (e.g. 'current low-risk indicators in evaluated domains'), the pattern bridges across the entire sentence and erroneously flags a contradiction.",
+      "observed_trigger_text": "Consequently, the overall risk classification remains constrained by significant data gaps, and the current low-risk indicators in evaluated domains cannot be extrapolated to the unmonitored systems.",
+      "matched_substring": "overall risk classification remains constrained by significant data gaps, and the current low",
+      "validator_rejection_reason": "Synthesis contradicts deterministic overall risk 'INSUFFICIENT_DATA' by declaring overall risk is low."
+    },
+    {
+      "failure_id": "RC-03-MULTI-DOMAIN-LIST-BLEED",
+      "category": "FALSE POSITIVE (Validator Regex Vulnerability)",
+      "target_rule": "Unevaluated Domain Normality Claim Check",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_range": "L87-L95",
+      "problematic_code": "re.search(rf'\\b{re.escape(ud_clean)}\\b[^.\\n]*(?:is|exhibits|shows|remains)?\\s*(?:nominal|normal|healthy|low\\s+risk|fully\\s+intact)', lower)",
+      "mechanism": "When multiple unevaluated domains are listed in parentheses followed by 'cannot be assumed nominal', [^.\\n]* bridges from the first domain in the list all the way to the word 'nominal' at the end of the sentence, ignoring 'cannot be assumed'. This causes the deterministic fallback text itself to fail validation.",
+      "observed_trigger_text": "Unevaluated physiological domains (NEUROLOGICAL, SLEEP_AND_FATIGUE, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL) remain unmonitored and cannot be assumed nominal.",
+      "matched_substrings": [
+        "neurological, sleep_and_fatigue, hydration_and_fluid_balance, musculoskeletal, general_physiological) remain unmonitored and cannot be assumed nominal",
+        "musculoskeletal, general_physiological) remain unmonitored and cannot be assumed nominal"
+      ],
+      "validator_rejection_reason": "Unevaluated domain 'NEUROLOGICAL' improperly asserted as nominal/normal in clinical synthesis."
+    },
+    {
+      "failure_id": "RC-04-FALLBACK-UNVALIDATED-EXECUTION",
+      "category": "ARCHITECTURAL OMISSION",
+      "target_component": "Deterministic Fallback Mechanism",
+      "source_file": "ai-engine/agents/risk_assessment/services/llm_interpretation_service.py",
+      "line_range": "L124-L126",
+      "problematic_code": "if not is_valid: return fallback_text, 'LLM_GROUNDING_FAILED'",
+      "mechanism": "The fallback text returned upon a grounding failure is never audited by ClaimGroundingValidator. When the fallback text from RA-D9E05251 was passed through ClaimGroundingValidator, it failed with 2 violations due to regex bleed (RC-03).",
+      "impact": "The system assumes fallback text is inherently compliant, yet the regex validator would reject its own fallback text."
+    },
+    {
+      "failure_id": "RC-05-DUPLICATE-UNCERTAINTIES-AND-PUNCTUATION",
+      "category": "FORMATTING DEFECT",
+      "target_component": "Deterministic Fallback String Construction",
+      "source_file": "ai-engine/agents/risk_assessment/services/llm_interpretation_service.py",
+      "line_range": "L167, L175",
+      "problematic_code": "f'Protective factors noted: {\"; \".join(protective_factors)}.' and f'Observational caveats and uncertainties: {\"; \".join(uncertainties)}.'",
+      "mechanism": "Individual uncertainty strings generated in risk_engine.py already terminate with periods ('.'). Joining them with '; ' produces '.; ' between items and '..' at the end. Additionally, risk_engine.py appends an uncertainty for GENERAL_PHYSIOLOGICAL at line 176 and appends another uncertainty for unsubmitted symptoms at line 377, repeating the same medical limitation twice.",
+      "impact": "Produces ungrammatical and duplicative briefing text in the fallback output."
+    }
+  ],
+  "empirical_groq_sampling_results": [
+    {
+      "sampling_run": 1,
+      "temperature": 0.10,
+      "validator_result": "PASSED",
+      "violations_count": 0,
+      "note": "LLM phrased negation and risk boundaries cleanly without triggering regex traps."
+    },
+    {
+      "sampling_run": 2,
+      "temperature": 0.15,
+      "validator_result": "FAILED",
+      "violations_count": 1,
+      "violations": [
+        "Synthesis asserts unconfirmed symptom denial ('reported no symptoms' or 'denies symptoms') when symptoms were only unsubmitted."
+      ],
+      "cause": "RC-01 (False positive on 'not a confirmed absence of symptoms')"
+    },
+    {
+      "sampling_run": 3,
+      "temperature": 0.20,
+      "validator_result": "PASSED",
+      "violations_count": 0,
+      "note": "Clean phrasing."
+    },
+    {
+      "sampling_run": 4,
+      "temperature": 0.25,
+      "validator_result": "PASSED",
+      "violations_count": 0,
+      "note": "Clean phrasing."
+    },
+    {
+      "sampling_run": 5,
+      "temperature": 0.30,
+      "validator_result": "FAILED",
+      "violations_count": 1,
+      "violations": [
+        "Synthesis contradicts deterministic overall risk 'INSUFFICIENT_DATA' by declaring overall risk is low."
+      ],
+      "cause": "RC-02 (False positive on 'overall risk ... constrained ... low-risk indicators in evaluated domains cannot be extrapolated')"
+    }
+  ],
+  "fallback_text_validation_test": {
+    "test_input": "Full text of rep['llm_explanation'] from RA-D9E05251",
+    "validator_result": "FAILED",
+    "violations_count": 2,
+    "violations": [
+      "Unevaluated domain 'NEUROLOGICAL' improperly asserted as nominal/normal in clinical synthesis.",
+      "Unevaluated domain 'MUSCULOSKELETAL' improperly asserted as nominal/normal in clinical synthesis."
+    ],
+    "cause": "RC-03 (Regex matches 'neurological... cannot be assumed nominal')"
+  }
+}

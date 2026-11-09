@@ -1,0 +1,134 @@
+{
+  "investigation_header": {
+    "investigation_id": "RAA-REPEATED-GROUNDING-TRACE-2026-11-08",
+    "timestamp": "2026-11-08T21:26:00Z",
+    "primary_assessment_id": "RA-0337F654",
+    "comparator_assessment_id": "RA-D9E05251",
+    "session_id": "SESSION-001",
+    "astronaut_id": "AST-001",
+    "auditor_role": "Senior Safety-Critical Software Auditor & Biomedical AI Validation Engineer",
+    "audit_mode": "STRICT READ-ONLY"
+  },
+  "execution_comparison": {
+    "deterministic_invariants": {
+      "RA-D9E05251": {
+        "assessment_status": "PARTIALLY_COMPLETED",
+        "evaluated_domains_risk": "LOW",
+        "overall_risk": "INSUFFICIENT_DATA",
+        "overall_confidence": "MODERATE",
+        "coverage_ratio": 0.50,
+        "evaluated_domains_count": 5,
+        "unevaluated_domains_count": 5,
+        "escalation_state": "NO_TRIGGER_DETECTED",
+        "protective_factors_count": 1,
+        "uncertainties_count": 12,
+        "llm_status": "LLM_GROUNDING_FAILED"
+      },
+      "RA-0337F654": {
+        "assessment_status": "PARTIALLY_COMPLETED",
+        "evaluated_domains_risk": "LOW",
+        "overall_risk": "INSUFFICIENT_DATA",
+        "overall_confidence": "MODERATE",
+        "coverage_ratio": 0.50,
+        "evaluated_domains_count": 5,
+        "unevaluated_domains_count": 5,
+        "escalation_state": "NO_TRIGGER_DETECTED",
+        "protective_factors_count": 1,
+        "uncertainties_count": 12,
+        "llm_status": "LLM_GROUNDING_FAILED"
+      },
+      "equivalence_verdict": "IDENTICAL_DETERMINISTIC_STATE"
+    },
+    "failure_recurrence_mechanism": "Both executions fail for the identical root cause: the Groq LLM (llama-3.3-70b-versatile) generates clinically accurate, boundary-compliant synthesis text, but ClaimGroundingValidator's brittle regular expressions and naive substring matching misinterpret valid negation phrasing and cross-clause qualifications as violations."
+  },
+  "rejected_claims_catalog": [
+    {
+      "claim_id": "REJ-CLAIM-SYM-01",
+      "exact_claim_text": "It is critical to note that unsubmitted symptom questionnaires and missing telemetry represent an unknown status, not a confirmed absence of symptoms or pathology.",
+      "claim_category": "SUBJECTIVE_SYMPTOM_STATUS",
+      "expected_evidence_ids": [
+        "EV-SYM-CONFIRMED-ABSENCE"
+      ],
+      "actually_matched_evidence_ids": [
+        "EV-SYM-UNSUBMITTED"
+      ],
+      "validator_function": "ClaimGroundingValidator.validate_synthesis",
+      "exact_rejection_condition": "if not symptoms_explicitly_denied: if 'confirmed absence of symptoms' in lower: violations.append(\"Synthesis asserts unconfirmed symptom denial ('reported no symptoms' or 'denies symptoms') when symptoms were only unsubmitted.\")",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_number": 101,
+      "classification": "FALSE_POSITIVE",
+      "scientific_and_logical_critique": "The LLM explicitly stated the NEGATION ('not a confirmed absence of symptoms'), properly adhering to System Prompt Boundary 6. The validator's naive substring check ('confirmed absence of symptoms' in lower) lacks syntactic negation handling, mistakenly flagging a correct negation as an affirmative denial."
+    },
+    {
+      "claim_id": "REJ-CLAIM-RISK-01",
+      "exact_claim_text": "Consequently, the overall risk classification remains constrained by significant data gaps, and the current low-risk indicators in evaluated domains cannot be extrapolated to the unmonitored systems.",
+      "claim_category": "OVERALL_RISK_CLASSIFICATION",
+      "expected_evidence_ids": [
+        "DETERMINISTIC_OVERALL_RISK:INSUFFICIENT_DATA"
+      ],
+      "actually_matched_evidence_ids": [
+        "DETERMINISTIC_OVERALL_RISK:INSUFFICIENT_DATA",
+        "EVALUATED_DOMAINS_RISK:LOW"
+      ],
+      "validator_function": "ClaimGroundingValidator.validate_synthesis",
+      "exact_rejection_condition": "if overall_risk == RiskLevel.INSUFFICIENT_DATA: if re.search(r'overall\\s+(?:physiological\\s+|clinical\\s+)?risk\\b[^.\\n]*\\blow\\b', lower): violations.append(\"Synthesis contradicts deterministic overall risk 'INSUFFICIENT_DATA' by declaring overall risk is low.\")",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_number": 75,
+      "classification": "FALSE_POSITIVE",
+      "scientific_and_logical_critique": "The regex pattern [^.\\n]* bridges greedily across commas and clauses within a sentence. The LLM affirmed that overall risk is constrained by data gaps (INSUFFICIENT_DATA), but because the word 'low' appeared in a subsequent dependent clause ('low-risk indicators in evaluated domains'), the regex matched across the sentence, falsely claiming the LLM declared overall risk as low."
+    },
+    {
+      "claim_id": "REJ-CLAIM-UNEV-01",
+      "exact_claim_text": "Unevaluated physiological domains (NEUROLOGICAL, SLEEP_AND_FATIGUE, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL) remain unmonitored and cannot be assumed nominal.",
+      "claim_category": "UNEVALUATED_DOMAIN_BOUNDARY",
+      "expected_evidence_ids": [
+        "COVERAGE:UNEVALUATED_DOMAINS"
+      ],
+      "actually_matched_evidence_ids": [
+        "COVERAGE:UNEVALUATED_DOMAINS"
+      ],
+      "validator_function": "ClaimGroundingValidator.validate_synthesis",
+      "exact_rejection_condition": "if unevaluated_domains: pattern = rf\"\\b{re.escape(ud_clean)}\\b[^.\\n]*(?:is|exhibits|shows|remains)?\\s*(?:nominal|normal|healthy|low\\s+risk|fully\\s+intact)\"; if re.search(pattern, lower): violations.append(f\"Unevaluated domain '{ud}' improperly asserted as nominal/normal in clinical synthesis.\")",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_number": 90,
+      "classification": "FALSE_POSITIVE",
+      "scientific_and_logical_critique": "The regex [^.\\n]* spans across multi-domain lists and ignores modal negation ('cannot be assumed nominal'). When tested against the deterministic fallback text itself, this exact rule triggers 2 violations for NEUROLOGICAL and MUSCULOSKELETAL."
+    },
+    {
+      "claim_id": "REJ-CLAIM-PROT-01",
+      "exact_claim_text": "Cardiovascular risk is low and resting heart rate is nominal at 72.0 bpm.",
+      "claim_category": "PROTECTIVE_FACTOR_BOUNDARY",
+      "expected_evidence_ids": [
+        "ALLOWED_PROTECTIVE_DOMAINS:['RESPIRATORY']"
+      ],
+      "actually_matched_evidence_ids": [
+        "EV-PHY-HR-MEAN"
+      ],
+      "validator_function": "ClaimGroundingValidator.validate_synthesis",
+      "exact_rejection_condition": "if allowed_protective_domains is not None: for cand in candidates: if cand not in allowed_lowers: pat = rf\"\\b{re.escape(cand)}\\b[^.\\n]*(?:is\\s+protective|protective\\s+factor|is\\s+nominal\\b|signal\\s+fidelity\\s+is\\s+fully\\s+verified)\"; if re.search(pat, lower): violations.append(f\"Synthesis asserts unverified protective factor for domain '{cand}'.\")",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_number": 113,
+      "classification": "FALSE_POSITIVE",
+      "scientific_and_logical_critique": "The validator conflates describing a specific physiological metric as nominal (resting HR 72 bpm within 50-100 bpm) with asserting an unverified domain-level protective factor. Because only 'RESPIRATORY' is in allowed_protective_domains, any sentence containing 'cardiovascular ... is nominal' is rejected."
+    },
+    {
+      "claim_id": "REJ-CLAIM-NOM-01",
+      "exact_claim_text": "All physiological variables are nominal in evaluated streams, with resting respiration rate verified at 15.0 breaths/min.",
+      "claim_category": "TELEMETRY_VALIDITY_QUALIFICATION",
+      "expected_evidence_ids": [
+        "EV-PHY-RESP-RATE",
+        "EV-PHY-HR-MEAN"
+      ],
+      "actually_matched_evidence_ids": [
+        "EV-PHY-HRV-RMSSD (INVALID)",
+        "EV-PHY-TEMP-MEAN (DEGRADED)"
+      ],
+      "validator_function": "ClaimGroundingValidator.validate_synthesis",
+      "exact_rejection_condition": "if 'all physiological variables are nominal' in lower or 'all physiological variables are normal' in lower or 'all physiological telemetry is fully valid' in lower: violations.append(\"Synthesis improperly claims all physiological variables are nominal or valid when telemetry is invalid or degraded.\")",
+      "source_file": "ai-engine/agents/risk_assessment/services/claim_grounding_validator.py",
+      "line_number": 161,
+      "classification": "VERIFIED_VIOLATION",
+      "scientific_and_logical_critique": "If the LLM summarizes evaluated streams with broad blanket phrases like 'all physiological variables are nominal', this is a verified violation because HRV RMSSD is invalid (ZERO_VARIABILITY) and peripheral skin temperature is degraded. The validator correctly catches this when asserted unconditionally."
+    }
+  ]
+}

@@ -4,7 +4,7 @@
   "astronaut_id": "AST-001",
   "session_id": "SESSION-001",
   "recording_id": "REC-001",
-  "execution_timestamp": "2026-11-05T17:35:43.007920+00:00",
+  "execution_timestamp": "2026-11-09T03:19:07.170711+00:00",
   "overall_quality": {
     "score": 0.9639,
     "status": "VALID",
@@ -271,6 +271,6 @@
   ],
   "llm_explanation": {
     "source": "groq_direct_synthesizer",
-    "briefing": "**Executive Briefing: AST-001 / SESSION-001 Telemetry Quality Assessment**\n\nThe overall telemetry integrity for Astronaut AST-001 is confirmed as **VALID** with a composite quality score of 0.9639. All six monitored physiological channels (ECG, EDA, RESP, EMG, ACC, and TEMP) have passed the primary validation threshold, resulting in a 6/6 sensor pass rate. While five sensors achieved full \"VALID\" status with \"ACCEPT\" recommendations, the thermal sensor (TEMP) is flagged as \"ACCEPTABLE_WITH_WARNING.\" Consequently, the session data is cleared for downstream analysis, but the thermal channel requires specific handling due to its lower confidence score of 0.8500.\n\nSensor-specific diagnostics indicate that the primary source of noise across the ECG, EDA, and EMG channels is **SIGNAL_SPIKES** (moderate severity), likely attributable to transient motion artifacts or minor electrode-skin impedance fluctuations common in active physiological monitoring. The ECG channel also exhibits low-level high-frequency noise, which is typical of environmental electromagnetic interference. The most critical finding is in the TEMP channel, which reports a **HIGH** severity issue of **TEMP_IMPLAUSIBLE_RATE_OF_CHANGE**. This suggests a rapid, physically inconsistent shift in temperature readings, potentially caused by a loose sensor contact, a sudden environmental change not yet stabilized, or a transient hardware glitch, rather than a genuine physiological event.\n\nFor downstream processing, it is recommended to apply standard median or moving-average filtering to the ECG, EDA, and EMG streams to mitigate the moderate signal spikes without distorting the underlying physiological waveforms. For the TEMP channel, immediate **sensor recalibration** or a manual verification of the sensor’s physical placement is advised before integrating this data into long-term health trends. If the implausible rate of change persists after recalibration, the thermal data should be isolated and flagged for hardware inspection, while the remaining five channels can proceed directly to clinical or performance analysis pipelines."
+    "briefing": "Briefing generation error: Error code: 429 - {'error': {'message': 'Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01kxxppw6ceg3vvxs4y2ba2fr6` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199549, Requested 872. Please try again in 3m1.872s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}"
   }
 }

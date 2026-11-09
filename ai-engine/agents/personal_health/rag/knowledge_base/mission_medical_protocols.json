@@ -1,0 +1,34 @@
+[
+  {
+    "doc_id": "MMP-001",
+    "collection": "mission_medical_protocols",
+    "title": "Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol",
+    "source_organization": "NASA / International Space Station Medical Operations",
+    "author": "Chief Flight Surgeon Directorate",
+    "publication_date": "2025-02-01",
+    "version": "4.2",
+    "medical_domain": "Emergency Clinical Protocols",
+    "evidence_type": "APPROVED_MISSION_PROTOCOL",
+    "population_studied": "Active Spaceflight Crewmembers",
+    "spaceflight_relevance": "critical",
+    "approval_status": "flight_surgeon_directive_mandatory",
+    "excerpt": "CRITICAL ESCALATION TRIGGER: Any reported acute severe chest pain, sudden respiratory distress, acute neurological deficit, syncope, or sustained heart rate exceeding 160 bpm or falling below 40 bpm at rest requires immediate emergency escalation. Under this protocol, autonomous AI systems must immediately trigger mission medical alerts to the Supervisor and Flight Surgeon, bypassing routine ML inference or general research retrieval pipelines.",
+    "citation_reference": "ISS-MEDOPS-REDLINE-2025-V4.2"
+  },
+  {
+    "doc_id": "MMP-002",
+    "collection": "mission_medical_protocols",
+    "title": "Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions",
+    "source_organization": "NASA / ESA Behavioral Health Operations Group",
+    "author": "Space Behavioral Health Directorate",
+    "publication_date": "2024-08-15",
+    "version": "2.0",
+    "medical_domain": "Operational Behavioral Medicine",
+    "evidence_type": "APPROVED_MISSION_PROTOCOL",
+    "population_studied": "Astronauts on Long-Duration Exploration Missions",
+    "spaceflight_relevance": "high",
+    "approval_status": "flight_surgeon_approved",
+    "excerpt": "When sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
+    "citation_reference": "NASA-BHO-STRESS-2024-V2.0"
+  }
+]

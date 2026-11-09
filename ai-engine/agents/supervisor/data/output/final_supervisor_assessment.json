@@ -1,0 +1,230 @@
+{
+  "assessment_id": "SUP-798ED530",
+  "astronaut_id": "AST-001",
+  "session_id": "SESSION-001",
+  "workflow_id": "WF-D76EB542",
+  "generation_timestamp": "2026-11-09 13:23:59.243029",
+  "workflow_completion_status": "PARTIALLY_COMPLETED",
+  "agent_execution_statuses": {
+    "supervisor": {
+      "agent_name": "supervisor_orchestrator",
+      "status": "SUCCESS",
+      "execution_time_ms": 2.98,
+      "error_message": null,
+      "warnings": []
+    },
+    "sensor_quality_agent": {
+      "agent_name": "sensor_quality_agent",
+      "status": "SKIPPED",
+      "execution_time_ms": 0.08,
+      "error_message": null,
+      "warnings": [
+        "No sensor manifest supplied; skipping sensor quality inspection."
+      ]
+    },
+    "personal_health_agent": {
+      "agent_name": "personal_health_agent",
+      "status": "PARTIAL",
+      "execution_time_ms": 293.5,
+      "error_message": null,
+      "warnings": [
+        "Individualized personal baseline is not yet established; population reference norms utilized.",
+        "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
+      ]
+    },
+    "risk_assessment_agent": {
+      "agent_name": "risk_assessment_agent",
+      "status": "FAILED",
+      "execution_time_ms": 0.07,
+      "error_message": "Simulated RA rule engine fault",
+      "warnings": [
+        "risk_assessment_agent raised uncaught exception: Simulated RA rule engine fault"
+      ]
+    }
+  },
+  "timing_breakdown": {
+    "workflow_total_execution_time_ms": 296.63,
+    "supervisor_overhead_time_ms": 2.98,
+    "sensor_quality_execution_time_ms": 0.08,
+    "personal_health_execution_time_ms": 293.5,
+    "risk_assessment_execution_time_ms": 0.07,
+    "evidence_validation_time_ms": 0.1,
+    "final_synthesis_time_ms": 0.1,
+    "persistence_time_ms": 0.0
+  },
+  "overall_assessment_status": "PARTIALLY_COMPLETED",
+  "overall_risk": "INSUFFICIENT_DATA",
+  "overall_confidence": "MODERATE",
+  "escalation_state": "NO_TRIGGER_DETECTED",
+  "escalation_required": false,
+  "escalation_urgency": "NOMINAL",
+  "coverage_summary": {
+    "total_domains": 10,
+    "evaluated_domains": [],
+    "unevaluated_domains": [],
+    "partially_evaluated_domains": [],
+    "domain_coverage_ratio": 0.0,
+    "coverage_status": "INSUFFICIENT"
+  },
+  "sensor_quality_summary": {},
+  "personal_health_summary": {
+    "assessment_id": "PHA-778C8167",
+    "astronaut_id": "AST-001",
+    "session_id": "SESSION-001",
+    "execution_timestamp": "2026-11-09 13:23:59.238602",
+    "assessment_status": "INSUFFICIENT_EVIDENCE",
+    "baseline_status": "not_available",
+    "sensor_quality_summary": null,
+    "core_features": null,
+    "physiological_findings": [],
+    "hrv_diagnostics": null,
+    "ml_findings": [],
+    "symptom_findings": [],
+    "symptom_assessment_status": "NO_SYMPTOMS_REPORTED",
+    "health_profile_summary": {
+      "age": 38,
+      "resting_hr": 58.0
+    },
+    "mission_context": {
+      "mission_id": "UNKNOWN_MISSION",
+      "mission_phase": null,
+      "mission_elapsed_time_hours": null,
+      "microgravity_exposure_days": null,
+      "radiation_dose_msv": null,
+      "current_activity": null,
+      "planned_sleep_hours": null,
+      "actual_sleep_hours": null,
+      "cabin_pressure_kpa": null,
+      "cabin_o2_percent": null,
+      "cabin_co2_percent": null,
+      "cabin_temperature_c": null,
+      "is_eva_active": false,
+      "is_context_supplied": false
+    },
+    "retrieved_evidence": [
+      {
+        "doc_id": "MMP-002",
+        "collection": "mission_medical_protocols",
+        "title": "Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions",
+        "source_organization": "NASA / ESA Behavioral Health Operations Group",
+        "author": "Space Behavioral Health Directorate",
+        "publication_date": "2024-08-15",
+        "version": "2.0",
+        "medical_domain": "Operational Behavioral Medicine",
+        "evidence_type": "APPROVED_MISSION_PROTOCOL",
+        "population_studied": "Astronauts on Long-Duration Exploration Missions",
+        "spaceflight_relevance": "high",
+        "approval_status": "flight_surgeon_approved",
+        "excerpt": "When sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
+        "relevance_score": 0.3791,
+        "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
+        "retrieval_timestamp": "2026-11-09 13:23:58.978541"
+      },
+      {
+        "doc_id": "MMP-001",
+        "collection": "mission_medical_protocols",
+        "title": "Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol",
+        "source_organization": "NASA / International Space Station Medical Operations",
+        "author": "Chief Flight Surgeon Directorate",
+        "publication_date": "2025-02-01",
+        "version": "4.2",
+        "medical_domain": "Emergency Clinical Protocols",
+        "evidence_type": "APPROVED_MISSION_PROTOCOL",
+        "population_studied": "Active Spaceflight Crewmembers",
+        "spaceflight_relevance": "critical",
+        "approval_status": "flight_surgeon_directive_mandatory",
+        "excerpt": "CRITICAL ESCALATION TRIGGER: Any reported acute severe chest pain, sudden respiratory distress, acute neurological deficit, syncope, or sustained heart rate exceeding 160 bpm or falling below 40 bpm at rest requires immediate emergency escalation. Under this protocol, autonomous AI systems must immediately trigger mission medical alerts to the Supervisor and Flight Surgeon, bypassing routine ML inference or general research retrieval pipelines.",
+        "relevance_score": 0.314,
+        "citation_reference": "ISS-MEDOPS-REDLINE-2025-V4.2",
+        "retrieval_timestamp": "2026-11-09 13:23:58.978533"
+      }
+    ],
+    "possible_explanations": [],
+    "evidence_conflicts": [],
+    "uncertainties": [
+      "Individualized personal baseline is not yet established; population reference norms utilized.",
+      "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
+    ],
+    "missing_information": [
+      "Symptom status: NO_SYMPTOMS_REPORTED. No subjective symptom survey was submitted; absence of reported symptoms does not constitute a confirmed negative clinical assessment."
+    ],
+    "recommended_follow_up": [
+      "Maintain standard telemetry monitoring pending baseline establishment."
+    ],
+    "clarification_requests": [],
+    "escalation": {
+      "status": "INSUFFICIENT_DATA",
+      "required": false,
+      "urgency_level": "INDETERMINATE",
+      "reason_codes": [],
+      "triggers": [],
+      "immediate_actions": [
+        "Maintain active telemetry acquisition",
+        "Request sensor re-validation from Sensor Quality Agent"
+      ],
+      "protocol_reference": "ISS-MEDOPS-TELEMETRY-GAPS-V2.1",
+      "uncertainty_notes": [
+        "Emergency status cannot be conclusively confirmed as NOMINAL due to missing or unvalidated physiological telemetry; close monitoring maintained."
+      ],
+      "data_gaps": [
+        "Cardiac heart rate (hr_mean_bpm) telemetry unavailable or omitted",
+        "Critical physiological sensors (ECG) unavailable or quarantined",
+        "Sensor quality gate indicates unvalidated or compromised signal telemetry"
+      ]
+    },
+    "next_agent": "risk_assessment_agent",
+    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-001 (Session SESSION-001) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. No symptoms were recorded in the provided assessment. Lack of recorded symptoms does not constitute a confirmed negative clinical assessment.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
+  },
+  "risk_assessment_summary": {},
+  "detected_concerns": [],
+  "nominal_observations": [],
+  "protective_factors": [],
+  "uncertainties": [],
+  "missing_information": [
+    "Sensor telemetry manifest was not provided for this session.",
+    "Subjective symptom questionnaire was not submitted.",
+    "External confirmed medical records were not submitted.",
+    "Mission operational context parameters were not provided."
+  ],
+  "recommended_actions": [],
+  "evidence_references": [
+    {
+      "evidence_id": "EV-PHY-HRV-RMSSD",
+      "source_agent": "personal_health_agent",
+      "domain": "CARDIOVASCULAR",
+      "metric_name": "hrv_rmssd",
+      "observed_value": 0.0,
+      "validity_status": "INVALID",
+      "is_quarantined": true,
+      "quarantine_reason": "Zero variability artifact detected; quarantined from autonomic cardiovascular inference",
+      "provenance": "Personal Health Agent ECG R-Peak Timing"
+    },
+    {
+      "evidence_id": "EV-SYM-UNSUBMITTED",
+      "source_agent": "personal_health_agent",
+      "domain": "GENERAL_PHYSIOLOGICAL",
+      "metric_name": "symptom_status_unsubmitted",
+      "observed_value": "no_symptoms_submitted",
+      "validity_status": "NOT_AVAILABLE",
+      "is_quarantined": false,
+      "quarantine_reason": "Unsubmitted symptoms represent unknown symptom status, not clinical absence of symptoms",
+      "provenance": "Personal Health Intake (No Questionnaire Submitted)"
+    }
+  ],
+  "provenance_chain": [
+    {
+      "agent": "sensor_quality_agent",
+      "status": "SKIPPED"
+    },
+    {
+      "agent": "personal_health_agent",
+      "status": "PARTIAL"
+    },
+    {
+      "agent": "risk_assessment_agent",
+      "status": "FAILED"
+    }
+  ],
+  "executive_synthesis": "Objective physiological telemetry for Astronaut AST-001 (Session SESSION-001) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. No symptoms were recorded in the provided assessment. Lack of recorded symptoms does not constitute a confirmed negative clinical assessment.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised.",
+  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-001 (Session SESSION-001)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Subjective Symptoms\nNo subjective symptoms were submitted for this session. The absence of submitted symptoms reflects an unassessed symptom status (EV-SYM-UNSUBMITTED) and must not be interpreted as a confirmed clinical absence of symptoms. Please log a symptom report if you experience fatigue, nausea, headache, or other discomfort.\n\n### Monitored Systems Summary\n- **Coverage:** 0% of configured monitoring domains evaluated (0/10 domains).\n- **Active Monitored Streams:** None.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Resting heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: .\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- Continue standard in-flight health monitoring routine.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
+}

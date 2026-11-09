@@ -1,0 +1,7 @@
+sensor,quality_score,status,recommendation,critical_failure,issue_count,verdict,notes
+ECG,0.9808,VALID,ACCEPT,False,2,PASSED,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+EDA,0.9858,VALID,ACCEPT,False,1,PASSED,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+RESP,0.9925,VALID,ACCEPT,False,0,PASSED,All checks passed.
+EMG,0.982,VALID,ACCEPT,False,1,PASSED,Sensor has active moderate/high issues but was marked fully VALID without warning (advisable to refine status threshold to ACCEPTABLE_WITH_WARNING).
+ACC,0.9925,VALID,ACCEPT,False,0,PASSED,All checks passed.
+TEMP,0.85,ACCEPTABLE_WITH_WARNING,ACCEPT_WITH_WARNING,False,1,PASSED,All checks passed.
