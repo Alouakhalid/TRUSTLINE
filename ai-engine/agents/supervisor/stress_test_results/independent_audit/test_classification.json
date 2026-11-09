@@ -1,0 +1,677 @@
+{
+  "total_tests": 74,
+  "summary_counts": {
+    "REAL WORKFLOW INTEGRATION": 12,
+    "UNIT / MOCKED": 48,
+    "ADAPTER INTEGRATION": 13,
+    "LIVE PIPELINE": 1
+  },
+  "tests": [
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_01_missing_ecg_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 4,
+      "docstring": "Verify that omitting ECG prevents cardiovascular normality claims and attenuates coverage."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_02_missing_eda_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that omitting EDA prevents psychological autonomic claims."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_03_missing_resp_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify that omitting RESP prevents respiratory rate inference."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_04_missing_emg_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that omitting EMG keeps musculoskeletal domain strictly unevaluated."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_05_missing_acc_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that omitting ACC removes physical activity contextual tracking."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_06_missing_temp_telemetry_stream",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that omitting TEMP leaves thermoregulatory domain unevaluated."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_07_multiple_sensors_missing_simultaneously",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify that multi-sensor omission severely reduces coverage and maintains INSUFFICIENT_DATA."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py",
+      "test_function": "test_08_all_sensors_missing_complete_telemetry_blackout",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify that total telemetry omission safely yields INSUFFICIENT_DATA without fabricating health."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_01_nan_and_infinity_in_signal_buffer",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify that QualityEngine rejects or degrades signals containing NaN and Inf."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_02_empty_signal_arrays",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that zero-length signal arrays are rejected gracefully without uncaught exceptions."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_03_constant_flatline_signals",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that flatline signals are deterministically detected and quarantined."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_04_zero_length_timestamps",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that transmission gaps in timestamps are detected and reduce continuity score."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_05_duplicate_timestamps",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that duplicated timestamps degrade timestamp integrity metrics."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_06_non_monotonic_timestamps",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that backwards time jumps trigger timestamp integrity warnings."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_07_extreme_impulsive_spikes",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify that non-physiological spike artifacts are detected."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py",
+      "test_function": "test_08_zero_variance_rr_rmssd_quarantined",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 7,
+      "docstring": "Verify that zero RMSSD is strictly quarantined from supporting normal cardiovascular regulation."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_01_no_symptoms_submitted_never_interpreted_as_no_symptoms",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 5,
+      "docstring": "Verify unsubmitted symptoms generate EV-SYM-UNSUBMITTED with explicit unassessed status."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_02_explicitly_submitted_severe_chest_pain_triggers_emergency_escalation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 5,
+      "docstring": "Verify red-line symptom severe chest pain triggers immediate emergency escalation."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_03_shortness_of_breath_triggers_escalation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify severe shortness of breath triggers cardiorespiratory escalation."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_04_arabic_red_line_symptom_triggers_escalation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify Arabic red-line phrases trigger emergency escalation."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_05_dizziness_and_headache_handled_without_unauthorized_diagnosis",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 4,
+      "docstring": "Verify neurological symptoms are recorded factually without fabricating diagnostic labels."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py",
+      "test_function": "test_06_ambiguous_and_malformed_symptom_handling",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify ambiguous or malformed payloads do not crash the communication service."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py",
+      "test_function": "test_01_pha_timeout_capture",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 3,
+      "docstring": "Verify adapter wraps timeouts cleanly without crashing orchestrator."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py",
+      "test_function": "test_02_feature_extraction_exception_isolated",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 3,
+      "docstring": "Verify feature extraction exception generates failed status without fabricating features."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py",
+      "test_function": "test_03_ml_inference_exception_gracefully_degrades",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 2,
+      "docstring": "Verify failure in ML stress model does not crash entire PHA run."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py",
+      "test_function": "test_04_rag_retrieval_failure_handled_gracefully",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 1,
+      "docstring": "Verify RAG database failure falls back to empty evidence without halting workflow."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py",
+      "test_function": "test_05_workflow_isolates_pha_failure_and_preserves_sqr",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 5,
+      "docstring": "Verify end-to-end workflow continues to Risk Assessment when PHA fails completely."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py",
+      "test_function": "test_01_ra_timeout_isolated_cleanly",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 2,
+      "docstring": "Verify Risk Assessment timeout is isolated and does not crash the orchestrator."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py",
+      "test_function": "test_02_ra_rule_engine_exception_does_not_default_to_low_risk",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 4,
+      "docstring": "Verify an uncaught exception in Risk Assessment prevents false nominal LOW risk assignment."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py",
+      "test_function": "test_03_missing_escalation_fields_safely_handled",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify malformed escalation payload from RA does not cause unhandled crash in supervisor."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py",
+      "test_function": "test_04_claims_referencing_quarantined_evidence_fail_validation",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify validator rejects assertions claiming health based on quarantined evidence."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py",
+      "test_function": "test_01_trace_claims_rejects_unsupported_protective_factors",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify validator rejects protective factor claims when no protective evidence is documented."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py",
+      "test_function": "test_02_trace_claims_rejects_missing_data_equaling_normal_health",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify validator rejects claims asserting unmonitored domains are healthy."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py",
+      "test_function": "test_03_trace_claims_rejects_invented_environmental_explanations",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify validator rejects hallucinated environmental explanations like habitat cooling failure."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py",
+      "test_function": "test_04_trace_claims_marks_metadata_claims_as_insufficient_evidence",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 4,
+      "docstring": "Verify operational assertions without biosensor telemetry receive INSUFFICIENT_EVIDENCE."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py",
+      "test_function": "test_05_astronaut_communication_sentence_by_sentence_grounding",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 12,
+      "docstring": "Verify every sentence in the astronaut communication is strictly evidenced without hallucinated claims."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py",
+      "test_function": "test_01_sqr_marks_ecg_invalid_quarantines_pha_cardiac_telemetry",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 7,
+      "docstring": "Verify that when Sensor Quality marks ECG INVALID, the Evidence Registry quarantines derived PHA metrics."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py",
+      "test_function": "test_02_symptom_concern_overrides_nominal_telemetry_in_escalation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify that an emergency red-line symptom triggers escalation even when vital signs appear nominal."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py",
+      "test_function": "test_03_pha_insufficient_evidence_preserves_conflict_against_low_risk",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify supervisor prevents premature LOW risk when upstream PHA reported insufficient evidence."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py",
+      "test_function": "test_01_sqlite_unavailable_records_warning_without_crash",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify database connection failure generates warning and does not crash persistence."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py",
+      "test_function": "test_02_json_write_failure_handled_safely",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 1,
+      "docstring": "Verify file write errors are captured as warnings."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py",
+      "test_function": "test_03_persistence_failure_degrades_workflow_completion_status",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": true,
+      "assertion_count": 3,
+      "docstring": "Verify persistence failure flags error in state and prevents unqualified COMPLETED status."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py",
+      "test_function": "test_04_duplicate_workflow_execution_idempotency",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify executing persistence twice with same assessment_id updates existing row instead of corrupting db."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py",
+      "test_function": "test_01_concurrent_workflows_maintain_state_isolation",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 8,
+      "docstring": "Verify concurrent execution of two distinct workflows prevents cross-session leakage."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py",
+      "test_function": "test_02_simultaneous_multi_agent_failures_handled_gracefully",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 4,
+      "docstring": "Verify workflow degrades safely when both Sensor Quality and PHA fail concurrently."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py",
+      "test_function": "test_03_same_astronaut_multiple_sessions_isolated",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify successive workflows for same astronaut do not collide."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_e2e_integration.py",
+      "test_function": "test_01_four_agent_end_to_end_integration_live",
+      "classification": "LIVE PIPELINE",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 27,
+      "docstring": "Execute complete 4-agent LangGraph workflow with real agent implementations and biosensor fixture."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_01_intake_node_initializes_workflow_state",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 5,
+      "docstring": "Verify intake_node initializes identifiers and timestamps."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_02_input_validation_node_accepts_valid_ids",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify input_validation_node accepts valid astronaut and session identifiers."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_03_input_validation_node_rejects_missing_astronaut_id",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify input_validation_node sets failure status when astronaut_id is missing."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_04_input_validation_node_rejects_missing_session_id",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify input_validation_node sets failure status when session_id is missing."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_05_evidence_validation_node_audits_and_quarantines_invalid_hrv",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 4,
+      "docstring": "Verify evidence_validation_node automatically quarantines zero-variability HRV artifacts."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_06_final_synthesis_node_compiles_assessment_and_response",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 7,
+      "docstring": "Verify final_synthesis_node creates unified FinalSupervisorAssessment."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_07_persistence_node_writes_output",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify persistence_node writes JSON artifact and updates state without throwing unhandled exceptions."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_nodes.py",
+      "test_function": "test_08_final_response_node_records_completed_timestamp",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify final_response_node updates timestamps with completed step."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_01_no_trigger_detected_semantics_never_claims_total_health",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify astronaut response clearly explains that NO_TRIGGER_DETECTED does not confirm absence of disease."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_02_insufficient_data_semantics_never_converts_to_low_risk",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify that partial domain coverage strictly preserves overall risk as INSUFFICIENT_DATA."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_03_missing_symptoms_never_converted_to_negative_symptoms",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify unsubmitted symptoms are registered as NOT_AVAILABLE with explicit data gap quarantine reason."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_04_evidence_provenance_preserved_across_all_registered_items",
+      "classification": "ADAPTER INTEGRATION",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify all evidence registry items contain non-empty provenance strings and source agents."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_05_astronaut_communication_contains_required_safety_disclaimers",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify astronaut-facing text contains standard research prototype disclaimers and Flight Surgeon escalation path."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_06_astronaut_communication_strictly_grounds_hrv_rmssd_without_sensor_artifact_speculation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 5,
+      "docstring": "Verify RMSSD zero variability is quarantined without claiming confirmed sensor artifact."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_07_astronaut_communication_strictly_grounds_temperature_without_ambient_conditions_speculation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 5,
+      "docstring": "Verify skin temperature is distinguished from core without asserting ambient conditions."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_08_astronaut_communication_strictly_grounds_cardiac_and_respiration_metrics",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 6,
+      "docstring": "Verify cardiac and respiration statements cite exact numbers, evidence IDs, and reference intervals."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_09_astronaut_communication_uses_configured_monitoring_domains_terminology",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify coverage reporting uses configured monitoring domains instead of standard monitoring domains."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_safety.py",
+      "test_function": "test_10_astronaut_communication_preserves_unsubmitted_symptom_distinction",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify unsubmitted symptoms state unassessed status rather than confirmed absence."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_state.py",
+      "test_function": "test_01_state_initialization_and_serialization",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify SupervisorMultiAgentState handles typed dictionary keys without errors."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_state.py",
+      "test_function": "test_02_request_schema_validation",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify SupervisorRequest validates required subject IDs and modalities."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_state.py",
+      "test_function": "test_03_final_assessment_schema_contracts",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify FinalSupervisorAssessment validates required fields and enum types."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_01_router_branches_to_evidence_validation_on_validation_failure",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": false,
+      "uses_mock_or_patch": false,
+      "assertion_count": 2,
+      "docstring": "Verify route_after_validation directs to evidence_validation when errors exist."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_02_workflow_runner_handles_invalid_astronaut_identity",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 4,
+      "docstring": "Verify workflow terminates with FAILED status and error logs when astronaut ID is empty."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_03_workflow_runner_handles_missing_sensor_data_gracefully",
+      "classification": "REAL WORKFLOW INTEGRATION",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": false,
+      "assertion_count": 3,
+      "docstring": "Verify workflow executes without failure when sensor manifest is omitted."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_04_workflow_runner_handles_upstream_pha_failure",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 3,
+      "docstring": "Verify workflow recovers safely when Personal Health agent encounters an unhandled exception."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_05_workflow_runner_handles_upstream_ra_failure",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 3,
+      "docstring": "Verify workflow completes with error status when Risk Assessment agent fails."
+    },
+    {
+      "test_file": "ai-engine/agents/supervisor/tests/test_supervisor_workflow.py",
+      "test_function": "test_06_workflow_runner_handles_persistence_warning",
+      "classification": "UNIT / MOCKED",
+      "uses_workflow_runner": true,
+      "uses_mock_or_patch": true,
+      "assertion_count": 2,
+      "docstring": "Verify workflow handles database persistence failure without raising an uncaught exception."
+    }
+  ]
+}

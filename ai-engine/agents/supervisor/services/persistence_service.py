@@ -11,18 +11,15 @@ class PersistenceService:
     @classmethod
     def save_final_assessment(cls, assessment_dict: Dict[str, Any]) -> Tuple[bool, str, list]:
         """Write JSON output artifact and persist summary row into SQLite database."""
+        from datetime import datetime
+        t_save_start = datetime.utcnow()
         cfg = get_supervisor_settings()
         warnings = []
         target_dir = cfg.output_dir
         json_file = target_dir / "final_supervisor_assessment.json"
-        try:
-            target_dir.mkdir(parents=True, exist_ok=True)
-            with open(json_file, "w", encoding="utf-8") as f:
-                json.dump(assessment_dict, f, indent=2, default=str)
-        except Exception as exc:
-            warnings.append(f"Failed to write assessment JSON to {json_file}: {str(exc)}")
 
         db_success = False
+        conn = None
         try:
             db_path_str = cfg.database_url.replace("sqlite:///", "")
             db_path = Path(db_path_str).resolve()
@@ -42,28 +39,49 @@ class PersistenceService:
                     serialized_payload TEXT NOT NULL
                 )
             """)
-            cursor.execute("""
-                INSERT OR REPLACE INTO supervisor_assessments (
-                    assessment_id, astronaut_id, session_id, workflow_id,
-                    completion_status, overall_risk, escalation_state,
-                    generation_timestamp, serialized_payload
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                assessment_dict.get("assessment_id", "A-UNKNOWN"),
-                assessment_dict.get("astronaut_id", "AST-UNKNOWN"),
-                assessment_dict.get("session_id", "S-UNKNOWN"),
-                assessment_dict.get("workflow_id", "WF-UNKNOWN"),
-                str(assessment_dict.get("workflow_completion_status", "COMPLETED")),
-                str(assessment_dict.get("overall_risk", "UNKNOWN")),
-                str(assessment_dict.get("escalation_state", "UNKNOWN")),
-                str(assessment_dict.get("generation_timestamp", "")),
-                json.dumps(assessment_dict, default=str)
-            ))
             conn.commit()
-            conn.close()
-            db_success = True
         except Exception as exc:
             warnings.append(f"Edge database persistence failed: {str(exc)}")
+
+        p_dur = max(0.1, (datetime.utcnow() - t_save_start).total_seconds() * 1000.0)
+        if "timing_breakdown" in assessment_dict and isinstance(assessment_dict["timing_breakdown"], dict):
+            assessment_dict["timing_breakdown"]["persistence_time_ms"] = round(p_dur, 2)
+            if "measured_supervisor_overhead_ms" in assessment_dict["timing_breakdown"]:
+                current_overhead = assessment_dict["timing_breakdown"].get("measured_supervisor_overhead_ms", 0.0)
+                assessment_dict["timing_breakdown"]["measured_supervisor_overhead_ms"] = round(current_overhead + p_dur, 2)
+
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT OR REPLACE INTO supervisor_assessments (
+                        assessment_id, astronaut_id, session_id, workflow_id,
+                        completion_status, overall_risk, escalation_state,
+                        generation_timestamp, serialized_payload
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    assessment_dict.get("assessment_id", "A-UNKNOWN"),
+                    assessment_dict.get("astronaut_id", "AST-UNKNOWN"),
+                    assessment_dict.get("session_id", "S-UNKNOWN"),
+                    assessment_dict.get("workflow_id", "WF-UNKNOWN"),
+                    str(assessment_dict.get("workflow_completion_status", "COMPLETED")),
+                    str(assessment_dict.get("overall_risk", "UNKNOWN")),
+                    str(assessment_dict.get("escalation_state", "UNKNOWN")),
+                    str(assessment_dict.get("generation_timestamp", "")),
+                    json.dumps(assessment_dict, default=str)
+                ))
+                conn.commit()
+                conn.close()
+                db_success = True
+            except Exception as exc:
+                warnings.append(f"Edge database persistence failed: {str(exc)}")
+
+        try:
+            target_dir.mkdir(parents=True, exist_ok=True)
+            with open(json_file, "w", encoding="utf-8") as f:
+                json.dump(assessment_dict, f, indent=2, default=str)
+        except Exception as exc:
+            warnings.append(f"Failed to write assessment JSON to {json_file}: {str(exc)}")
 
         json_exists = False
         try:

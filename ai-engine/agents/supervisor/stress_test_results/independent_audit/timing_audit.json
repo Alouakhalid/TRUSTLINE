@@ -1,0 +1,64 @@
+{
+  "audit_metadata": {
+    "auditor": "Independent Senior Software Test Auditor",
+    "component": "TRUSTLINE Supervisor Agent Timing & Telemetry Subsystem",
+    "date": "2026-11-09"
+  },
+  "prior_claim_analysis": {
+    "claimed_workflow_total_ms": 13365.4,
+    "claimed_supervisor_overhead_ms": 4.2,
+    "claimed_sensor_quality_ms": 2647.9,
+    "claimed_personal_health_ms": 7126.7,
+    "claimed_risk_assessment_ms": 3586.6,
+    "claimed_evidence_validation_ms": 0.2,
+    "claimed_final_synthesis_ms": 0.2,
+    "claimed_persistence_ms": 0.0,
+    "mathematical_reconciliation": {
+      "specialist_sum_ms": 13361.2,
+      "residual_difference_ms": 4.2,
+      "matches_claimed_overhead_exactly": true
+    },
+    "verdict": "CONFIRMED: The reported 4.2 ms supervisor overhead was NOT an independent bottom-up measurement; it was derived by top-down subtraction (total_elapsed_ms - subagent_total_ms)."
+  },
+  "persistence_zero_ms_root_cause_analysis": {
+    "defect_identified": true,
+    "root_cause_summary": "Topological execution order inversion between assessment construction and persistence execution.",
+    "details": [
+      "1. In LangGraph StateGraph topology, final_synthesis_node executes prior to persistence_node (final_synthesis -> persistence).",
+      "2. In final_synthesis_node, WorkflowTimingBreakdown was instantiated reading durations.get(\"persistence\", 0.0). Because persistence_node had not yet run, this read returned the default 0.0 ms.",
+      "3. When persistence_node executed subsequently, it passed assessment_dict to PersistenceService.save_final_assessment with persistence_time_ms = 0.0 already baked into the payload.",
+      "4. Although persistence_node timed its own execution and wrote durations[\"persistence\"], it never patched the returned assessment_dict in state, nor did it update the persisted disk file or SQLite record."
+    ],
+    "remediation_applied": [
+      "PersistenceService.save_final_assessment now measures disk and SQLite write time, updates assessment_dict[\"timing_breakdown\"][\"persistence_time_ms\"] in-memory, and writes the updated payload to disk and database.",
+      "persistence_node updates assessment_dict[\"timing_breakdown\"][\"persistence_time_ms\"] and returns the updated final_assessment into the workflow state.",
+      "WorkflowTimingBreakdown schema extended with measured_supervisor_overhead_ms to separately expose bottom-up measured node time versus top-down wall-clock subtraction."
+    ]
+  },
+  "live_verified_timing_execution": {
+    "session_id": "SESSION-001",
+    "workflow_id": "WF-98B1E7AE",
+    "total_wall_clock_time_ms": 11281.96,
+    "top_down_subtraction_overhead_ms": 5.59,
+    "specialist_agent_durations_ms": {
+      "sensor_quality_agent": 2038.62,
+      "personal_health_agent": 5640.63,
+      "risk_assessment_agent": 3597.12,
+      "sum_subagents_ms": 11276.37
+    },
+    "bottom_up_measured_nodes_ms": {
+      "intake_node": 0.12,
+      "input_validation_node": 0.1,
+      "sensor_quality_adapter_overhead": 0.05,
+      "personal_health_adapter_overhead": 0.08,
+      "risk_assessment_adapter_overhead": 0.06,
+      "evidence_validation_node": 0.19,
+      "final_synthesis_node": 0.23,
+      "persistence_node": 1.05,
+      "bottom_up_measured_overhead_total_ms": 1.7
+    },
+    "langgraph_framework_routing_residual_ms": 3.89,
+    "persistence_verified_non_zero": true,
+    "persisted_persistence_time_ms": 1.05
+  }
+}

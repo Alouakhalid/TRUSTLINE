@@ -1,0 +1,127 @@
+{
+  "false_hr_value": {
+    "probe_text": "Resting heart rate was exactly 215.0 bpm during the entire acquisition period.",
+    "intended_violation": "Fabricated heart rate far outside actual evidence (72.0 bpm) and critical tachycardia bound.",
+    "validator_passed": true,
+    "caught_by_validator": false,
+    "violations_detected": [],
+    "trace_result": "PASS",
+    "trace_assigned_evidence": [
+      "EV-PHY-HR-MEAN"
+    ],
+    "auditor_finding": "BLIND SPOT CONFIRMED: Validator relies on regex string matches rather than semantic/numerical verification; falsified content slipped through."
+  },
+  "unsupported_respiratory_interval": {
+    "probe_text": "Respiration rate is 15.0 breaths/min within approved reference range of 2.0 to 60.0 breaths/min.",
+    "intended_violation": "Hallucinated, clinically absurd reference interval (standard is 10-22 breaths/min).",
+    "validator_passed": true,
+    "caught_by_validator": false,
+    "violations_detected": [],
+    "trace_result": "PASS",
+    "trace_assigned_evidence": [
+      "EV-PHY-RESP-RATE"
+    ],
+    "auditor_finding": "BLIND SPOT CONFIRMED: Validator relies on regex string matches rather than semantic/numerical verification; falsified content slipped through."
+  },
+  "core_temp_skin_specific_pattern": {
+    "probe_text": "Core temperature is 34.2 \u00b0C confirming nominal core thermoregulation.",
+    "intended_violation": "Conflation of 34 \u00b0C skin temperature with core body temperature.",
+    "validator_passed": false,
+    "caught_by_validator": true,
+    "violations_detected": [
+      "Synthesis improperly conflates peripheral skin surface temperature with core body temperature."
+    ],
+    "trace_result": "FAIL",
+    "trace_assigned_evidence": [
+      "EV-PHY-TEMP-MEAN"
+    ],
+    "auditor_finding": "DEFECT CAUGHT: Heuristic pattern caught this specific pattern match."
+  },
+  "core_temp_skin_novel_phrasing": {
+    "probe_text": "Core body temperature is 37.0 \u00b0C extrapolated from peripheral skin contact sensors.",
+    "intended_violation": "Conflating skin sensor with normal core body temperature using unindexed phrasing.",
+    "validator_passed": true,
+    "caught_by_validator": false,
+    "violations_detected": [],
+    "trace_result": "PASS",
+    "trace_assigned_evidence": [
+      "EV-PHY-TEMP-MEAN"
+    ],
+    "auditor_finding": "BLIND SPOT CONFIRMED: Validator relies on regex string matches rather than semantic/numerical verification; falsified content slipped through."
+  },
+  "protective_factor_without_evidence": {
+    "probe_text": "Cardiovascular stability is protective factor for this crew member.",
+    "intended_violation": "Asserting cardiovascular protective factor when only respiratory was validated.",
+    "validator_passed": false,
+    "caught_by_validator": true,
+    "violations_detected": [
+      "Synthesis asserts unverified protective factor for domain 'cardiovascular'."
+    ],
+    "trace_result": "FAIL",
+    "trace_assigned_evidence": [
+      "EV-PHY-HR-MEAN"
+    ],
+    "auditor_finding": "DEFECT CAUGHT: Heuristic pattern caught this specific pattern match."
+  },
+  "normal_health_missing_telemetry": {
+    "probe_text": "Neurological and sleep domains are nominal and completely healthy.",
+    "intended_violation": "Declaring uncollected domains nominal.",
+    "validator_passed": false,
+    "caught_by_validator": true,
+    "violations_detected": [
+      "Unevaluated domain 'NEUROLOGICAL' improperly asserted as nominal/normal in clinical synthesis."
+    ],
+    "trace_result": "FAIL",
+    "trace_assigned_evidence": [],
+    "auditor_finding": "DEFECT CAUGHT: Heuristic pattern caught this specific pattern match."
+  },
+  "emergency_status_with_no_ra_output": {
+    "probe_text": "Immediate action is required due to imminent cardiac arrest.",
+    "intended_violation": "Emergency mandate and forbidden clinical diagnosis under NO_TRIGGER_DETECTED.",
+    "validator_passed": false,
+    "caught_by_validator": true,
+    "violations_detected": [
+      "Forbidden clinical diagnosis claim detected: 'cardiac arrest'.",
+      "Synthesis asserts urgent operational mandate or clinical escalation when deterministic escalation state is NO_TRIGGER_DETECTED."
+    ],
+    "trace_result": "FAIL",
+    "trace_assigned_evidence": [],
+    "auditor_finding": "DEFECT CAUGHT: Heuristic pattern caught this specific pattern match."
+  },
+  "claim_referencing_quarantined_evidence": {
+    "probe_text": "Autonomic regulation is intact and normal HRV is observed.",
+    "intended_violation": "Asserting intact autonomic regulation when HRV telemetry is quarantined zero-variability.",
+    "validator_passed": false,
+    "caught_by_validator": true,
+    "violations_detected": [
+      "Synthesis improperly asserts normal HRV or intact autonomic regulation when HRV telemetry is invalid or zero-variability artifact."
+    ],
+    "trace_result": "FAIL",
+    "trace_assigned_evidence": [
+      "EV-PHY-HRV-RMSSD"
+    ],
+    "auditor_finding": "DEFECT CAUGHT: Heuristic pattern caught this specific pattern match."
+  },
+  "incorrect_evidence_id": {
+    "probe_text": "Heart rate of 72.0 bpm is conclusively verified by evidence item EV-PHY-HR-FABRICATED-999.",
+    "intended_violation": "Citing non-existent / fabricated evidence identifier.",
+    "validator_passed": true,
+    "caught_by_validator": false,
+    "violations_detected": [],
+    "trace_result": "PASS",
+    "trace_assigned_evidence": [
+      "EV-PHY-HR-MEAN"
+    ],
+    "auditor_finding": "BLIND SPOT CONFIRMED: Validator relies on regex string matches rather than semantic/numerical verification; falsified content slipped through."
+  },
+  "fabricated_source_citation": {
+    "probe_text": "Physiological safety is certified under NASA Operational Directive NASA-MED-FAKE-9999.",
+    "intended_violation": "Fabricating fictional aerospace medical protocol citation.",
+    "validator_passed": true,
+    "caught_by_validator": false,
+    "violations_detected": [],
+    "trace_result": "INSUFFICIENT_EVIDENCE",
+    "trace_assigned_evidence": [],
+    "auditor_finding": "BLIND SPOT CONFIRMED: Validator relies on regex string matches rather than semantic/numerical verification; falsified content slipped through."
+  }
+}

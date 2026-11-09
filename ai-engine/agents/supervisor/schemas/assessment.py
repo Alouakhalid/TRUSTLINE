@@ -56,6 +56,7 @@ class WorkflowTimingBreakdown(BaseModel):
     evidence_validation_time_ms: float = Field(default=0.0)
     final_synthesis_time_ms: float = Field(default=0.0)
     persistence_time_ms: float = Field(default=0.0)
+    measured_supervisor_overhead_ms: float = Field(default=0.0)
 
 class FinalSupervisorAssessment(BaseModel):
     """Comprehensive final structured assessment synthesized by Supervisor for clinical systems and mission log."""

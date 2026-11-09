@@ -23,6 +23,7 @@ from ..services.persistence_service import PersistenceService
 
 def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Initialize workflow execution state, generate tracking identifiers, and record start timestamp."""
+    t_intake_start = datetime.utcnow()
     wf_id = state.get("workflow_id") or f"WF-{uuid.uuid4().hex[:8].upper()}"
     timestamps = dict(state.get("timestamps") or {})
     timestamps["intake"] = datetime.utcnow().isoformat()
@@ -34,12 +35,16 @@ def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         warnings=[]
     ).model_dump()
 
+    durations = dict(state.get("durations_ms") or {})
+    durations["intake"] = max(0.1, (datetime.utcnow() - t_intake_start).total_seconds() * 1000.0)
+
     return {
         "workflow_id": wf_id,
         "workflow_status": "IN_PROGRESS",
         "current_step": "INTAKE",
         "agent_execution_status": agent_statuses,
         "timestamps": timestamps,
+        "durations_ms": durations,
         "errors": list(state.get("errors") or []),
         "warnings": list(state.get("warnings") or []),
         "missing_data": list(state.get("missing_data") or [])
@@ -47,6 +52,7 @@ def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Validate subject identity, manifest path, and security constraints before dispatching agents."""
+    t_val_start = datetime.utcnow()
     errors = list(state.get("errors") or [])
     warnings = list(state.get("warnings") or [])
     missing_data = list(state.get("missing_data") or [])
@@ -73,26 +79,37 @@ def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     if not state.get("mission_context"):
         missing_data.append("Mission operational context parameters were not provided.")
 
+    durations = dict(state.get("durations_ms") or {})
+    durations["input_validation"] = max(0.1, (datetime.utcnow() - t_val_start).total_seconds() * 1000.0)
+
     if errors:
         return {
             "workflow_status": "FAILED",
             "current_step": "INPUT_VALIDATION_FAILED",
             "errors": errors,
             "warnings": warnings,
-            "missing_data": missing_data
+            "missing_data": missing_data,
+            "durations_ms": durations
         }
 
     return {
         "current_step": "INPUT_VALIDATION",
         "errors": errors,
         "warnings": warnings,
-        "missing_data": missing_data
+        "missing_data": missing_data,
+        "durations_ms": durations
     }
 
 def sensor_quality_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Sensor Quality Agent adapter and capture execution telemetry."""
+    t_start = datetime.utcnow()
     adapter = SensorQualityAdapter()
     updates, status = adapter.execute_with_telemetry(state)
+
+    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    durations = dict(state.get("durations_ms") or {})
+    durations["sensor_quality_node"] = dur
+    durations["sensor_quality_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["sensor_quality_agent"] = status.model_dump()
@@ -107,14 +124,21 @@ def sensor_quality_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     updates["agent_execution_status"] = agent_statuses
     updates["warnings"] = warnings
     updates["errors"] = errors
+    updates["durations_ms"] = durations
     updates["current_step"] = "SENSOR_QUALITY"
 
     return updates
 
 def personal_health_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Personal Health Agent adapter and capture execution telemetry."""
+    t_start = datetime.utcnow()
     adapter = PersonalHealthAdapter()
     updates, status = adapter.execute_with_telemetry(state)
+
+    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    durations = dict(state.get("durations_ms") or {})
+    durations["personal_health_node"] = dur
+    durations["personal_health_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["personal_health_agent"] = status.model_dump()
@@ -129,14 +153,21 @@ def personal_health_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     updates["agent_execution_status"] = agent_statuses
     updates["warnings"] = warnings
     updates["errors"] = errors
+    updates["durations_ms"] = durations
     updates["current_step"] = "PERSONAL_HEALTH"
 
     return updates
 
 def risk_assessment_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Risk Assessment Agent adapter and capture execution telemetry."""
+    t_start = datetime.utcnow()
     adapter = RiskAssessmentAdapter()
     updates, status = adapter.execute_with_telemetry(state)
+
+    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    durations = dict(state.get("durations_ms") or {})
+    durations["risk_assessment_node"] = dur
+    durations["risk_assessment_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["risk_assessment_agent"] = status.model_dump()
@@ -151,6 +182,7 @@ def risk_assessment_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     updates["agent_execution_status"] = agent_statuses
     updates["warnings"] = warnings
     updates["errors"] = errors
+    updates["durations_ms"] = durations
     updates["current_step"] = "RISK_ASSESSMENT"
 
     return updates
@@ -293,6 +325,17 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     synthesis_dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
     durations["final_synthesis"] = synthesis_dur
 
+    measured_overhead = round(
+        durations.get("intake", 0.0)
+        + durations.get("input_validation", 0.0)
+        + durations.get("sensor_quality_adapter_overhead", 0.0)
+        + durations.get("personal_health_adapter_overhead", 0.0)
+        + durations.get("risk_assessment_adapter_overhead", 0.0)
+        + durations.get("evidence_validation", 0.0)
+        + synthesis_dur,
+        2
+    )
+
     timing_breakdown = WorkflowTimingBreakdown(
         workflow_total_execution_time_ms=round(total_elapsed_ms, 2),
         supervisor_overhead_time_ms=round(supervisor_overhead_ms, 2),
@@ -301,7 +344,8 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         risk_assessment_execution_time_ms=round(ra_ms, 2),
         evidence_validation_time_ms=round(durations.get("evidence_validation", 0.0), 2),
         final_synthesis_time_ms=round(synthesis_dur, 2),
-        persistence_time_ms=round(durations.get("persistence", 0.0), 2)
+        persistence_time_ms=round(durations.get("persistence", 0.0), 2),
+        measured_supervisor_overhead_ms=measured_overhead
     )
 
     assessment = FinalSupervisorAssessment(
@@ -351,7 +395,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Persist final assessment to disk and edge SQLite database."""
     t_start = datetime.utcnow()
-    assessment_dict = state.get("final_assessment") or {}
+    assessment_dict = dict(state.get("final_assessment") or {})
     success, filepath, p_warnings = PersistenceService.save_final_assessment(assessment_dict)
 
     warnings = list(state.get("warnings") or [])
@@ -365,9 +409,17 @@ def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
             workflow_status = "PARTIALLY_COMPLETED"
 
     durations = dict(state.get("durations_ms") or {})
-    durations["persistence"] = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    persistence_dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    durations["persistence"] = persistence_dur
+
+    if "timing_breakdown" in assessment_dict and isinstance(assessment_dict["timing_breakdown"], dict):
+        assessment_dict["timing_breakdown"]["persistence_time_ms"] = round(persistence_dur, 2)
+        if "measured_supervisor_overhead_ms" in assessment_dict["timing_breakdown"]:
+            cur_ovh = assessment_dict["timing_breakdown"].get("measured_supervisor_overhead_ms", 0.0)
+            assessment_dict["timing_breakdown"]["measured_supervisor_overhead_ms"] = round(cur_ovh + persistence_dur, 2)
 
     return {
+        "final_assessment": assessment_dict,
         "warnings": warnings,
         "errors": errors,
         "workflow_status": workflow_status,

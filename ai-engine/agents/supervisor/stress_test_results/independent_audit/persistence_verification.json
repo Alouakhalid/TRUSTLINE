@@ -1,0 +1,66 @@
+{
+  "successful_sqlite_write": {
+    "status": "PASS",
+    "read_back_verified": true,
+    "assessment_id": "A-SQL-8407b8",
+    "overall_risk": "LOW",
+    "persisted_persistence_time_ms": 2.59,
+    "warnings": []
+  },
+  "successful_json_write": {
+    "status": "PASS",
+    "file_exists": true,
+    "read_back_assessment_id": "A-SQL-8407b8",
+    "persisted_persistence_time_ms": 2.59
+  },
+  "sqlite_write_failure": {
+    "status": "PASS",
+    "overall_success": true,
+    "json_preserved_despite_db_failure": true,
+    "warnings": [
+      "Edge database persistence failed: [Errno 30] Read-only file system: '/proc'"
+    ]
+  },
+  "json_write_failure": {
+    "status": "PASS",
+    "overall_success": true,
+    "db_preserved_despite_json_failure": true,
+    "warnings": [
+      "Failed to write assessment JSON to /proc/nonexistent/out/final_supervisor_assessment.json: [Errno 30] Read-only file system: '/proc'"
+    ]
+  },
+  "both_persistence_targets_failing": {
+    "status": "PASS",
+    "save_success": false,
+    "degraded_workflow_status": "PARTIALLY_COMPLETED",
+    "errors": [
+      "Persistence Failure: Failed to write assessment artifact or edge database record."
+    ],
+    "warnings": [
+      "Edge database persistence failed: [Errno 30] Read-only file system: '/proc'",
+      "Failed to write assessment JSON to /proc/nonexistent/out/final_supervisor_assessment.json: [Errno 30] Read-only file system: '/proc'"
+    ]
+  },
+  "partial_persistence": {
+    "status": "PASS",
+    "explanation": "System reports success if at least one persistent store survives (JSON disk artifact or SQLite edge record) while logging explicit warning for failed store."
+  },
+  "duplicate_workflow_requests": {
+    "status": "PASS",
+    "record_count_for_id": 1,
+    "updated_risk_state": "HIGH",
+    "behavior": "INSERT OR REPLACE cleanly overwrites preexisting record without unique constraint crash."
+  },
+  "idempotent_retries": {
+    "status": "PASS",
+    "retry_successes": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "final_record_count": 1,
+    "consistency_verified": true
+  }
+}

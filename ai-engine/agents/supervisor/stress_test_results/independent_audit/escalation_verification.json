@@ -1,0 +1,106 @@
+{
+  "severe_chest_pain": {
+    "input_text": "I am experiencing severe crushing chest pain radiating to left arm.",
+    "extracted_category": "CARDIORESPIRATORY",
+    "extracted_severity": "SEVERE",
+    "pha_escalation_status": "ESCALATION_REQUIRED",
+    "pha_reason_codes": [
+      "EMERGENCY_CHEST_PAIN",
+      "EMERGENCY_CRITICAL_CARDIORESPIRATORY"
+    ],
+    "pha_triggers": [
+      "Red-Line Symptom Detected: chest_pain",
+      "Severe Cardiorespiratory Symptom: chest_pain"
+    ],
+    "ra_triggered_rule_ids": [
+      "RR-EMERG-CHEST-PAIN"
+    ],
+    "ra_escalation_state": "ESCALATION_REQUIRED",
+    "ra_protocol_reference": "ISS-MEDOPS-REDLINE-2025-V4.2",
+    "actions_generated": [
+      "ACT-EMERG-001"
+    ],
+    "verdict": "ESCALATION_REQUIRED confirmed deterministically."
+  },
+  "severe_shortness_of_breath": {
+    "input_text": "Severe shortness of breath, cannot breathe, gasping for air.",
+    "extracted_category": "CARDIORESPIRATORY",
+    "extracted_severity": "SEVERE",
+    "pha_escalation_status": "ESCALATION_REQUIRED",
+    "pha_reason_codes": [
+      "EMERGENCY_RESPIRATORY_DISTRESS",
+      "EMERGENCY_CRITICAL_CARDIORESPIRATORY"
+    ],
+    "ra_triggered_rule_ids": [
+      "RR-RESP-DYSPNEA-ALERT"
+    ],
+    "ra_escalation_state": "ESCALATION_RECOMMENDED",
+    "verdict": "ESCALATION_RECOMMENDED / REQUIRED confirmed deterministically."
+  },
+  "arabic_symptom_descriptions": {
+    "input_arabic_text": "\u0623\u0634\u0639\u0631 \u0628\u0623\u0644\u0645 \u0634\u062f\u064a\u062f \u0648\u0636\u063a\u0637 \u0641\u064a \u0627\u0644\u0635\u062f\u0631 \u0648\u0644\u0627 \u0623\u0633\u062a\u0637\u064a\u0639 \u0627\u0644\u062a\u0646\u0641\u0633",
+    "extracted_category": "CARDIORESPIRATORY",
+    "extracted_severity": "SEVERE",
+    "pha_escalation_status": "ESCALATION_REQUIRED",
+    "pha_reason_codes": [
+      "EMERGENCY_CRITICAL_CARDIORESPIRATORY"
+    ],
+    "verdict": "Arabic terminology matches cardiorespiratory red-line triggers successfully."
+  },
+  "ambiguous_symptom_language": {
+    "input_text": "I feel somewhat weird and a little off today, not sure what it is.",
+    "event_created": false,
+    "clarification_requested": true,
+    "clarification_prompt": "Could you please describe specific physical or mental changes you are experiencing? For example, do you have fatigue, dizziness, nausea, or changes in mood?",
+    "pha_escalation_status": "NO_TRIGGER_DETECTED",
+    "pha_reason_codes": [],
+    "emergency_triggered": false,
+    "verdict": "Safely diverted to ClarificationRequest or non-emergency classification without false positive escalation."
+  },
+  "normal_telemetry_with_emergency_symptom": {
+    "telemetry": {
+      "hr_mean_bpm": 72.0,
+      "status": "NOMINAL"
+    },
+    "symptom": "severe crushing chest pain",
+    "pha_escalation_status": "ESCALATION_REQUIRED",
+    "escalation_required": true,
+    "escalation_suppressed_by_nominal_telemetry": false,
+    "verdict": "CONFIRMED: Nominal vitals DO NOT suppress subjective emergency red-lines."
+  },
+  "invalid_telemetry_with_emergency_symptom": {
+    "telemetry_status": "INVALID_AND_QUARANTINED",
+    "symptom": "severe crushing chest pain",
+    "pha_escalation_status": "ESCALATION_REQUIRED",
+    "escalation_required": true,
+    "verdict": "CONFIRMED: Compromised sensor telemetry does not block emergency symptom escalation."
+  },
+  "no_symptoms_submitted": {
+    "symptoms": [],
+    "telemetry": {
+      "hr_mean_bpm": 72.0
+    },
+    "pha_escalation_status": "NO_TRIGGER_DETECTED",
+    "escalation_required": false,
+    "verdict": "Safely evaluates to NOMINAL / NO_TRIGGER_DETECTED without inventing symptoms."
+  },
+  "missing_symptom_fields": {
+    "raw_input": {
+      "symptom_type": "dizziness"
+    },
+    "defaulted_severity": null,
+    "defaulted_category": "GENERAL",
+    "pha_escalation_status": "NO_TRIGGER_DETECTED",
+    "verdict": "Handled gracefully with Pydantic validation defaults without crash."
+  },
+  "negation_handling_probe": {
+    "input_text": "Astronaut has no chest pain and no shortness of breath.",
+    "extracted_symptom_type": "chest_discomfort",
+    "extracted_category": "CARDIORESPIRATORY",
+    "pha_reason_codes": [
+      "EMERGENCY_CHEST_PAIN"
+    ],
+    "false_positive_triggered": true,
+    "audit_finding": "In offline/rule-based fallback mode, phrase substring search for \"chest pain\" within \"no chest pain\" matches naive substring, creating a documented false positive risk unless LLM negation extraction is active."
+  }
+}
