@@ -1,6 +1,7 @@
 """Persistence service saving final assessments to disk and edge database."""
 import json
 import sqlite3
+import time
 from pathlib import Path
 from typing import Dict, Any, Tuple
 from ..config.settings import get_supervisor_settings
@@ -11,8 +12,7 @@ class PersistenceService:
     @classmethod
     def save_final_assessment(cls, assessment_dict: Dict[str, Any]) -> Tuple[bool, str, list]:
         """Write JSON output artifact and persist summary row into SQLite database."""
-        from datetime import datetime
-        t_save_start = datetime.utcnow()
+        t_save_start = time.perf_counter()
         cfg = get_supervisor_settings()
         warnings = []
         target_dir = cfg.output_dir
@@ -43,12 +43,12 @@ class PersistenceService:
         except Exception as exc:
             warnings.append(f"Edge database persistence failed: {str(exc)}")
 
-        p_dur = max(0.1, (datetime.utcnow() - t_save_start).total_seconds() * 1000.0)
+        p_dur = max(0.01, round((time.perf_counter() - t_save_start) * 1000.0, 3))
         if "timing_breakdown" in assessment_dict and isinstance(assessment_dict["timing_breakdown"], dict):
-            assessment_dict["timing_breakdown"]["persistence_time_ms"] = round(p_dur, 2)
+            assessment_dict["timing_breakdown"]["persistence_time_ms"] = round(p_dur, 3)
             if "measured_supervisor_overhead_ms" in assessment_dict["timing_breakdown"]:
                 current_overhead = assessment_dict["timing_breakdown"].get("measured_supervisor_overhead_ms", 0.0)
-                assessment_dict["timing_breakdown"]["measured_supervisor_overhead_ms"] = round(current_overhead + p_dur, 2)
+                assessment_dict["timing_breakdown"]["measured_supervisor_overhead_ms"] = round(current_overhead + p_dur, 3)
 
         if conn is not None:
             try:

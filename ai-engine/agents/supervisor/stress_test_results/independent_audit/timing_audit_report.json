@@ -1,0 +1,31 @@
+{
+  "workflow_id": "WF-6AD4030B",
+  "assessment_id": "SUP-5C055001",
+  "external_wall_clock_perf_ms": 12714.68,
+  "workflow_total_execution_time_ms": 12707.06,
+  "supervisor_overhead_time_ms": 33.83,
+  "measured_supervisor_overhead_ms": 11.72,
+  "sensor_quality_execution_time_ms": 5072.31,
+  "personal_health_execution_time_ms": 3854.4,
+  "risk_assessment_execution_time_ms": 3746.52,
+  "evidence_validation_time_ms": 1.39,
+  "final_synthesis_time_ms": 0.22,
+  "persistence_time_ms": 8.15,
+  "node_durations_ms": {
+    "intake": 0.035,
+    "input_validation": 0.01,
+    "sensor_quality_node": 5072.617,
+    "sensor_quality_adapter_overhead": 0.307,
+    "personal_health_node": 3854.486,
+    "personal_health_adapter_overhead": 0.086,
+    "risk_assessment_node": 3746.65,
+    "risk_assessment_adapter_overhead": 0.13,
+    "evidence_validation": 1.394,
+    "final_synthesis": 0.223,
+    "persistence": 8.153,
+    "final_response": 0.012
+  },
+  "monotonic_clock_verified": true,
+  "non_zero_persistence_verified": true,
+  "encompassing_workflow_total": true
+}

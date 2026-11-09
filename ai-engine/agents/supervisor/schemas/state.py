@@ -32,6 +32,7 @@ class SupervisorMultiAgentState(TypedDict, total=False):
     final_assessment: Optional[Dict[str, Any]]
     final_response: Optional[str]
     timestamps: Dict[str, str]
+    perf_timestamps: Dict[str, float]
     durations_ms: Dict[str, float]
     audit_metadata: Dict[str, Any]
     requires_human_review: Optional[bool]

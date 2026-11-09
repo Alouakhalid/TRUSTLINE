@@ -1,22 +1,22 @@
 {
-  "assessment_id": "SUP-DCAD9C3E",
+  "assessment_id": "SUP-B817211D",
   "astronaut_id": "AST-001",
   "session_id": "SESSION-001",
-  "workflow_id": "WF-A93D8B69",
-  "generation_timestamp": "2026-11-09 14:41:51.391000",
+  "workflow_id": "WF-00C3683A",
+  "generation_timestamp": "2026-11-09 20:19:44.055150",
   "workflow_completion_status": "PARTIALLY_COMPLETED",
   "agent_execution_statuses": {
     "supervisor": {
       "agent_name": "supervisor_orchestrator",
       "status": "SUCCESS",
-      "execution_time_ms": 6.18,
+      "execution_time_ms": 23.46,
       "error_message": null,
       "warnings": []
     },
     "sensor_quality_agent": {
       "agent_name": "sensor_quality_agent",
       "status": "SUCCESS",
-      "execution_time_ms": 1766.13,
+      "execution_time_ms": 3459.28,
       "error_message": null,
       "warnings": [
         "[ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
@@ -29,7 +29,7 @@
     "personal_health_agent": {
       "agent_name": "personal_health_agent",
       "status": "SUCCESS",
-      "execution_time_ms": 4777.24,
+      "execution_time_ms": 7874.21,
       "error_message": null,
       "warnings": [
         "Individualized personal baseline is not yet established; population reference norms utilized.",
@@ -49,7 +49,7 @@
     "risk_assessment_agent": {
       "agent_name": "risk_assessment_agent",
       "status": "SUCCESS",
-      "execution_time_ms": 3566.63,
+      "execution_time_ms": 3914.35,
       "error_message": null,
       "warnings": [
         "Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE",
@@ -68,15 +68,15 @@
     }
   },
   "timing_breakdown": {
-    "workflow_total_execution_time_ms": 10116.18,
-    "supervisor_overhead_time_ms": 6.18,
-    "sensor_quality_execution_time_ms": 1766.13,
-    "personal_health_execution_time_ms": 4777.24,
-    "risk_assessment_execution_time_ms": 3566.63,
-    "evidence_validation_time_ms": 0.32,
-    "final_synthesis_time_ms": 0.22,
-    "persistence_time_ms": 0.99,
-    "measured_supervisor_overhead_ms": 1.73
+    "workflow_total_execution_time_ms": 15282.98,
+    "supervisor_overhead_time_ms": 35.14,
+    "sensor_quality_execution_time_ms": 3459.28,
+    "personal_health_execution_time_ms": 7874.21,
+    "risk_assessment_execution_time_ms": 3914.35,
+    "evidence_validation_time_ms": 0.83,
+    "final_synthesis_time_ms": 0.27,
+    "persistence_time_ms": 8.91,
+    "measured_supervisor_overhead_ms": 12.19
   },
   "overall_assessment_status": "PARTIALLY_COMPLETED",
   "overall_risk": "INSUFFICIENT_DATA",
@@ -110,7 +110,7 @@
     "astronaut_id": "AST-001",
     "session_id": "SESSION-001",
     "recording_id": "REC-001",
-    "execution_timestamp": "2026-11-09T14:41:43.038853+00:00",
+    "execution_timestamp": "2026-11-09T20:19:32.240988+00:00",
     "overall_quality": {
       "score": 0.9639,
       "status": "VALID",
@@ -378,10 +378,10 @@
     "llm_explanation": null
   },
   "personal_health_summary": {
-    "assessment_id": "PHA-83153C99",
+    "assessment_id": "PHA-9B732184",
     "astronaut_id": "AST-001",
     "session_id": "SESSION-001",
-    "execution_timestamp": "2026-11-09 14:41:47.816632",
+    "execution_timestamp": "2026-11-09 20:19:40.117317",
     "assessment_status": "COMPLETED",
     "baseline_status": "not_available",
     "sensor_quality_summary": {
@@ -719,7 +719,7 @@
           "acc_magnitude_mean": 0.9803928572841505,
           "acc_magnitude_std": 0.02000362888639742
         },
-        "inference_timestamp": "2026-11-09 14:41:47.519789",
+        "inference_timestamp": "2026-11-09 20:19:39.770501",
         "validity_status": "VALID",
         "clinical_disclaimer": "Trained on laboratory stress induction protocols (TSST) from the WESAD benchmark. Predicts acute sympathovagal stress activation; not validated as general health or disease anomaly detector. Requires valid Core 14 physiological features centered with production RobustScaler."
       }
@@ -763,7 +763,7 @@
         "excerpt": "When sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
         "relevance_score": 0.3791,
         "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
-        "retrieval_timestamp": "2026-11-09 14:41:47.520398"
+        "retrieval_timestamp": "2026-11-09 20:19:39.771393"
       },
       {
         "doc_id": "MMP-001",
@@ -781,7 +781,7 @@
         "excerpt": "CRITICAL ESCALATION TRIGGER: Any reported acute severe chest pain, sudden respiratory distress, acute neurological deficit, syncope, or sustained heart rate exceeding 160 bpm or falling below 40 bpm at rest requires immediate emergency escalation. Under this protocol, autonomous AI systems must immediately trigger mission medical alerts to the Supervisor and Flight Surgeon, bypassing routine ML inference or general research retrieval pipelines.",
         "relevance_score": 0.314,
         "citation_reference": "ISS-MEDOPS-REDLINE-2025-V4.2",
-        "retrieval_timestamp": "2026-11-09 14:41:47.520395"
+        "retrieval_timestamp": "2026-11-09 20:19:39.771386"
       }
     ],
     "possible_explanations": [
@@ -826,10 +826,10 @@
     "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-001 (Session SESSION-001) recorded a mean heart rate of 72.0 bpm and mean skin conductance of 4.69 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.1201 (verdict: NORMAL). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. No symptoms were recorded in the provided assessment. Lack of recorded symptoms does not constitute a confirmed negative clinical assessment.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is NO_TRIGGER_DETECTED with no configured escalation rule triggered using the available telemetry. This observation alone does not confirm that the astronaut is medically normal or that no health risk exists."
   },
   "risk_assessment_summary": {
-    "assessment_id": "RA-1CAAA1F0",
+    "assessment_id": "RA-A55164AE",
     "astronaut_id": "AST-001",
     "session_id": "SESSION-001",
-    "assessment_timestamp": "2026-11-09 14:41:51.385196",
+    "assessment_timestamp": "2026-11-09 20:19:44.032521",
     "assessment_status": "PARTIALLY_COMPLETED",
     "evaluated_domains_risk": "LOW",
     "overall_risk": "INSUFFICIENT_DATA",

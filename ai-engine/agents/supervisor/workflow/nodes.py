@@ -1,4 +1,5 @@
 """LangGraph node implementations for TRUSTLINE Supervisor Agent."""
+import time
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -23,10 +24,12 @@ from ..services.persistence_service import PersistenceService
 
 def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Initialize workflow execution state, generate tracking identifiers, and record start timestamp."""
-    t_intake_start = datetime.utcnow()
+    t_perf_start = time.perf_counter()
     wf_id = state.get("workflow_id") or f"WF-{uuid.uuid4().hex[:8].upper()}"
     timestamps = dict(state.get("timestamps") or {})
     timestamps["intake"] = datetime.utcnow().isoformat()
+    perf_timestamps = dict(state.get("perf_timestamps") or {})
+    perf_timestamps["workflow_start"] = t_perf_start
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["supervisor"] = AgentExecutionStatus(
@@ -36,7 +39,7 @@ def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     ).model_dump()
 
     durations = dict(state.get("durations_ms") or {})
-    durations["intake"] = max(0.1, (datetime.utcnow() - t_intake_start).total_seconds() * 1000.0)
+    durations["intake"] = max(0.01, round((time.perf_counter() - t_perf_start) * 1000.0, 3))
 
     return {
         "workflow_id": wf_id,
@@ -44,6 +47,7 @@ def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         "current_step": "INTAKE",
         "agent_execution_status": agent_statuses,
         "timestamps": timestamps,
+        "perf_timestamps": perf_timestamps,
         "durations_ms": durations,
         "errors": list(state.get("errors") or []),
         "warnings": list(state.get("warnings") or []),
@@ -52,7 +56,7 @@ def intake_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Validate subject identity, manifest path, and security constraints before dispatching agents."""
-    t_val_start = datetime.utcnow()
+    t_val_start = time.perf_counter()
     errors = list(state.get("errors") or [])
     warnings = list(state.get("warnings") or [])
     missing_data = list(state.get("missing_data") or [])
@@ -80,7 +84,7 @@ def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         missing_data.append("Mission operational context parameters were not provided.")
 
     durations = dict(state.get("durations_ms") or {})
-    durations["input_validation"] = max(0.1, (datetime.utcnow() - t_val_start).total_seconds() * 1000.0)
+    durations["input_validation"] = max(0.01, round((time.perf_counter() - t_val_start) * 1000.0, 3))
 
     if errors:
         return {
@@ -102,14 +106,14 @@ def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def sensor_quality_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Sensor Quality Agent adapter and capture execution telemetry."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     adapter = SensorQualityAdapter()
     updates, status = adapter.execute_with_telemetry(state)
 
-    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
     durations = dict(state.get("durations_ms") or {})
     durations["sensor_quality_node"] = dur
-    durations["sensor_quality_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
+    durations["sensor_quality_adapter_overhead"] = max(0.0, round(dur - float(status.execution_time_ms), 3))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["sensor_quality_agent"] = status.model_dump()
@@ -131,14 +135,14 @@ def sensor_quality_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def personal_health_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Personal Health Agent adapter and capture execution telemetry."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     adapter = PersonalHealthAdapter()
     updates, status = adapter.execute_with_telemetry(state)
 
-    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
     durations = dict(state.get("durations_ms") or {})
     durations["personal_health_node"] = dur
-    durations["personal_health_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
+    durations["personal_health_adapter_overhead"] = max(0.0, round(dur - float(status.execution_time_ms), 3))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["personal_health_agent"] = status.model_dump()
@@ -160,14 +164,14 @@ def personal_health_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def risk_assessment_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Risk Assessment Agent adapter and capture execution telemetry."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     adapter = RiskAssessmentAdapter()
     updates, status = adapter.execute_with_telemetry(state)
 
-    dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
     durations = dict(state.get("durations_ms") or {})
     durations["risk_assessment_node"] = dur
-    durations["risk_assessment_adapter_overhead"] = max(0.0, dur - float(status.execution_time_ms))
+    durations["risk_assessment_adapter_overhead"] = max(0.0, round(dur - float(status.execution_time_ms), 3))
 
     agent_statuses = dict(state.get("agent_execution_status") or {})
     agent_statuses["risk_assessment_agent"] = status.model_dump()
@@ -189,7 +193,7 @@ def risk_assessment_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def evidence_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Compile cross-agent evidence registry and verify quarantine guards on invalid artifacts."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     registry_items = EvidenceRegistryService.compile_and_audit_registry(state)
     registry_dicts = [item.model_dump() for item in registry_items]
 
@@ -199,7 +203,7 @@ def evidence_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]
         warnings.append(f"Evidence Registry: {quarantined_count} evidence item(s) quarantined under scientific integrity guards.")
 
     durations = dict(state.get("durations_ms") or {})
-    durations["evidence_validation"] = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    durations["evidence_validation"] = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
 
     return {
         "evidence_registry": registry_dicts,
@@ -210,7 +214,7 @@ def evidence_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]
 
 def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Synthesize complete multi-agent assessment and compile FinalSupervisorAssessment contract."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     astro_id = state.get("astronaut_id", "AST-UNKNOWN")
     session_id = state.get("session_id", "SESSION-UNKNOWN")
     wf_id = state.get("workflow_id", "WF-UNKNOWN")
@@ -224,22 +228,27 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     for k, v in agent_statuses_raw.items():
         agent_statuses[k] = AgentExecutionStatus.model_validate(v) if isinstance(v, dict) else v
 
-    intake_ts_str = (state.get("timestamps") or {}).get("intake")
-    if intake_ts_str:
-        try:
-            start_dt = datetime.fromisoformat(intake_ts_str)
-            total_elapsed_ms = max(0.1, (datetime.utcnow() - start_dt).total_seconds() * 1000.0)
-        except Exception:
-            total_elapsed_ms = 0.0
+    perf_timestamps = dict(state.get("perf_timestamps") or {})
+    wf_start_perf = perf_timestamps.get("workflow_start")
+    if wf_start_perf:
+        total_elapsed_ms = max(0.01, round((time.perf_counter() - wf_start_perf) * 1000.0, 2))
     else:
-        total_elapsed_ms = 0.0
+        intake_ts_str = (state.get("timestamps") or {}).get("intake")
+        if intake_ts_str:
+            try:
+                start_dt = datetime.fromisoformat(intake_ts_str)
+                total_elapsed_ms = max(0.01, round((datetime.utcnow() - start_dt).total_seconds() * 1000.0, 2))
+            except Exception:
+                total_elapsed_ms = 0.0
+        else:
+            total_elapsed_ms = 0.0
 
     sq_ms = float(agent_statuses.get("sensor_quality_agent", {}).execution_time_ms if "sensor_quality_agent" in agent_statuses else 0.0)
     pha_ms = float(agent_statuses.get("personal_health_agent", {}).execution_time_ms if "personal_health_agent" in agent_statuses else 0.0)
     ra_ms = float(agent_statuses.get("risk_assessment_agent", {}).execution_time_ms if "risk_assessment_agent" in agent_statuses else 0.0)
 
     subagent_total_ms = sq_ms + pha_ms + ra_ms
-    supervisor_overhead_ms = max(0.1, round(total_elapsed_ms - subagent_total_ms, 2))
+    supervisor_overhead_ms = max(0.0, round(total_elapsed_ms - subagent_total_ms, 2))
 
     if "supervisor" in agent_statuses:
         agent_statuses["supervisor"].execution_time_ms = supervisor_overhead_ms
@@ -322,7 +331,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     )
 
     durations = dict(state.get("durations_ms") or {})
-    synthesis_dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    synthesis_dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
     durations["final_synthesis"] = synthesis_dur
 
     measured_overhead = round(
@@ -394,7 +403,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Persist final assessment to disk and edge SQLite database."""
-    t_start = datetime.utcnow()
+    t_start = time.perf_counter()
     assessment_dict = dict(state.get("final_assessment") or {})
     success, filepath, p_warnings = PersistenceService.save_final_assessment(assessment_dict)
 
@@ -409,7 +418,7 @@ def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
             workflow_status = "PARTIALLY_COMPLETED"
 
     durations = dict(state.get("durations_ms") or {})
-    persistence_dur = max(0.1, (datetime.utcnow() - t_start).total_seconds() * 1000.0)
+    persistence_dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
     durations["persistence"] = persistence_dur
 
     if "timing_breakdown" in assessment_dict and isinstance(assessment_dict["timing_breakdown"], dict):
@@ -429,10 +438,45 @@ def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
 def final_response_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Finalize workflow, stamp completion timestamp, and deliver astronaut communication."""
+    t_resp_start = time.perf_counter()
     timestamps = dict(state.get("timestamps") or {})
     timestamps["completed"] = datetime.utcnow().isoformat()
 
+    durations = dict(state.get("durations_ms") or {})
+    resp_dur = max(0.01, round((time.perf_counter() - t_resp_start) * 1000.0, 3))
+    durations["final_response"] = resp_dur
+
+    perf_timestamps = dict(state.get("perf_timestamps") or {})
+    wf_start_perf = perf_timestamps.get("workflow_start")
+
+    assessment_dict = dict(state.get("final_assessment") or {})
+    if wf_start_perf and "timing_breakdown" in assessment_dict and isinstance(assessment_dict["timing_breakdown"], dict):
+        total_wf_ms = max(0.01, round((time.perf_counter() - wf_start_perf) * 1000.0, 2))
+        tb = assessment_dict["timing_breakdown"]
+        tb["workflow_total_execution_time_ms"] = total_wf_ms
+        subagent_sum = (
+            tb.get("sensor_quality_execution_time_ms", 0.0)
+            + tb.get("personal_health_execution_time_ms", 0.0)
+            + tb.get("risk_assessment_execution_time_ms", 0.0)
+        )
+        tb["supervisor_overhead_time_ms"] = max(0.0, round(total_wf_ms - subagent_sum, 2))
+        cur_meas = tb.get("measured_supervisor_overhead_ms", 0.0)
+        tb["measured_supervisor_overhead_ms"] = round(cur_meas + resp_dur, 2)
+
+        try:
+            from ..config.settings import get_supervisor_settings
+            import json
+            cfg = get_supervisor_settings()
+            out_file = cfg.output_dir / "final_supervisor_assessment.json"
+            if out_file.exists():
+                with open(out_file, "w", encoding="utf-8") as f:
+                    json.dump(assessment_dict, f, indent=2, default=str)
+        except Exception:
+            pass
+
     return {
         "timestamps": timestamps,
+        "durations_ms": durations,
+        "final_assessment": assessment_dict,
         "current_step": "FINAL_RESPONSE"
     }

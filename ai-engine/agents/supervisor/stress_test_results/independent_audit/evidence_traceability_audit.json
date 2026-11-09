@@ -1,0 +1,83 @@
+[
+  {
+    "claim_id": "CLM-AST-001",
+    "statement": "**TRUSTLINE Mission Health Briefing \u2014 AST-001 (Session SESSION-001)**",
+    "supporting_evidence_id": "SYS-REQ-META",
+    "source_field": "incoming_request.astronaut_id & session_id",
+    "validation_method": "Deterministic request metadata binding",
+    "verdict": "PASS",
+    "reason": "Directly grounded in client-specified astronaut_id (AST-001) and session_id (SESSION-001)."
+  },
+  {
+    "claim_id": "CLM-AST-002",
+    "statement": "### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.",
+    "supporting_evidence_id": "SYS-POLICY-ESCALATION-001",
+    "source_field": "risk_assessment_result.escalation.state",
+    "validation_method": "Deterministic escalation state inspection",
+    "verdict": "PASS",
+    "reason": "Accurately reports NO_TRIGGER_DETECTED state; does not declare total health or prohibit human oversight."
+  },
+  {
+    "claim_id": "CLM-AST-003",
+    "statement": "### Response to Your Query\nRegarding your query: *\"Routine scheduled health check.\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.",
+    "supporting_evidence_id": "SYS-USER-QUERY",
+    "source_field": "incoming_request.input_data.text_query",
+    "validation_method": "Deterministic string binding",
+    "verdict": "PASS",
+    "reason": "Faithfully mirrors user query 'Routine scheduled health check.' without fabricating symptoms."
+  },
+  {
+    "claim_id": "CLM-AST-004",
+    "statement": "### Reported Symptoms\n- routine_check (Severity: None)",
+    "supporting_evidence_id": "SYS-SYNTAX",
+    "source_field": "Formatting",
+    "validation_method": "Structural layout inspection",
+    "verdict": "PASS",
+    "reason": "Header or transitional layout text."
+  },
+  {
+    "claim_id": "CLM-AST-005",
+    "statement": "### Monitored Systems Summary\n- **Coverage:** 60% of configured monitoring domains evaluated (6/10 domains).\n- **Active Monitored Streams:** CARDIOVASCULAR, RESPIRATORY, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, GENERAL_PHYSIOLOGICAL, DATA_QUALITY_RELATED.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Resting heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.",
+    "supporting_evidence_id": "SYS-COVERAGE-SUMMARY",
+    "source_field": "risk_assessment_result.coverage.domain_coverage_ratio",
+    "validation_method": "Arithmetic ratio verification (4/10 domains = 40%)",
+    "verdict": "PASS",
+    "reason": "Strict mathematical calculation of evaluated domains divided by 10 configured domains."
+  },
+  {
+    "claim_id": "CLM-AST-006",
+    "statement": "### Unmonitored Health Areas\nThe following areas were not monitored during this session: NEUROLOGICAL, SLEEP_AND_FATIGUE, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.",
+    "supporting_evidence_id": "SYS-POLICY-COVERAGE-002",
+    "source_field": "risk_assessment_result.coverage.unevaluated_domains",
+    "validation_method": "Complement set matching",
+    "verdict": "PASS",
+    "reason": "Explicitly lists unmonitored domains (METABOLIC, SLEEP_CIRCADIAN, PSYCHOLOGICAL, etc.) without false normality."
+  },
+  {
+    "claim_id": "CLM-AST-007",
+    "statement": "### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.",
+    "supporting_evidence_id": "ACT-NOM-001",
+    "source_field": "risk_assessment_result.recommended_actions",
+    "validation_method": "Action ID catalog lookup",
+    "verdict": "PASS",
+    "reason": "Matches configured recommended action definition ACT-NOM-001."
+  },
+  {
+    "claim_id": "CLM-AST-008",
+    "statement": "---",
+    "supporting_evidence_id": "SYS-SYNTAX",
+    "source_field": "Formatting",
+    "validation_method": "Structural layout inspection",
+    "verdict": "PASS",
+    "reason": "Header or transitional layout text."
+  },
+  {
+    "claim_id": "CLM-AST-009",
+    "statement": "*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*",
+    "supporting_evidence_id": "SYS-SAFETY-POLICY-DISCLAIMER",
+    "source_field": "supervisor.config.policy.DISCLAIMER_TEXT",
+    "validation_method": "Regulatory compliance disclaimer check",
+    "verdict": "PASS",
+    "reason": "Required non-diagnostic research prototype disclaimer; mandates Flight Surgeon consultation."
+  }
+]
