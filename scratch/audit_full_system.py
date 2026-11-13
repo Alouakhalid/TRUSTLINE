@@ -240,7 +240,7 @@ results["resilience_matrix"].append({
         "missing_not_converted_to_normal": s4_fa.get("overall_risk") in ("INSUFFICIENT_DATA", "UNKNOWN"),
         "quarantined_artifacts_enforced": True,
         "partial_results_marked": True,
-        "escalation_semantics_hold": s4_fa.get("escalation_state") == "NO_TRIGGER_DETECTED",
+        "escalation_semantics_hold": s4_fa.get("escalation_state") in ("ASSESSMENT_INCOMPLETE", "NO_TRIGGER_DETECTED"),
         "communication_factual": True
     },
     "verdict": "PASS" if s4_isolated and s4_no_fab else "FAIL"
@@ -349,22 +349,33 @@ unprovenanced_state = {
     "sensor_quality_result": {"overall_quality_score": 0.8},
     "personal_health_result": {
         "core_features": {"hr_mean_bpm": 70.0}
-    }
+    },
+    "injected_evidence": [
+        {
+            "evidence_id": "EV-UNPROVENANCED-001",
+            "source_agent": "UNKNOWN",
+            "provenance": "",
+            "metric_name": "fake_spo2",
+            "observed_value": 99.0
+        }
+    ]
 }
 s8_registry = EvidenceRegistryService.compile_and_audit_registry(unprovenanced_state)
-s8_verified_provenance = all(bool(item.provenance) and bool(item.source_agent) for item in s8_registry)
+s8_injected_item = next((item for item in s8_registry if item.evidence_id == "EV-UNPROVENANCED-001"), None)
+s8_quarantined = s8_injected_item is not None and s8_injected_item.is_quarantined is True and s8_injected_item.validity_status == "INVALID"
+s8_verified_provenance = s8_quarantined and all(bool(item.provenance) and bool(item.source_agent) for item in s8_registry if item.evidence_id != "EV-UNPROVENANCED-001")
 
 results["resilience_matrix"].append({
     "scenario_id": "RES-08",
     "name": "Evidence Provenance Verification",
-    "description": "Every compiled evidence item strictly carries non-empty source agent and provenance metadata",
+    "description": "Every compiled evidence item strictly carries non-empty source agent and provenance metadata; unprovenanced items are quarantined",
     "total_registry_items": len(s8_registry),
     "all_items_provenanced": s8_verified_provenance,
     "criteria_verified": {
         "correct_workflow_status": True,
         "no_fabricated_data": True,
         "missing_not_converted_to_normal": True,
-        "quarantined_artifacts_enforced": True,
+        "quarantined_artifacts_enforced": s8_quarantined,
         "partial_results_marked": True,
         "escalation_semantics_hold": True,
         "communication_factual": True

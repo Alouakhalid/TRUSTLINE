@@ -1,0 +1,71 @@
+{
+  "execution_timestamp": "2026-11-13T02:42:03.905547Z",
+  "python_runtime": "3.10.0rc2",
+  "platform": "Darwin 25.5.0 (macOS)",
+  "total_collected": 455,
+  "total_passed": 455,
+  "total_failed": 0,
+  "total_skipped": 0,
+  "total_duration_seconds": 314.44,
+  "suite_breakdown": [
+    {
+      "suite_name": "Sensor Quality Agent (SQA)",
+      "directory": "ai-engine/agents/sensor_quality/tests/",
+      "collected": 45,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 6.82,
+      "command": "pytest ai-engine/agents/sensor_quality/tests/ -v",
+      "status": "PASS"
+    },
+    {
+      "suite_name": "Personal Health Agent (PHA)",
+      "directory": "ai-engine/agents/personal_health/tests/",
+      "collected": 211,
+      "passed": 211,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 74.15,
+      "command": "pytest ai-engine/agents/personal_health/tests/ -v",
+      "note": "When GROQ_API_KEY is unset, test_08 skips yielding 210 passed, 1 skipped. With active key in ai-engine/agents/personal_health/.env, all 211 pass.",
+      "status": "PASS"
+    },
+    {
+      "suite_name": "Risk Assessment Agent (RAA)",
+      "directory": "ai-engine/agents/risk_assessment/tests/",
+      "collected": 86,
+      "passed": 86,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 15.3,
+      "command": "pytest ai-engine/agents/risk_assessment/tests/ -v",
+      "status": "PASS"
+    },
+    {
+      "suite_name": "Supervisor Core Unit & E2E",
+      "directory": "ai-engine/agents/supervisor/tests/ (excluding stress/)",
+      "collected": 67,
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 155.72,
+      "command": "pytest ai-engine/agents/supervisor/tests/ --ignore=ai-engine/agents/supervisor/tests/stress -v",
+      "note": "Includes 47 base unit tests + 13 P01 E2E tests + 7 P02 RAG E2E tests.",
+      "status": "PASS"
+    },
+    {
+      "suite_name": "Supervisor Stress Suite",
+      "directory": "ai-engine/agents/supervisor/tests/stress/",
+      "collected": 46,
+      "passed": 46,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 62.45,
+      "command": "pytest ai-engine/agents/supervisor/tests/stress/ -v",
+      "note": "Also verified in duplicate path ai-engine/agents/supervisor/stress_test_results/regression_tests/.",
+      "status": "PASS"
+    }
+  ],
+  "log_artifact": "artifacts/audits/priority_03/independent_verification/full_regression_execution.log"
+}

@@ -1,0 +1,248 @@
+{
+  "evaluation_classification": "CATEGORY A: REAL OBSERVATIONAL EVALUATION",
+  "dataset": "WESAD (real wearable physiological sensor recording windows)",
+  "description": "Evaluated on genuine human physiological windows from wesad_window_features.csv. Calibrated on initial Baseline windows, tested on remaining Baseline and Stress windows.",
+  "subject_evaluations": {
+    "S2": {
+      "calib_windows": 10,
+      "test_nominal_windows": 8,
+      "test_stress_windows": 10,
+      "precision": 0.7143,
+      "recall": 1.0,
+      "f1_score": 0.8333,
+      "false_alarm_rate": 0.5,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 4,
+        "TN": 4,
+        "FN": 0
+      }
+    },
+    "S3": {
+      "calib_windows": 10,
+      "test_nominal_windows": 8,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 8,
+        "FN": 0
+      }
+    },
+    "S4": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 9,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 9,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S5": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S6": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 0.7143,
+      "recall": 1.0,
+      "f1_score": 0.8333,
+      "false_alarm_rate": 0.4444,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 4,
+        "TN": 5,
+        "FN": 0
+      }
+    },
+    "S7": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S8": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S9": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S10": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S11": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S13": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S14": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S15": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 0.8462,
+      "recall": 1.0,
+      "f1_score": 0.9167,
+      "false_alarm_rate": 0.2222,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 2,
+        "TN": 7,
+        "FN": 0
+      }
+    },
+    "S16": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 10,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_alarm_rate": 0.0,
+      "confusion_matrix": {
+        "TP": 10,
+        "FP": 0,
+        "TN": 9,
+        "FN": 0
+      }
+    },
+    "S17": {
+      "calib_windows": 10,
+      "test_nominal_windows": 9,
+      "test_stress_windows": 11,
+      "precision": 0.8462,
+      "recall": 1.0,
+      "f1_score": 0.9167,
+      "false_alarm_rate": 0.2222,
+      "confusion_matrix": {
+        "TP": 11,
+        "FP": 2,
+        "TN": 7,
+        "FN": 0
+      }
+    }
+  },
+  "aggregate": {
+    "total_samples": 288,
+    "nominal_samples": 133,
+    "stress_samples": 155,
+    "precision": 0.9281,
+    "recall": 1.0,
+    "f1_score": 0.9627,
+    "false_alarm_rate": 0.0902,
+    "roc_auc": 0.988,
+    "confusion_matrix": {
+      "TP": 155,
+      "FP": 12,
+      "TN": 121,
+      "FN": 0
+    }
+  }
+}

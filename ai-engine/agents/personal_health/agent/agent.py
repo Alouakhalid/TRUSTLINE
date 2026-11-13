@@ -74,9 +74,10 @@ def generate_clinical_synthesis(
     astronaut_id: str,
     session_id: str,
     evidence_summary: str,
-    ground_truth: Optional[Dict[str, Any]] = None
+    ground_truth: Optional[Dict[str, Any]] = None,
+    router: Optional[Any] = None
 ) -> Optional[str]:
-    """Generate concise 3-paragraph flight surgeon synthesis using Groq LLM with clinical claim validation."""
+    """Generate concise 3-paragraph flight surgeon synthesis using HybridAIRouter with clinical claim validation."""
     cfg = get_settings()
     validator = ClinicalSynthesisValidator()
     gt = ground_truth or {
@@ -100,24 +101,30 @@ def generate_clinical_synthesis(
     }
 
     api_key = cfg.groq_api_key or os.environ.get("GROQ_API_KEY", "")
-    if not api_key:
-        return validator.generate_grounded_fallback(gt)
+    from hybrid_ai import HybridAIRouter, GroqProvider, ProviderRequest, TaskCategory
+    r = router
+    if r is None:
+        if not api_key:
+            return validator.generate_grounded_fallback(gt)
+        groq_p = GroqProvider(api_key=api_key, model=cfg.groq_chat_model, timeout=25.0)
+        r = HybridAIRouter(groq_provider=groq_p)
 
     try:
-        client = Groq(api_key=api_key)
         prompt = build_clinical_synthesis_prompt(
             astronaut_id=astronaut_id,
             session_id=session_id,
             evidence_summary=evidence_summary,
             ground_truth=gt
         )
-        resp = client.chat.completions.create(
-            model=cfg.groq_chat_model,
-            messages=[{"role": "user", "content": prompt}],
+        req = ProviderRequest(
+            task_category=TaskCategory.PERSONAL_HEALTH_SYNTHESIS,
+            prompt=prompt,
             temperature=0.1,
-            max_tokens=650
+            max_tokens=650,
+            timeout_seconds=25.0
         )
-        raw_output = resp.choices[0].message.content
+        resp = r.route_request(req)
+        raw_output = resp.content or ""
         validation_res = validator.validate_synthesis(raw_output, ground_truth=gt)
         return validation_res.sanitized_synthesis
     except Exception:

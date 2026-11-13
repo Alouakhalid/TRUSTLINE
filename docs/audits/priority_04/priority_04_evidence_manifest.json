@@ -1,0 +1,123 @@
+{
+  "priority": "PRIORITY_04",
+  "milestone": "Priority 04 \u2014 Final Integration Closure Gate",
+  "title": "Hybrid AI Router & Local LLM Fallback Evidence Manifest",
+  "generated_timestamp": "2026-11-13T16:55:00Z",
+  "verdict": "ACCEPTED WITH LIMITATIONS \u2014 RESEARCH PROTOTYPE ONLY",
+  "artifacts": [
+    {
+      "filename": "full_regression_execution_p04_closure.log",
+      "relative_path": "artifacts/audits/priority_04/full_regression_execution_p04_closure.log",
+      "size_bytes": 62832,
+      "sha256": "cb3f7e56a8a58a07ce6dd6930a79a773904ba29756b01830bcd173cf21f2bca0"
+    },
+    {
+      "filename": "hardware_memory_and_inference_profile.json",
+      "relative_path": "artifacts/audits/priority_04/hardware_memory_and_inference_profile.json",
+      "size_bytes": 4384,
+      "sha256": "087fda4c0f8a760c0d793112176f72968ffc93d0e8b37f593829ce5fcf9eceea"
+    },
+    {
+      "filename": "cloud_vs_local_benchmark_comparison.json",
+      "relative_path": "artifacts/audits/priority_04/cloud_vs_local_benchmark_comparison.json",
+      "size_bytes": 7434,
+      "sha256": "2c2bf8c19657aad9c97f63f40a2598c3ccf7637b0c65f20d6d79ca1c905ef130"
+    },
+    {
+      "filename": "local_model_evaluation_raw.json",
+      "relative_path": "artifacts/audits/priority_04/local_model_evaluation_raw.json",
+      "size_bytes": 5063,
+      "sha256": "fdeade7a47933010e2547c2378854a89a97c441a18c1b068394b6675cb1d6d8b"
+    },
+    {
+      "filename": "real_fallback_integration_evidence.json",
+      "relative_path": "artifacts/audits/priority_04/real_fallback_integration_evidence.json",
+      "size_bytes": 3653,
+      "sha256": "0ab4a538f0af538da9ea775163a89130e3d8f338401d9e1d9bc65a95cfdae1a0"
+    },
+    {
+      "filename": "priority_04_regression_summary.json",
+      "relative_path": "artifacts/audits/priority_04/priority_04_regression_summary.json",
+      "size_bytes": 1160,
+      "sha256": "3aabddb9c35daf7c214d37c8b0818378c0ee04dbb3937016a023a321b9aa6441"
+    },
+    {
+      "filename": "priority_04_test_inventory.json",
+      "relative_path": "artifacts/audits/priority_04/priority_04_test_inventory.json",
+      "size_bytes": 57774,
+      "sha256": "2525b212f8ae2b236b95a643c46c0c79a4ba25c0699dd998b3530cf747989634"
+    },
+    {
+      "filename": "PRIORITY_04_FINAL_INTEGRATION_REPORT.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_FINAL_INTEGRATION_REPORT.md",
+      "size_bytes": 10404,
+      "sha256": "e2ca700262a327ca378934e5df5b65ef2d6c1cc0a6423eafee53f77df908702d"
+    },
+    {
+      "filename": "PRIORITY_04_DIRECT_CALL_AUDIT.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_DIRECT_CALL_AUDIT.md",
+      "size_bytes": 6260,
+      "sha256": "248df28b82cf10f027e0a8d79e3b68138bd90d7eaa1cc42fa4063d9ca276576e"
+    },
+    {
+      "filename": "PRIORITY_04_AGENT_ROUTING_TEST_MATRIX.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_AGENT_ROUTING_TEST_MATRIX.md",
+      "size_bytes": 6081,
+      "sha256": "1d74a9e0187d1b0a3adddbe9689f844b097a0c908704bf7c5dbf2f9a544f99b8"
+    },
+    {
+      "filename": "PRIORITY_04_FINAL_REGRESSION_REPORT.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_FINAL_REGRESSION_REPORT.md",
+      "size_bytes": 4392,
+      "sha256": "3b85a1deea1f8836daac5d8b737f1a2a45a9a2907c590b16ff0fba05b1d86b31"
+    },
+    {
+      "filename": "PRIORITY_04_ARCHITECTURE.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_ARCHITECTURE.md",
+      "size_bytes": 4366,
+      "sha256": "5d723ac8e6f21d2de13656bdcb5deb723e9b2659de5ee56acb52be0fe99c03c3"
+    },
+    {
+      "filename": "PRIORITY_04_ROUTING_POLICY.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_ROUTING_POLICY.md",
+      "size_bytes": 3297,
+      "sha256": "1218ad02a840b4b5a7a709432e3d6453cefc5eea6d971a7a01233360d9ad8f31"
+    },
+    {
+      "filename": "PRIORITY_04_CAPABILITY_POLICY.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_CAPABILITY_POLICY.md",
+      "size_bytes": 3512,
+      "sha256": "24f7ac88b6a0d9fbec8bac4a33d40535e1cc778df91a84d19de9850724ab540c"
+    },
+    {
+      "filename": "LOCAL_MODEL_EVALUATION.md",
+      "relative_path": "audits/priority_04/LOCAL_MODEL_EVALUATION.md",
+      "size_bytes": 8986,
+      "sha256": "a8f65a12daace9e2c45c07e54bb88fa828bbe0f39eb249047234a52bf0432e05"
+    },
+    {
+      "filename": "PRIORITY_04_BENCHMARK.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_BENCHMARK.md",
+      "size_bytes": 5734,
+      "sha256": "38e4848b17d5188a82a6d86bb6167b98e725e69fa6d415fdeb682efe4726f129"
+    },
+    {
+      "filename": "PRIORITY_04_SECURITY_REVIEW.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_SECURITY_REVIEW.md",
+      "size_bytes": 2113,
+      "sha256": "d4703eacee1f84e78f2bc52c7505005bb52fba2bb74a84e53faea395d46e2860"
+    },
+    {
+      "filename": "PRIORITY_04_FINAL_REPORT.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_FINAL_REPORT.md",
+      "size_bytes": 10861,
+      "sha256": "9d934bc3752329d72579d3b74f801da5899c16500f619a0aa19835a0be15dff5"
+    },
+    {
+      "filename": "PRIORITY_04_FINAL_EVIDENCE_VERIFICATION.md",
+      "relative_path": "audits/priority_04/PRIORITY_04_FINAL_EVIDENCE_VERIFICATION.md",
+      "size_bytes": 24045,
+      "sha256": "7db8d1ae6d3bd74c6de8b17ec9e6d7e84a893b3c956fee17375f540a896c15c5"
+    }
+  ]
+}

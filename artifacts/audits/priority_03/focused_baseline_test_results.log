@@ -1,0 +1,67 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 38 items
+
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_01_baseline_status_not_available_default PASSED [  2%]
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_02_baseline_status_insufficient_data PASSED [  5%]
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_03_baseline_status_invalid PASSED [  7%]
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_04_baseline_status_available PASSED [ 10%]
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_05_single_session_cannot_become_baseline PASSED [ 13%]
+ai-engine/agents/personal_health/tests/test_baseline_interface.py::test_06_set_baseline_status_dynamically PASSED [ 15%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_01_sqa_quality_gating PASSED [ 18%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_02_physiological_sanity_bounding PASSED [ 21%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_03_zero_variability_hrv_artifact_exclusion PASSED [ 23%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_04_duplicate_observation_rejection PASSED [ 26%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_05_identity_isolation_at_ingestion PASSED [ 28%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_06_temporal_chronological_ordering PASSED [ 31%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_pipeline.py::test_07_telemetry_immutability PASSED [ 34%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_statistics.py::test_01_non_parametric_statistics_accuracy PASSED [ 36%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_statistics.py::test_02_zero_mad_fallback_handling PASSED [ 39%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_statistics.py::test_03_multi_context_baseline_generation PASSED [ 42%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_statistics.py::test_04_determinism_and_reproducibility PASSED [ 44%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_statistics.py::test_05_outlier_robustness_median_vs_mean PASSED [ 47%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_isolation_and_states.py::test_01_astronaut_identity_isolation PASSED [ 50%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_isolation_and_states.py::test_02_rejection_of_unverified_astronaut PASSED [ 52%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_isolation_and_states.py::test_03_readiness_state_machine_transitions PASSED [ 55%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_isolation_and_states.py::test_04_baseline_interface_state_mapping PASSED [ 57%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_isolation_and_states.py::test_05_versioned_snapshot_isolation PASSED [ 60%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_01_context_inference_from_accelerometry PASSED [ 63%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_02_transparent_contextual_fallback PASSED [ 65%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_03_robust_z_score_and_severity_classification PASSED [ 68%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_04_composite_anomaly_score PASSED [ 71%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_05_safe_abstention_on_unestablished_baseline PASSED [ 73%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_context_and_deviation.py::test_06_temporal_persistence_tracking PASSED [ 76%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_update_manager.py::test_01_anti_contamination_guard_rejects_anomalous_session PASSED [ 78%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_update_manager.py::test_02_poor_sensor_quality_rejection PASSED [ 81%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_update_manager.py::test_03_cross_astronaut_update_rejection PASSED [ 84%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_update_manager.py::test_04_version_increment_and_audit_logging PASSED [ 86%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_update_manager.py::test_05_snapshot_rollback PASSED [ 89%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_supervisor_integration.py::test_01_supervisor_e2e_with_established_baseline PASSED [ 92%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_supervisor_integration.py::test_02_supervisor_e2e_with_unestablished_baseline PASSED [ 94%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_supervisor_integration.py::test_03_telemetry_immutability_through_supervisor_dag PASSED [ 97%]
+ai-engine/agents/personal_health/tests/test_personal_baseline_supervisor_integration.py::test_04_baseline_deviation_does_not_falsely_escalate_evacuation PASSED [100%]
+
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 38 passed, 8 warnings in 19.67s ========================

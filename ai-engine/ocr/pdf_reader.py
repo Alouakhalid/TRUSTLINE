@@ -81,12 +81,19 @@ class PDFReader:
                 )
                 page_metas.append(page_meta)
                 all_records.extend(page_res)
+                doc_warnings.extend(page_meta.extraction_warnings)
 
             validated_records = [MedicalDocumentValidator.validate_record(r) for r in all_records]
             final_records = MedicalDocumentValidator.detect_duplicates_and_conflicts(validated_records)
 
             import hashlib
             file_hash = hashlib.sha256(file_bytes).hexdigest()
+
+            has_failed_page = any(pm.ocr_status == "FAILED" for pm in page_metas)
+            if has_failed_page:
+                overall_status = "FAILED" if len(final_records) == 0 else "PARTIALLY_COMPLETED"
+            else:
+                overall_status = "COMPLETED"
 
             return DocumentProcessingResult(
                 document_id=document_id,
@@ -97,7 +104,7 @@ class PDFReader:
                 total_pages_or_images=total_pages,
                 page_metadata=page_metas,
                 extracted_records=final_records,
-                overall_status="COMPLETED",
+                overall_status=overall_status,
                 processing_warnings=doc_warnings
             )
         finally:

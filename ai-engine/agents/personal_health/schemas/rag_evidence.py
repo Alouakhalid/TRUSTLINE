@@ -11,6 +11,7 @@ class EvidenceType(str, Enum):
     CLINICAL_GUIDELINE = "CLINICAL_GUIDELINE"
     PEER_REVIEWED_RESEARCH = "PEER_REVIEWED_RESEARCH"
     TECHNICAL_SPECIFICATION = "TECHNICAL_SPECIFICATION"
+    CONFIRMED_CLINICAL_FINDING = "CONFIRMED_CLINICAL_FINDING"
 
 class RAGCollection(str, Enum):
     """The 5 required aerospace medical knowledge collections."""

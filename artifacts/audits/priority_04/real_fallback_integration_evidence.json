@@ -1,0 +1,92 @@
+{
+  "timestamp_start": "2026-11-13T10:50:12Z",
+  "environment": {
+    "chip": "Apple M1",
+    "memory": "8GB Unified Memory",
+    "local_model": "qwen2.5:7b-instruct",
+    "cloud_model": "qwen/qwen3.8-27b",
+    "ollama_endpoint": "http://127.0.0.1:11434"
+  },
+  "scenarios": {
+    "scenario_a_normal_cloud": {
+      "status": "PASSED",
+      "provider_selected": "GROQ",
+      "model": "qwen/qwen3.8-27b",
+      "is_fallback": false,
+      "latency_s": 0.261,
+      "response_content": "Microgravity causes a significant reduction in human red blood cell mass, a condition known as spaceflight-associated anemia, primarily driven by fluid shifts and increased erythrocyte destruction.",
+      "circuit_state": "CLOSED"
+    },
+    "scenario_b_local_fallback": {
+      "status": "PASSED",
+      "provider_selected": "OLLAMA",
+      "model": "qwen2.5:7b-instruct",
+      "is_fallback": true,
+      "fallback_reason": "ProviderAuthenticationError: Groq authentication rejected: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}",
+      "latency_s": 7.661,
+      "tokens_per_second": 11.79,
+      "response_content": "Microgravity reduces human red blood cell mass through increased erythrocyte destruction and decreased bone marrow production.",
+      "circuit_state": "CLOSED"
+    },
+    "scenario_c_cloud_recovery": {
+      "status": "PASSED",
+      "provider_selected": "GROQ",
+      "model": "qwen/qwen3.8-27b",
+      "is_fallback": false,
+      "latency_s": 0.406,
+      "response_content": "Microgravity causes a significant reduction in human red blood cell mass, a physiological adaptation that contributes to the development of spaceflight-associated neuro-ocular syndrome and potential anemia upon return to Earth.",
+      "circuit_state": "CLOSED"
+    }
+  },
+  "telemetry_records": [
+    {
+      "request_id": "REQ-SCENARIO-A",
+      "timestamp_iso": "2026-11-13T10:50:13.329888",
+      "task_category": "general_explanation",
+      "provider_selected": "GROQ",
+      "model_selected": "qwen/qwen3.8-27b",
+      "routing_decision": "CLOUD_DIRECT",
+      "fallback_reason": null,
+      "latency_ms": 260.71,
+      "tokens_per_second": null,
+      "retry_count": 0,
+      "circuit_breaker_state": "CLOSED",
+      "output_valid": true,
+      "final_status": "SUCCESS",
+      "error_summary": null
+    },
+    {
+      "request_id": "REQ-SCENARIO-B",
+      "timestamp_iso": "2026-11-13T10:50:20.995964",
+      "task_category": "general_explanation",
+      "provider_selected": "OLLAMA",
+      "model_selected": "qwen2.5:7b-instruct",
+      "routing_decision": "LOCAL_FALLBACK",
+      "fallback_reason": "ProviderAuthenticationError: Groq authentication rejected: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}",
+      "latency_ms": 7407.58,
+      "tokens_per_second": 11.79,
+      "retry_count": 0,
+      "circuit_breaker_state": "CLOSED",
+      "output_valid": true,
+      "final_status": "FALLBACK_SUCCESS",
+      "error_summary": null
+    },
+    {
+      "request_id": "REQ-SCENARIO-C",
+      "timestamp_iso": "2026-11-13T10:50:21.405924",
+      "task_category": "general_explanation",
+      "provider_selected": "GROQ",
+      "model_selected": "qwen/qwen3.8-27b",
+      "routing_decision": "CLOUD_DIRECT",
+      "fallback_reason": null,
+      "latency_ms": 405.95,
+      "tokens_per_second": null,
+      "retry_count": 0,
+      "circuit_breaker_state": "CLOSED",
+      "output_valid": true,
+      "final_status": "SUCCESS",
+      "error_summary": null
+    }
+  ],
+  "timestamp_end": "2026-11-13T10:50:21Z"
+}

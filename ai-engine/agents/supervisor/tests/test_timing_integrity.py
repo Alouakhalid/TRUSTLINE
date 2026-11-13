@@ -99,8 +99,9 @@ def test_03_workflow_total_covers_complete_pipeline(tmp_path):
         total_ms = tb.get("workflow_total_execution_time_ms", 0.0)
         sq_ms = tb.get("sensor_quality_execution_time_ms", 0.0)
         pha_ms = tb.get("personal_health_execution_time_ms", 0.0)
+        rag_ms = tb.get("medical_rag_execution_time_ms", 0.0)
         ra_ms = tb.get("risk_assessment_execution_time_ms", 0.0)
-        subagent_sum = sq_ms + pha_ms + ra_ms
+        subagent_sum = sq_ms + pha_ms + rag_ms + ra_ms
 
         assert total_ms > 0.0
         assert total_ms >= subagent_sum
@@ -143,6 +144,7 @@ def test_04_supervisor_overhead_is_accurately_separated(tmp_path):
         subagent_sum = (
             tb.get("sensor_quality_execution_time_ms", 0.0)
             + tb.get("personal_health_execution_time_ms", 0.0)
+            + tb.get("medical_rag_execution_time_ms", 0.0)
             + tb.get("risk_assessment_execution_time_ms", 0.0)
         )
 

@@ -1,0 +1,150 @@
+{
+  "model_name": "qwen2.5:7b-instruct",
+  "timestamp": "2026-11-13T10:43:26Z",
+  "tasks": {
+    "task_1_general_instruction": {
+      "wall_time_s": 5.219,
+      "total_duration_s": 5.18,
+      "load_duration_s": 0.035,
+      "prompt_eval_duration_s": 1.249,
+      "prompt_eval_count": 57,
+      "eval_duration_s": 3.808,
+      "eval_count": 49,
+      "tokens_per_second": 12.87,
+      "response": "- Microgravity causes bone density loss, increasing the risk of osteoporosis.\n- Prolonged exposure to space can lead to muscle atrophy and weakness.\n- Isolation and confinement can result in psychological stress and decreased mental health.",
+      "validity": {
+        "meets_constraint": true,
+        "bullet_count_estimate": 3
+      }
+    },
+    "task_2_concise_summarization": {
+      "wall_time_s": 3.999,
+      "total_duration_s": 3.995,
+      "load_duration_s": 0.003,
+      "prompt_eval_duration_s": 1.144,
+      "prompt_eval_count": 105,
+      "eval_duration_s": 2.824,
+      "eval_count": 37,
+      "tokens_per_second": 13.1,
+      "response": "Astronaut had transient 142 bpm tachycardia post-EVA, mild dyspnea, resolved in 8 minutes of rest; ECG normal.",
+      "validity": {
+        "word_count": 17,
+        "under_25_words": true
+      }
+    },
+    "task_3_structured_json": {
+      "wall_time_s": 4.878,
+      "total_duration_s": 4.87,
+      "load_duration_s": 0.006,
+      "prompt_eval_duration_s": 0.873,
+      "prompt_eval_count": 89,
+      "eval_duration_s": 3.972,
+      "eval_count": 50,
+      "tokens_per_second": 12.59,
+      "response": "{\n  \"astronaut_id\": \"AST-001\",\n  \"status\": \"NOMINAL\",\n  \"vitals\": {\n    \"hr\": 75,\n    \"spo2\": 99\n  }\n}",
+      "validity": {
+        "is_valid_json": true,
+        "has_expected_keys": true
+      }
+    },
+    "task_4_schema_constrained": {
+      "wall_time_s": 5.927,
+      "total_duration_s": 5.924,
+      "load_duration_s": 0.003,
+      "prompt_eval_duration_s": 0.935,
+      "prompt_eval_count": 112,
+      "eval_duration_s": 4.975,
+      "eval_count": 63,
+      "tokens_per_second": 12.66,
+      "response": "{\n  \"symptom_category\": \"Headache\",\n  \"symptom_type\": \"Throbbing frontotemporal headache\",\n  \"severity\": \"6/10\",\n  \"duration\": \"2 hours\",\n  \"denied_symptoms\": [\"Nausea\", \"Dizziness\"]\n}",
+      "validity": {
+        "is_valid_json": true,
+        "schema_conformance": true
+      }
+    },
+    "task_5_medical_text_extraction": {
+      "wall_time_s": 8.043,
+      "total_duration_s": 8.03,
+      "load_duration_s": 0.002,
+      "prompt_eval_duration_s": 0.948,
+      "prompt_eval_count": 111,
+      "eval_duration_s": 7.072,
+      "eval_count": 88,
+      "tokens_per_second": 12.44,
+      "response": "{\n  \"extracted_values\": {\n    \"Hematocrit\": \"42%\",\n    \"Platelets\": \"210k/uL\",\n    \"Potassium\": \"4.1 mEq/L\"\n  },\n  \"omitted_or_unmeasured_tests\": [\n    \"Sodium\",\n    \"Glucose\",\n    \"WBC count\",\n    \"Blood Pressure\",\n    \"Mission Day\"\n  ]\n}",
+      "validity": {
+        "anti_hallucination_passed": true
+      }
+    },
+    "task_6_tool_calling": {
+      "wall_time_s": 4.821,
+      "message": {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_i14so0vj",
+            "function": {
+              "index": 0,
+              "name": "get_astronaut_baseline",
+              "arguments": {
+                "astronaut_id": "AST-002",
+                "parameters": {
+                  "heart_rate": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "tool_calls": [
+        {
+          "id": "call_i14so0vj",
+          "function": {
+            "index": 0,
+            "name": "get_astronaut_baseline",
+            "arguments": {
+              "astronaut_id": "AST-002",
+              "parameters": {
+                "heart_rate": true
+              }
+            }
+          }
+        }
+      ],
+      "validity": {
+        "emitted_tool_call": true,
+        "tool_call_details": [
+          {
+            "id": "call_i14so0vj",
+            "function": {
+              "index": 0,
+              "name": "get_astronaut_baseline",
+              "arguments": {
+                "astronaut_id": "AST-002",
+                "parameters": {
+                  "heart_rate": true
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "task_7_arabic_instruction": {
+      "wall_time_s": 6.968,
+      "total_duration_s": 6.959,
+      "load_duration_s": 0.002,
+      "prompt_eval_duration_s": 1.203,
+      "prompt_eval_count": 120,
+      "eval_duration_s": 5.742,
+      "eval_count": 71,
+      "tokens_per_second": 12.37,
+      "response": "{\n  \"astronaut_id\": \"AST-001\",\n  \"confirmed_symptoms\": [\n    \"صداع نصفي متوسط\",\n    \"إرهاق خفيف\"\n  ],\n  \"denied_symptoms\": [\n    \"ألم في الصدر\",\n    \"ضيق في التنفس\"\n  ]\n}",
+      "validity": {
+        "is_valid_json": true,
+        "has_keys": true
+      }
+    }
+  }
+}

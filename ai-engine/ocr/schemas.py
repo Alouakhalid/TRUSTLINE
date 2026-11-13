@@ -62,6 +62,15 @@ class ExtractedMedicalRecord(BaseModel):
     validation_status: ValidationStatus = ValidationStatus.NEEDS_REVIEW
     validation_warnings: List[str] = Field(default_factory=list)
     extraction_method: ExtractionMethod = ExtractionMethod.NATIVE_TEXT
+    is_historical: bool = Field(default=True, description="Strictly marks document extractions as historical records, not live telemetry")
+    abnormality_flag: Optional[str] = Field(default=None, description="Clinical abnormality flag e.g. HIGH, LOW, NORMAL if explicitly documented")
+    conflict_detected: bool = Field(default=False, description="True if conflicting source extractions exist for this measurement")
+    conflicting_records: List[str] = Field(default_factory=list, description="IDs of conflicting extraction records")
+    document_date: Optional[str] = Field(default=None, description="Explicit document creation or report date")
+    clinical_observations: List[str] = Field(default_factory=list, description="Documented clinical observations")
+    diagnoses: List[str] = Field(default_factory=list, description="Explicitly documented clinical diagnoses")
+    medications: List[str] = Field(default_factory=list, description="Explicitly documented medications and dosages")
+    allergies: List[str] = Field(default_factory=list, description="Explicitly documented allergies")
 
 class PageProcessingMetadata(BaseModel):
     """Processing metadata associated with an individual document page or section."""

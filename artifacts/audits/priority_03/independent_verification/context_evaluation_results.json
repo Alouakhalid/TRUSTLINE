@@ -1,0 +1,72 @@
+{
+  "audit_timestamp": "2026-11-13T02:24:04.315175Z",
+  "evaluation_module": "ContextAwareBaselineEngine",
+  "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py",
+  "gravity_vector_analysis": {
+    "earth_1g_validation": {
+      "status": "VALIDATED",
+      "resting_magnitude": "~1.00g",
+      "locomotion_magnitude": ">1.15g",
+      "findings": "Accurate separation between quiet seated rest and active movement under standard 1-g Earth gravity."
+    },
+    "spaceflight_microgravity_0g_validation": {
+      "status": "FAILED / UNVALIDATED_IN_ORBIT",
+      "resting_magnitude": "~0.00g to 0.05g",
+      "locomotion_magnitude": "Variable (0.1g to 0.8g depending on exercise device tethering)",
+      "defect_analysis": "The condition `acc_mag <= 1.05 and acc_std <= 0.04` will evaluate to TRUE during free-floating microgravity rest, but will also trigger false positive rest classifications when translation occurs without torso accelerometer registration. Furthermore, `acc_mag > 1.15` will fail to detect high-intensity zero-g exercise unless tether strain registers as gravitational normal.",
+      "flight_readiness_blocker": true
+    }
+  },
+  "population_hardcoding_evaluation": {
+    "finding": "Population resting HR ceiling (hr <= 78.0 bpm) violates personalization invariants.",
+    "impact": "Athletes with resting tachycardia (e.g. post-EVA dehydration) will be rejected from REST context even while sleeping, defaulting to NOMINAL_OPERATIONAL.",
+    "recommendation": "Use personal percentile-based context inference (e.g. HR < P25 of personal history) rather than static 78.0 bpm."
+  },
+  "test_cases": [
+    {
+      "test_name": "Earth Quiet Rest",
+      "input": {
+        "acc_magnitude_mean": 1.01,
+        "acc_magnitude_std": 0.02,
+        "hr_mean_bpm": 62.0
+      },
+      "inferred": "REST",
+      "ground_truth": "REST",
+      "match": true
+    },
+    {
+      "test_name": "Earth Locomotion",
+      "input": {
+        "acc_magnitude_mean": 1.28,
+        "acc_magnitude_std": 0.15,
+        "hr_mean_bpm": 115.0
+      },
+      "inferred": "ACTIVITY",
+      "ground_truth": "ACTIVITY",
+      "match": true
+    },
+    {
+      "test_name": "Microgravity Free-Float (Simulated)",
+      "input": {
+        "acc_magnitude_mean": 0.03,
+        "acc_magnitude_std": 0.01,
+        "hr_mean_bpm": 58.0
+      },
+      "inferred": "REST",
+      "ground_truth": "MICROGRAVITY_REST",
+      "match": "UNSAFE_ASSUMPTION"
+    },
+    {
+      "test_name": "Dehydrated Sleep Rest (Simulated)",
+      "input": {
+        "acc_magnitude_mean": 1.0,
+        "acc_magnitude_std": 0.01,
+        "hr_mean_bpm": 82.0
+      },
+      "inferred": "NOMINAL_OPERATIONAL",
+      "ground_truth": "REST",
+      "match": false,
+      "reason": "HR exceeds hardcoded 78.0 bpm limit"
+    }
+  ]
+}

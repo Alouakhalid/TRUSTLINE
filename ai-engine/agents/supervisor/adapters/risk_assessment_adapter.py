@@ -56,7 +56,12 @@ class RiskAssessmentAdapter(BaseAgentAdapter):
         agent = RiskAssessmentAgent()
         output = agent.assess(input_payload)
 
-        exec_state = AgentExecutionState.SUCCESS if output.assessment_status in ("COMPLETED", "PARTIALLY_COMPLETED") else AgentExecutionState.FAILED
+        if output.assessment_status in ("COMPLETED", "PARTIALLY_COMPLETED"):
+            exec_state = AgentExecutionState.SUCCESS
+        elif output.assessment_status == "INSUFFICIENT_DATA":
+            exec_state = AgentExecutionState.PARTIAL
+        else:
+            exec_state = AgentExecutionState.FAILED
         warnings = list(output.uncertainties)
 
         status = AgentExecutionStatus(

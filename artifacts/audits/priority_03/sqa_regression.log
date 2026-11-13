@@ -1,0 +1,55 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 45 items
+
+ai-engine/agents/sensor_quality/tests/test_agent.py::test_langchain_tools_execution PASSED [  2%]
+ai-engine/agents/sensor_quality/tests/test_agent.py::test_crewai_agent_instantiation PASSED [  4%]
+ai-engine/agents/sensor_quality/tests/test_artifact_detection.py::test_flatline_detection PASSED [  6%]
+ai-engine/agents/sensor_quality/tests/test_artifact_detection.py::test_clipping_detection PASSED [  8%]
+ai-engine/agents/sensor_quality/tests/test_artifact_detection.py::test_spike_detection PASSED [ 11%]
+ai-engine/agents/sensor_quality/tests/test_artifact_detection.py::test_sensor_validation_temperature_limits PASSED [ 13%]
+ai-engine/agents/sensor_quality/tests/test_end_to_end.py::test_full_pipeline_with_sample_manifest PASSED [ 15%]
+ai-engine/agents/sensor_quality/tests/test_end_to_end.py::test_partial_sensor_failure_isolation PASSED [ 17%]
+ai-engine/agents/sensor_quality/tests/test_explainability.py::test_evidence_extractor_structure PASSED [ 20%]
+ai-engine/agents/sensor_quality/tests/test_explainability.py::test_shap_graceful_no_model_fallback PASSED [ 22%]
+ai-engine/agents/sensor_quality/tests/test_explainability.py::test_explanation_engine_visualization PASSED [ 24%]
+ai-engine/agents/sensor_quality/tests/test_explainability.py::test_explanation_report_formatting PASSED [ 26%]
+ai-engine/agents/sensor_quality/tests/test_integrity_checks.py::test_clean_signal_integrity PASSED [ 28%]
+ai-engine/agents/sensor_quality/tests/test_integrity_checks.py::test_missing_values_detected PASSED [ 31%]
+ai-engine/agents/sensor_quality/tests/test_integrity_checks.py::test_empty_signal_triggers_critical PASSED [ 33%]
+ai-engine/agents/sensor_quality/tests/test_quality_scoring.py::test_clean_sensor_scoring PASSED [ 35%]
+ai-engine/agents/sensor_quality/tests/test_quality_scoring.py::test_critical_failure_override PASSED [ 37%]
+ai-engine/agents/sensor_quality/tests/test_quality_scoring.py::test_overall_session_scoring PASSED [ 40%]
+ai-engine/agents/sensor_quality/tests/test_signal_loader.py::test_signal_loader_memory_mapped PASSED [ 42%]
+ai-engine/agents/sensor_quality/tests/test_signal_loader.py::test_signal_loader_path_traversal_protection PASSED [ 44%]
+ai-engine/agents/sensor_quality/tests/test_signal_loader.py::test_sliding_windows PASSED [ 46%]
+ai-engine/agents/sensor_quality/tests/test_temporal_checks.py::test_clean_temporal_integrity PASSED [ 48%]
+ai-engine/agents/sensor_quality/tests/test_temporal_checks.py::test_gap_detection PASSED [ 51%]
+ai-engine/agents/sensor_quality/tests/test_temporal_checks.py::test_backwards_timestamps_detected PASSED [ 53%]
+ai-engine/agents/sensor_quality/tests/test_temporal_checks.py::test_duplicate_timestamps_detected PASSED [ 55%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_01_valid_input_and_signals PASSED [ 57%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_02_empty_signal PASSED [ 60%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_03_nan_and_inf_values PASSED [ 62%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_04_missing_timestamps PASSED [ 64%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_05_duplicate_timestamps PASSED [ 66%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_06_irregular_sampling PASSED [ 68%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_07_severe_ecg_artifact PASSED [ 71%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_08_eda_discontinuity PASSED [ 73%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_09_resp_interruption PASSED [ 75%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_10_emg_saturation PASSED [ 77%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_11_acc_clipping PASSED [ 80%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_12_temperature_rate_of_change_warning PASSED [ 82%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_13_critical_sensor_failure PASSED [ 84%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_14_invalid_quality_score PASSED [ 86%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_15_inconsistent_sensor_status_and_recommendation PASSED [ 88%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_16_incorrect_overall_score PASSED [ 91%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_17_llm_briefing_contradiction PASSED [ 93%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_18_invalid_downstream_decision PASSED [ 95%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_19_missing_sensor_file PASSED [ 97%]
+ai-engine/agents/sensor_quality/tests/test_validation_layer.py::test_20_partial_sensor_availability PASSED [100%]
+
+============================== 45 passed in 6.31s ==============================

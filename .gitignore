@@ -22,6 +22,9 @@ Thumbs.db
 # Logs and databases
 *.log
 !ai-engine/ml/reports/**/*.log
+!artifacts/audits/**/*.log
+!audits/**/*.log
+!docs/audits/**/*.log
 *.sqlite3
 *.db
 

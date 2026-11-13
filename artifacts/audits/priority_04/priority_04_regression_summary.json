@@ -1,0 +1,51 @@
+{
+  "execution_date": "2026-11-13",
+  "duration_seconds": 348.91,
+  "environment": {
+    "platform": "Darwin (Apple Silicon M1)",
+    "os_version": "macOS Darwin 26.5.2",
+    "python": "3.10.0rc2",
+    "pytest": "9.1.1",
+    "memory": "8GB Unified Memory",
+    "ollama_model": "qwen2.5:7b-instruct",
+    "groq_model": "qwen/qwen3.8-27b"
+  },
+  "suites": {
+    "sensor_quality_agent": {
+      "collected": 45,
+      "passed": 45,
+      "failed": 0,
+      "skipped": 0
+    },
+    "personal_health_agent": {
+      "collected": 211,
+      "passed": 210,
+      "failed": 0,
+      "skipped": 1
+    },
+    "risk_assessment_agent": {
+      "collected": 86,
+      "passed": 86,
+      "failed": 0,
+      "skipped": 0
+    },
+    "supervisor_agent": {
+      "collected": 113,
+      "passed": 113,
+      "failed": 0,
+      "skipped": 0
+    },
+    "hybrid_ai_core_and_integration": {
+      "collected": 25,
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "total_collected": 480,
+  "total_passed": 479,
+  "total_failed": 0,
+  "total_skipped": 1,
+  "pass_rate_percentage": 100.0,
+  "verdict": "ACCEPTED WITH LIMITATIONS \u2014 RESEARCH PROTOTYPE ONLY"
+}

@@ -1,0 +1,90 @@
+{
+  "manifest_created_at": "2026-11-13T02:42:03.906858Z",
+  "evidence_directory": "/Users/alikhalidalikhalid/TRUSTLINE/artifacts/audits/priority_03/independent_verification",
+  "artifacts": [
+    {
+      "filename": "benchmark_sample_provenance.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/benchmark_sample_provenance.json",
+      "size_bytes": 176541,
+      "sha256": "16e97fe4bb6cdea3d88e9c17a1492e0fe1787ce5c51ac253892b4847dbb4ec32"
+    },
+    {
+      "filename": "benchmark_reproduced_metrics.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/benchmark_reproduced_metrics.json",
+      "size_bytes": 1959,
+      "sha256": "7928277853db62f13d63e9c97e36fecd3649ebd9608d9ceeefd11298effe335c"
+    },
+    {
+      "filename": "real_wesad_observational_evaluation.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/real_wesad_observational_evaluation.json",
+      "size_bytes": 5460,
+      "sha256": "03af46f037035e02286db15a8cd74f1c08e541f8406b5f78db1f1f67d9f03b66"
+    },
+    {
+      "filename": "data_leakage_audit_results.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/data_leakage_audit_results.json",
+      "size_bytes": 2343,
+      "sha256": "ed233e3db7ac46e77d53a1fd27139037861c657deb40eac7e68c08cb2d6dc4c8"
+    },
+    {
+      "filename": "threshold_inventory.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/threshold_inventory.json",
+      "size_bytes": 8970,
+      "sha256": "f481a638bef536a504b58fa9f9dd2baef0459328bb3a75afa5fa8fe7fb796a05"
+    },
+    {
+      "filename": "context_evaluation_results.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/context_evaluation_results.json",
+      "size_bytes": 2803,
+      "sha256": "b80b4f3908e38c15fd26b9505cd5a68ec1f6c0de9d8990a19185f2fd7d9b4067"
+    },
+    {
+      "filename": "update_integrity_test_logs.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/update_integrity_test_logs.json",
+      "size_bytes": 2035,
+      "sha256": "3e656e0295bc2ec6a416f7485395a0049399c24653909812cc0967fd982d14b4"
+    },
+    {
+      "filename": "security_findings.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/security_findings.json",
+      "size_bytes": 3043,
+      "sha256": "bfe4e19394d955f597cfadc636d3e1768024ad891377d9387c86dbfc532fb9e5"
+    },
+    {
+      "filename": "old_vs_new_regression_inventory.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/old_vs_new_regression_inventory.json",
+      "size_bytes": 1723,
+      "sha256": "786dceee189dd96129620f9bb93a3e08055c07f731756973bc25d23d791d8e7c"
+    },
+    {
+      "filename": "full_regression_execution.log",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/full_regression_execution.log",
+      "size_bytes": 59923,
+      "sha256": "15287b316d4ceeeeaab2dee46620cd5663cfbde7e387d699b7eb7728bba4e29f"
+    },
+    {
+      "filename": "priority_03_test_inventory.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/priority_03_test_inventory.json",
+      "size_bytes": 65662,
+      "sha256": "28ca3a8b9c2804d795b1785455cbc9e9caf2f37e3296f9f6507a463e31a12079"
+    },
+    {
+      "filename": "priority_03_regression_summary.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/priority_03_regression_summary.json",
+      "size_bytes": 2483,
+      "sha256": "5d72d48294fb1ddf6697eae76b6ade1eea8dba315056bbc3d4a0411d18e571bb"
+    },
+    {
+      "filename": "priority_03_threshold_inventory.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/priority_03_threshold_inventory.json",
+      "size_bytes": 5204,
+      "sha256": "38f73955ebb0903dab168217e17d685969ec2d269547ddaf2b98049739ee57c5"
+    },
+    {
+      "filename": "priority_03_benchmark_reproduction.json",
+      "relative_path": "artifacts/audits/priority_03/independent_verification/priority_03_benchmark_reproduction.json",
+      "size_bytes": 9713,
+      "sha256": "e765cce57c9cb1664421449c15796e8a0a5bc1727cb44cffa59985cf3cef30ab"
+    }
+  ]
+}

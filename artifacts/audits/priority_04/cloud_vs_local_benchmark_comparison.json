@@ -1,0 +1,165 @@
+{
+  "timestamp": "2026-11-13T10:53:16Z",
+  "cloud_model": "qwen/qwen3.8-27b",
+  "local_model": "qwen2.5:7b-instruct",
+  "cases": [
+    {
+      "case_id": "BM-01-SUMMARIZATION",
+      "name": "Clinical Summarization",
+      "cloud": {
+        "model": "qwen/qwen3.8-27b",
+        "latency_s": 0.711,
+        "word_count": 26,
+        "content": "Astronaut showed normal sinus rhythm with transient heart rate elevation to 138 bpm after 45 minutes of cycling, without chest pain, shortness of breath, or dizziness.",
+        "structured": null
+      },
+      "local": {
+        "model": "qwen2.5:7b-instruct",
+        "latency_s": 2.432,
+        "tokens_per_second": 12.5,
+        "word_count": 16,
+        "content": "Astronaut had transient heart rate elevation to 138 bpm post-exercise, normal sinus rhythm, no symptoms reported.",
+        "structured": null
+      }
+    },
+    {
+      "case_id": "BM-02-EXTRACTION-EN",
+      "name": "Structured Extraction (English)",
+      "cloud": {
+        "model": "qwen/qwen3.8-27b",
+        "latency_s": 0.499,
+        "word_count": 29,
+        "content": "{\n  \"confirmed_symptoms\": [\n    {\n      \"symptom\": \"motion sickness\",\n      \"severity\": \"moderate\"\n    },\n    {\n      \"symptom\": \"nausea\",\n      \"severity\": \"unspecified\"\n    },\n    {\n      \"symptom\": \"dizziness\",\n      \"severity\": \"mild\"\n    }\n  ],\n  \"denied_symptoms\": [\n    \"vomiting\",\n    \"headache\"\n  ]\n}",
+        "structured": {
+          "confirmed_symptoms": [
+            {
+              "symptom": "motion sickness",
+              "severity": "moderate"
+            },
+            {
+              "symptom": "nausea",
+              "severity": "unspecified"
+            },
+            {
+              "symptom": "dizziness",
+              "severity": "mild"
+            }
+          ],
+          "denied_symptoms": [
+            "vomiting",
+            "headache"
+          ]
+        }
+      },
+      "local": {
+        "model": "qwen2.5:7b-instruct",
+        "latency_s": 4.071,
+        "tokens_per_second": 12.38,
+        "word_count": 13,
+        "content": "{\n  \"confirmed_symptoms\": [\"motion sickness\", \"nausea\", \"mild dizziness\"],\n  \"denied_symptoms\": [\"vomiting\", \"headache\"],\n  \"severity\": \"moderate\"\n}",
+        "structured": {
+          "confirmed_symptoms": [
+            "motion sickness",
+            "nausea",
+            "mild dizziness"
+          ],
+          "denied_symptoms": [
+            "vomiting",
+            "headache"
+          ],
+          "severity": "moderate"
+        }
+      }
+    },
+    {
+      "case_id": "BM-03-EXTRACTION-AR",
+      "name": "Structured Extraction (Arabic)",
+      "cloud": {
+        "model": "qwen/qwen3.8-27b",
+        "latency_s": 0.278,
+        "word_count": 16,
+        "content": "{\n  \"confirmed_symptoms\": [\n    \"دوار خفيف\",\n    \"إجهاد عام\"\n  ],\n  \"denied_symptoms\": [\n    \"ألم في الصدر\",\n    \"خفقان\"\n  ]\n}",
+        "structured": {
+          "confirmed_symptoms": [
+            "دوار خفيف",
+            "إجهاد عام"
+          ],
+          "denied_symptoms": [
+            "ألم في الصدر",
+            "خفقان"
+          ]
+        }
+      },
+      "local": {
+        "model": "qwen2.5:7b-instruct",
+        "latency_s": 3.536,
+        "tokens_per_second": 11.84,
+        "word_count": 12,
+        "content": "{\n  \"confirmed_symptoms\": [\"دوار خفيف\", \"إجهاد عام\"],\n  \"denied_symptoms\": [\"ألم في الصدر\", \"خفقان\"]\n}",
+        "structured": {
+          "confirmed_symptoms": [
+            "دوار خفيف",
+            "إجهاد عام"
+          ],
+          "denied_symptoms": [
+            "ألم في الصدر",
+            "خفقان"
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "BM-04-ANTI-HALLUCINATION",
+      "name": "Medical Grounding (Anti-Hallucination)",
+      "cloud": {
+        "model": "qwen/qwen3.8-27b",
+        "latency_s": 0.92,
+        "word_count": 22,
+        "content": "{\n  \"extracted_findings\": {\n    \"Hemoglobin\": \"14.2 g/dL\",\n    \"Hematocrit\": \"41.5%\",\n    \"Serum Ferritin\": \"120 ng/mL\"\n  },\n  \"unmeasured_values\": [\n    \"Sodium\",\n    \"Potassium\",\n    \"WBC\",\n    \"Platelets\",\n    \"Glucose\"\n  ]\n}",
+        "structured": {
+          "extracted_findings": {
+            "Hemoglobin": "14.2 g/dL",
+            "Hematocrit": "41.5%",
+            "Serum Ferritin": "120 ng/mL"
+          },
+          "unmeasured_values": [
+            "Sodium",
+            "Potassium",
+            "WBC",
+            "Platelets",
+            "Glucose"
+          ]
+        }
+      },
+      "local": {
+        "model": "qwen2.5:7b-instruct",
+        "latency_s": 2.261,
+        "tokens_per_second": 12.17,
+        "word_count": 4,
+        "content": "{\n  \"Hemoglobin\": 14.2  }",
+        "structured": {
+          "Hemoglobin": 14.2
+        }
+      }
+    },
+    {
+      "case_id": "BM-05-CLINICAL-EXPLANATION",
+      "name": "Flight Surgeon Briefing Synthesis",
+      "cloud": {
+        "model": "qwen/qwen3.8-27b",
+        "latency_s": 0.577,
+        "word_count": 162,
+        "content": "The current physiological telemetry indicates a stable baseline for the subject, with a resting heart rate of 72 bpm and RMSSD values falling within normal limits, suggesting adequate parasympathetic tone and cardiovascular efficiency. The recorded skin conductance level of 4.2 uS is consistent with low-to-moderate sympathetic arousal, aligning with the subject’s report of no acute symptoms or distress. These metrics collectively suggest that the astronaut is currently in a state of physiological homeostasis, with no immediate indicators of autonomic dysregulation or stress-related anomalies.\n\nIt is critical to note that these findings strictly reflect the current state of telemetry acquisition and represent a snapshot of the subject’s status at the time of data capture. As such, this assessment should be interpreted as a real-time health indicator rather than a long-term trend analysis. Continued monitoring is recommended to ensure that these stable parameters persist, particularly given the dynamic nature of spaceflight environments, but no immediate medical intervention is warranted based on the present data.",
+        "structured": null
+      },
+      "local": {
+        "model": "qwen2.5:7b-instruct",
+        "latency_s": 13.716,
+        "tokens_per_second": 11.75,
+        "word_count": 117,
+        "content": "The astronaut's current telemetry data indicates a resting heart rate of 72 beats per minute (bpm), which is within the normal range for a well-conditioned individual. The root mean square of the successive differences (RMSSD) is also within normal limits, suggesting adequate parasympathetic nervous system activity and overall cardiovascular stability. Additionally, the skin conductance level is measured at 4.2 microsiemens (uS), which is within the expected range for a relaxed state, indicating no significant stress or anxiety. Given the absence of any reported symptoms, these physiological parameters suggest that the astronaut is currently in good health and performing within normal physiological bounds. It is important to continue monitoring these parameters to ensure sustained stability during the mission.",
+        "structured": null
+      }
+    }
+  ]
+}

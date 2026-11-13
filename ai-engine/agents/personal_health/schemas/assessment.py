@@ -62,6 +62,7 @@ class PersonalHealthAssessment(BaseModel):
     execution_timestamp: datetime = Field(default_factory=datetime.utcnow)
     assessment_status: AssessmentStatus
     baseline_status: BaselineStatus = Field(default=BaselineStatus.NOT_AVAILABLE)
+    personal_baseline_deviation: Optional[Dict[str, Any]] = None
 
     sensor_quality_summary: Optional[SensorIngestionContext] = None
     core_features: Optional[Core14Features] = None

@@ -44,7 +44,8 @@ class SymptomService:
     def __init__(
         self,
         repository: Optional[SymptomRepository] = None,
-        voice_service: Optional[GroqVoiceService] = None
+        voice_service: Optional[GroqVoiceService] = None,
+        router: Optional[Any] = None
     ):
         cfg = get_settings()
         self.repository = repository or SymptomRepository()
@@ -52,6 +53,14 @@ class SymptomService:
         self.api_key = cfg.groq_api_key or os.environ.get("GROQ_API_KEY", "")
         self.model = cfg.groq_chat_model
         self._groq_client = Groq(api_key=self.api_key) if self.api_key else None
+        from hybrid_ai import HybridAIRouter, GroqProvider
+        if router is not None:
+            self.router = router
+        else:
+            groq_p = GroqProvider(api_key=self.api_key, model=self.model, timeout=20.0)
+            if self._groq_client:
+                groq_p._client = self._groq_client
+            self.router = HybridAIRouter(groq_provider=groq_p)
 
     def process_text_symptom(
         self,
@@ -166,21 +175,23 @@ class SymptomService:
         return event
 
     def _extract_with_llm(self, text: str) -> Dict[str, Any]:
-        """Query Groq LLM with structured output or fallback to deterministic rules."""
-        if self._groq_client:
+        """Query HybridAIRouter with structured output or fallback to deterministic rules."""
+        if self._groq_client or (self.router and getattr(self.router, "mode", "") == "LOCAL_ONLY"):
             try:
-                resp = self._groq_client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": SYMPTOM_EXTRACTION_SYSTEM_PROMPT},
-                        {"role": "user", "content": f"Symptom statement: {text}"}
-                    ],
+                from hybrid_ai import ProviderRequest, TaskCategory
+                req = ProviderRequest(
+                    task_category=TaskCategory.STRUCTURED_EXTRACTION,
+                    prompt=f"Symptom statement: {text}",
+                    system_prompt=SYMPTOM_EXTRACTION_SYSTEM_PROMPT,
                     temperature=0.1,
                     max_tokens=400,
-                    response_format={"type": "json_object"}
+                    format_json=True
                 )
-                raw_json = resp.choices[0].message.content
-                return json.loads(raw_json)
+                resp = self.router.route_request(req)
+                if resp.structured_data:
+                    return resp.structured_data
+                if resp.content:
+                    return json.loads(resp.content)
             except Exception:
                 pass
 

@@ -1,0 +1,12 @@
+total_test_cases: 15
+mean_precision_at_3: 0.6
+mean_recall_at_3: 0.7222
+mean_mrr: 0.8667
+mean_ndcg_at_3: 0.7582
+citation_correctness_pct: 100.0
+safety_violation_rate_pct: 0.0
+personal_isolation_rate_pct: 100.0
+mean_retrieval_latency_ms: 22.19
+p95_retrieval_latency_ms: 52.73
+mean_generation_latency_ms: 0.55
+p95_generation_latency_ms: 0.78

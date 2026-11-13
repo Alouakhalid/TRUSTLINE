@@ -66,15 +66,20 @@ def generate_llm_briefing(
     astronaut_id: str,
     session_id: str,
     overall_quality_str: str,
-    sensor_summaries_str: str
+    sensor_summaries_str: str,
+    router: Optional[Any] = None
 ) -> Optional[str]:
     cfg = get_settings()
     api_key = cfg.groq_api_key or os.environ.get("GROQ_API_KEY", "")
-    if not api_key:
-        return None
+    from hybrid_ai import HybridAIRouter, GroqProvider, ProviderRequest, TaskCategory
+    r = router
+    if r is None:
+        if not api_key:
+            return None
+        groq_p = GroqProvider(api_key=api_key, model=cfg.groq_model, timeout=20.0)
+        r = HybridAIRouter(groq_provider=groq_p)
+
     try:
-        from groq import Groq
-        client = Groq(api_key=api_key)
         prompt = (
             f"You are the TRUSTLINE Sensor Quality Specialist. "
             f"Review this deterministic physiological sensor quality assessment for Astronaut {astronaut_id} (Session {session_id}):\n\n"
@@ -85,12 +90,14 @@ def generate_llm_briefing(
             f"2. Sensor-specific findings and physical causes of flagged issues.\n"
             f"3. Recommended downstream actions (e.g. signal filtering, sensor recalibration)."
         )
-        resp = client.chat.completions.create(
-            model=cfg.groq_model,
-            messages=[{"role": "user", "content": prompt}],
+        req = ProviderRequest(
+            task_category=TaskCategory.SENSOR_QUALITY_BRIEFING,
+            prompt=prompt,
             temperature=0.2,
-            max_tokens=600
+            max_tokens=600,
+            timeout_seconds=20.0
         )
-        return resp.choices[0].message.content
+        resp = r.route_request(req)
+        return resp.content
     except Exception as exc:
         return f"Briefing generation error: {str(exc)}"

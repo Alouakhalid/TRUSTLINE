@@ -77,11 +77,19 @@ def input_validation_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     if not state.get("reported_symptoms_text") and not state.get("reported_symptoms_voice_path"):
         missing_data.append("Subjective symptom questionnaire was not submitted.")
 
-    if not state.get("confirmed_medical_records"):
+    if not state.get("confirmed_medical_records") and not state.get("document_paths"):
         missing_data.append("External confirmed medical records were not submitted.")
 
     if not state.get("mission_context"):
         missing_data.append("Mission operational context parameters were not provided.")
+
+    doc_paths = state.get("document_paths") or []
+    for dp in doc_paths:
+        p = Path(dp)
+        if not p.exists():
+            warnings.append(f"Document file not found at path: {dp}")
+        elif p.suffix.lower() not in {".pdf", ".docx", ".png", ".jpg", ".jpeg", ".webp"}:
+            warnings.append(f"Document file '{p.name}' has unsupported extension: {p.suffix}")
 
     durations = dict(state.get("durations_ms") or {})
     durations["input_validation"] = max(0.01, round((time.perf_counter() - t_val_start) * 1000.0, 3))
@@ -161,6 +169,113 @@ def personal_health_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     updates["current_step"] = "PERSONAL_HEALTH"
 
     return updates
+
+def medical_rag_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
+    """Execute Medical Knowledge RAG retrieval and citation-grounded generation."""
+    t_start = time.perf_counter()
+    agent_statuses = dict(state.get("agent_execution_status") or {})
+    warnings = list(state.get("warnings") or [])
+    errors = list(state.get("errors") or [])
+    durations = dict(state.get("durations_ms") or {})
+
+    existing_rag = state.get("medical_rag_result")
+    if existing_rag is not None:
+        dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
+        durations["medical_rag_node"] = dur
+        durations["medical_rag_adapter_overhead"] = 0.0
+        agent_statuses["medical_rag_agent"] = AgentExecutionStatus(
+            agent_name="medical_knowledge_rag_service",
+            status=AgentExecutionState.SUCCESS,
+            execution_time_ms=dur,
+            warnings=["Used pre-existing medical RAG result from state."]
+        ).model_dump()
+        return {
+            "medical_rag_result": existing_rag,
+            "agent_execution_status": agent_statuses,
+            "durations_ms": durations,
+            "current_step": "MEDICAL_RAG"
+        }
+
+    incoming = state.get("incoming_request") or {}
+    input_data = incoming.get("input_data") or {}
+    user_query = None
+    if isinstance(input_data, dict):
+        user_query = input_data.get("text_query")
+
+    if not user_query:
+        user_query = state.get("reported_symptoms_text")
+
+    if not user_query:
+        pha = state.get("personal_health_result") or {}
+        symptoms = pha.get("symptom_findings", [])
+        if symptoms:
+            sym_names = [s.get("symptom_type", "") for s in symptoms if s.get("symptom_type")]
+            if sym_names:
+                user_query = "protocol emergency management " + " ".join(sym_names)
+
+    if not user_query:
+        user_query = "mission medical protocol aerospace health baseline"
+
+    rag_output = None
+    exec_state = AgentExecutionState.SUCCESS
+    rag_warnings = []
+    rag_error = None
+
+    try:
+        from personal_health.rag.service import MedicalKnowledgeRAGService
+        from personal_health.rag.schemas import RAGRetrievalStatus
+
+        rag_service = MedicalKnowledgeRAGService()
+        rag_result = rag_service.query(user_query, astronaut_id=state.get("astronaut_id"))
+        rag_output = rag_result.model_dump()
+
+        if rag_result.retrieval_status in (RAGRetrievalStatus.ISOLATION_VIOLATION, "ISOLATION_VIOLATION"):
+            exec_state = AgentExecutionState.PARTIAL
+            rag_warnings.append("Medical RAG personal record isolation guard triggered: query contained astronaut identifier or personal records.")
+        elif rag_result.retrieval_status in (RAGRetrievalStatus.INSUFFICIENT_EVIDENCE, "INSUFFICIENT_EVIDENCE", RAGRetrievalStatus.NO_RELEVANT_SOURCES, "NO_RELEVANT_SOURCES", RAGRetrievalStatus.EMPTY_CORPUS, "EMPTY_CORPUS"):
+            exec_state = AgentExecutionState.PARTIAL
+            status_str = getattr(rag_result.retrieval_status, "value", str(rag_result.retrieval_status))
+            rag_warnings.append(f"Medical RAG returned {status_str} for query.")
+        elif rag_result.retrieval_status in (RAGRetrievalStatus.CONFLICT_DETECTED, "CONFLICT_DETECTED", RAGRetrievalStatus.CONFLICTING_SOURCES, "CONFLICTING_SOURCES"):
+            rag_warnings.append("Medical RAG detected conflicting guideline recommendations across retrieved knowledge sources.")
+    except Exception as exc:
+        exec_state = AgentExecutionState.FAILED
+        rag_error = str(exc)
+        rag_warnings.append(f"Medical RAG invocation failure: {rag_error}")
+        rag_output = {
+            "query_id": "QRY-FAILED",
+            "query": user_query or "",
+            "retrieved_passages": [],
+            "generated_answer": "Medical knowledge retrieval unavailable due to internal service exception.",
+            "retrieval_status": "SERVICE_ERROR",
+            "grounding_status": "UNGROUNDED",
+            "source_citations": []
+        }
+
+    dur = max(0.01, round((time.perf_counter() - t_start) * 1000.0, 3))
+    durations["medical_rag_node"] = dur
+    durations["medical_rag_adapter_overhead"] = 0.0
+
+    agent_status_item = AgentExecutionStatus(
+        agent_name="medical_knowledge_rag_service",
+        status=exec_state,
+        execution_time_ms=dur,
+        error_message=rag_error,
+        warnings=rag_warnings
+    )
+    agent_statuses["medical_rag_agent"] = agent_status_item.model_dump()
+    warnings.extend(rag_warnings)
+    if rag_error:
+        errors.append(f"Medical RAG Error: {rag_error}")
+
+    return {
+        "medical_rag_result": rag_output,
+        "agent_execution_status": agent_statuses,
+        "warnings": warnings,
+        "errors": errors,
+        "durations_ms": durations,
+        "current_step": "MEDICAL_RAG"
+    }
 
 def risk_assessment_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     """Execute Risk Assessment Agent adapter and capture execution telemetry."""
@@ -245,9 +360,10 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
 
     sq_ms = float(agent_statuses.get("sensor_quality_agent", {}).execution_time_ms if "sensor_quality_agent" in agent_statuses else 0.0)
     pha_ms = float(agent_statuses.get("personal_health_agent", {}).execution_time_ms if "personal_health_agent" in agent_statuses else 0.0)
+    rag_ms = float(agent_statuses.get("medical_rag_agent", {}).execution_time_ms if "medical_rag_agent" in agent_statuses else 0.0)
     ra_ms = float(agent_statuses.get("risk_assessment_agent", {}).execution_time_ms if "risk_assessment_agent" in agent_statuses else 0.0)
 
-    subagent_total_ms = sq_ms + pha_ms + ra_ms
+    subagent_total_ms = sq_ms + pha_ms + rag_ms + ra_ms
     supervisor_overhead_ms = max(0.0, round(total_elapsed_ms - subagent_total_ms, 2))
 
     if "supervisor" in agent_statuses:
@@ -279,8 +395,41 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
     overall_conf = ra.get("overall_confidence", "MODERATE")
     overall_status = ra.get("assessment_status", "PARTIALLY_COMPLETED")
 
+    ra_exec = agent_statuses.get("risk_assessment_agent")
+    pha_exec = agent_statuses.get("personal_health_agent")
+    ra_failed = (
+        not ra
+        or (ra_exec and ra_exec.status == AgentExecutionState.FAILED)
+        or ra.get("status") == "FAILED"
+        or "error" in ra
+    )
+    pha_failed = (
+        not pha
+        or (pha_exec and pha_exec.status == AgentExecutionState.FAILED)
+        or pha.get("status") == "FAILED"
+        or "error" in pha
+    )
+
     errors = list(state.get("errors") or [])
-    if errors and not (sqr or pha or ra):
+    if ra_failed and pha_failed:
+        completion_status = WorkflowCompletionStatus.FAILED
+        overall_status = "FAILED"
+        overall_risk = "UNKNOWN"
+        esc_state = "ASSESSMENT_UNAVAILABLE"
+        esc_req = False
+    elif ra_failed:
+        completion_status = WorkflowCompletionStatus.PARTIALLY_COMPLETED
+        overall_status = "PARTIALLY_COMPLETED"
+        overall_risk = "UNKNOWN"
+        esc_state = "ASSESSMENT_UNAVAILABLE"
+        esc_req = False
+    elif pha_failed:
+        completion_status = WorkflowCompletionStatus.PARTIALLY_COMPLETED
+        overall_status = "PARTIALLY_COMPLETED"
+        overall_risk = "INSUFFICIENT_DATA"
+        esc_state = "ASSESSMENT_INCOMPLETE"
+        esc_req = False
+    elif errors and not (sqr or pha or ra):
         completion_status = WorkflowCompletionStatus.FAILED
     elif errors or coverage.domain_coverage_ratio < 1.0 or overall_status == "PARTIALLY_COMPLETED":
         completion_status = WorkflowCompletionStatus.PARTIALLY_COMPLETED
@@ -339,6 +488,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         + durations.get("input_validation", 0.0)
         + durations.get("sensor_quality_adapter_overhead", 0.0)
         + durations.get("personal_health_adapter_overhead", 0.0)
+        + durations.get("medical_rag_adapter_overhead", 0.0)
         + durations.get("risk_assessment_adapter_overhead", 0.0)
         + durations.get("evidence_validation", 0.0)
         + synthesis_dur,
@@ -350,12 +500,22 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         supervisor_overhead_time_ms=round(supervisor_overhead_ms, 2),
         sensor_quality_execution_time_ms=round(sq_ms, 2),
         personal_health_execution_time_ms=round(pha_ms, 2),
+        medical_rag_execution_time_ms=round(rag_ms, 2),
         risk_assessment_execution_time_ms=round(ra_ms, 2),
         evidence_validation_time_ms=round(durations.get("evidence_validation", 0.0), 2),
         final_synthesis_time_ms=round(synthesis_dur, 2),
         persistence_time_ms=round(durations.get("persistence", 0.0), 2),
         measured_supervisor_overhead_ms=measured_overhead
     )
+
+    rag_result = state.get("medical_rag_result") or {}
+    rag_summary = {
+        "retrieval_status": rag_result.get("retrieval_status", "NOT_INVOKED"),
+        "grounding_status": rag_result.get("grounding_status", "NOT_INVOKED"),
+        "generated_answer": rag_result.get("generated_answer", ""),
+        "source_citations": rag_result.get("source_citations", []),
+        "passages_count": len(rag_result.get("retrieved_passages", []))
+    } if rag_result else {}
 
     assessment = FinalSupervisorAssessment(
         assessment_id=f"SUP-{uuid.uuid4().hex[:8].upper()}",
@@ -375,6 +535,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         coverage_summary=coverage,
         sensor_quality_summary=sqr,
         personal_health_summary=pha,
+        medical_rag_summary=rag_summary,
         risk_assessment_summary=ra,
         detected_concerns=concerns,
         nominal_observations=nominals,
@@ -386,6 +547,7 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         provenance_chain=[
             {"agent": "sensor_quality_agent", "status": agent_statuses.get("sensor_quality_agent", {}).status if "sensor_quality_agent" in agent_statuses else "SKIPPED"},
             {"agent": "personal_health_agent", "status": agent_statuses.get("personal_health_agent", {}).status if "personal_health_agent" in agent_statuses else "SKIPPED"},
+            {"agent": "medical_rag_agent", "status": agent_statuses.get("medical_rag_agent", {}).status if "medical_rag_agent" in agent_statuses else "SKIPPED"},
             {"agent": "risk_assessment_agent", "status": agent_statuses.get("risk_assessment_agent", {}).status if "risk_assessment_agent" in agent_statuses else "SKIPPED"}
         ],
         executive_synthesis=executive_synthesis,
@@ -398,7 +560,9 @@ def final_synthesis_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         "workflow_status": completion_status.value,
         "agent_execution_status": {k: v.model_dump() if hasattr(v, "model_dump") else v for k, v in agent_statuses.items()},
         "durations_ms": durations,
-        "current_step": "FINAL_SYNTHESIS"
+        "current_step": "FINAL_SYNTHESIS",
+        "overall_risk": overall_risk,
+        "escalation_state": esc_state
     }
 
 def persistence_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
@@ -457,6 +621,7 @@ def final_response_node(state: SupervisorMultiAgentState) -> Dict[str, Any]:
         subagent_sum = (
             tb.get("sensor_quality_execution_time_ms", 0.0)
             + tb.get("personal_health_execution_time_ms", 0.0)
+            + tb.get("medical_rag_execution_time_ms", 0.0)
             + tb.get("risk_assessment_execution_time_ms", 0.0)
         )
         tb["supervisor_overhead_time_ms"] = max(0.0, round(total_wf_ms - subagent_sum, 2))

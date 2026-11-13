@@ -1,0 +1,131 @@
+{
+  "timestamp_utc": "2026-11-13T12:14:45Z",
+  "platform": {
+    "os": "macOS Darwin",
+    "chip": "Apple Silicon M1",
+    "physical_memory_gb": 8.0,
+    "ollama_model": "qwen2.5:7b-instruct"
+  },
+  "idle_state": {
+    "vm_stat": {
+      "Pages free": 59539456,
+      "Pages active": 430948352,
+      "Pages inactive": 384253952,
+      "Pages speculative": 31277056,
+      "Pages throttled": 0,
+      "Pages wired down": 5824200704,
+      "Pages purgeable": 0,
+      "\"Translation faults\"": 3650408890368,
+      "Pages copy-on-write": 82287312896,
+      "Pages zero filled": 1817364578304,
+      "Pages reactivated": 1211860484096,
+      "Pages purged": 59455537152,
+      "File-backed pages": 332513280,
+      "Anonymous pages": 513966080,
+      "Pages stored in compressor": 6924992512,
+      "Pages occupied by compressor": 1269219328,
+      "Decompressions": 1531822964736,
+      "Compressions": 1703713636352,
+      "Pageins": 279701356544,
+      "Pageouts": 3684302848,
+      "Swapins": 37219287040,
+      "Swapouts": 51140198400
+    },
+    "swap": {
+      "raw": "vm.swapusage: total = 4096.00M  used = 2592.31M  free = 1503.69M  (encrypted)",
+      "parsed": {
+        "": 1503.69
+      }
+    },
+    "ollama_ps": "NAME                   ID              SIZE      PROCESSOR          CONTEXT    RUNNER      UNTIL                   \nqwen2.5:7b-instruct    845dbda0ea48    5.2 GB    12%/88% CPU/GPU    4096       llamacpp    About a minute from now"
+  },
+  "single_local_inference": {
+    "latency_s": 6.29,
+    "tokens_per_second": 12.19,
+    "response_length_chars": 339,
+    "vm_stat": {
+      "Pages free": 61095936,
+      "Pages active": 413171712,
+      "Pages inactive": 368689152,
+      "Pages speculative": 31342592,
+      "Pages throttled": 0,
+      "Pages wired down": 5844336640,
+      "Pages purgeable": 32768,
+      "\"Translation faults\"": 3653528453120,
+      "Pages copy-on-write": 82314985472,
+      "Pages zero filled": 1817953173504,
+      "Pages reactivated": 1214301159424,
+      "Pages purged": 59472150528,
+      "File-backed pages": 318144512,
+      "Anonymous pages": 495058944,
+      "Pages stored in compressor": 7181926400,
+      "Pages occupied by compressor": 1282375680,
+      "Decompressions": 1533282205696,
+      "Compressions": 1705525886976,
+      "Pageins": 280276320256,
+      "Pageouts": 3686367232,
+      "Swapins": 37465243648,
+      "Swapouts": 51424034816
+    },
+    "swap": {
+      "raw": "vm.swapusage: total = 4096.00M  used = 2623.00M  free = 1473.00M  (encrypted)",
+      "parsed": {
+        "": 1473.0
+      }
+    }
+  },
+  "sequential_multi_agent_pipeline": {
+    "total_wall_time_s": 127.631,
+    "per_agent_latency_s": {
+      "sensor_quality_agent": 20.019,
+      "symptom_service": 11.566,
+      "medical_rag": 20.076,
+      "personal_health_agent": 25.025,
+      "risk_assessment_agent": 30.18
+    },
+    "vm_stat": {
+      "Pages free": 67747840,
+      "Pages active": 414203904,
+      "Pages inactive": 359596032,
+      "Pages speculative": 38895616,
+      "Pages throttled": 0,
+      "Pages wired down": 5845434368,
+      "Pages purgeable": 32768,
+      "\"Translation faults\"": 3706037731328,
+      "Pages copy-on-write": 82965692416,
+      "Pages zero filled": 1823980044288,
+      "Pages reactivated": 1250589655040,
+      "Pages purged": 59698266112,
+      "File-backed pages": 322568192,
+      "Anonymous pages": 490127360,
+      "Pages stored in compressor": 9500950528,
+      "Pages occupied by compressor": 1278050304,
+      "Decompressions": 1569219608576,
+      "Compressions": 1744487284736,
+      "Pageins": 284845834240,
+      "Pageouts": 3703488512,
+      "Swapins": 40440381440,
+      "Swapouts": 55108206592
+    },
+    "swap": {
+      "raw": "vm.swapusage: total = 4096.00M  used = 3303.44M  free = 792.56M  (encrypted)",
+      "parsed": {
+        "": 792.56
+      }
+    },
+    "outcomes": {
+      "sqa_generated": true,
+      "symptom_extracted": true,
+      "medical_rag_citations": [
+        "NASA-STD-3001:P45"
+      ],
+      "pha_synthesis_grounded": true,
+      "raa_synthesis_status": "LLM_TIMEOUT"
+    }
+  },
+  "timeout_evaluation": {
+    "configured_timeout_s": 0.001,
+    "timeout_handled": true,
+    "error_raised": "ProviderUnavailableError: Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderTimeoutError: Ollama local inference timed out after 0.001s) failed."
+  }
+}

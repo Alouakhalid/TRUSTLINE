@@ -37,7 +37,8 @@ class ClinicalSynthesisValidator:
 
         lower = synthesis_text.lower()
 
-        rmssd_val = ground_truth.get("rmssd_value", 0.0)
+        rmssd_raw = ground_truth.get("rmssd_value")
+        rmssd_val = float(rmssd_raw) if rmssd_raw is not None else 0.0
         rmssd_status = ground_truth.get("rmssd_status", "invalid")
         if rmssd_val < 1.0 or rmssd_status in ("invalid", "insufficient_variance"):
             unsupported_rmssd_patterns = [
@@ -233,7 +234,8 @@ class ClinicalSynthesisValidator:
         astronaut_id = ground_truth.get("astronaut_id", "UNKNOWN")
         session_id = ground_truth.get("session_id", "UNKNOWN")
         hr = ground_truth.get("hr_value", 72.0)
-        rmssd = ground_truth.get("rmssd_value", 0.0)
+        rmssd_raw = ground_truth.get("rmssd_value")
+        rmssd = float(rmssd_raw) if rmssd_raw is not None else 0.0
         rmssd_status = ground_truth.get("rmssd_status", "insufficient_variance")
         eda = ground_truth.get("eda_value", 4.69)
         hgb_prob = ground_truth.get("hgb_prob", 0.1201)

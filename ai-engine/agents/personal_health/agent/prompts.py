@@ -35,7 +35,8 @@ def build_clinical_synthesis_prompt(
 ) -> str:
     """Build grounded clinical synthesis prompt with explicit negative guardrails."""
     gt = ground_truth or {}
-    rmssd_val = gt.get("rmssd_value", 0.0)
+    rmssd_raw = gt.get("rmssd_value")
+    rmssd_val = float(rmssd_raw) if rmssd_raw is not None else 0.0
     hrv_status = gt.get("hrv_status", "ZERO_VARIABILITY")
     baseline_status = gt.get("baseline_status", "not_available")
     symptom_count = gt.get("symptom_count", 0)

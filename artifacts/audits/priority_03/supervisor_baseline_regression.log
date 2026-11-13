@@ -1,0 +1,96 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 67 items
+
+ai-engine/agents/supervisor/tests/test_agent_failure_semantics.py::test_01_risk_assessment_agent_failure_sets_unavailable_and_unknown PASSED [  1%]
+ai-engine/agents/supervisor/tests/test_agent_failure_semantics.py::test_02_personal_health_agent_failure_sets_incomplete_and_no_fabricated_vitals PASSED [  2%]
+ai-engine/agents/supervisor/tests/test_agent_failure_semantics.py::test_03_both_subagents_fail_sets_workflow_failed PASSED [  4%]
+ai-engine/agents/supervisor/tests/test_agent_failure_semantics.py::test_04_nominal_pipeline_execution_sets_no_trigger_detected PASSED [  5%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_01_native_pdf_extraction_without_unnecessary_ocr PASSED [  7%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_02_scanned_pdf_groq_vision_ocr PASSED [  8%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_03_mixed_pdf_hybrid_extraction PASSED [ 10%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_04_docx_paragraphs_and_tables_extraction PASSED [ 11%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_05_historical_medical_information_preserves_telemetry PASSED [ 13%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_06_evidence_rejection_missing_or_malformed_provenance PASSED [ 14%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_07_duplicate_upload_idempotency_prevents_duplicate_rows PASSED [ 16%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_08_ocr_failure_propagates_truthfully_without_fabrication PASSED [ 17%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_09_unknown_identity_quarantined_and_requires_review PASSED [ 19%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_10_conflicting_measurements_preserved_and_flagged PASSED [ 20%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_11_pha_failure_reports_assessment_incomplete PASSED [ 22%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_12_persistence_failure_reports_failure_truthfully PASSED [ 23%]
+ai-engine/agents/supervisor/tests/test_medical_document_e2e.py::test_13_complete_workflow_upload_to_persistence PASSED [ 25%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_01_full_langgraph_medical_rag_execution PASSED [ 26%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_02_evidence_registry_compilation_and_provenance PASSED [ 28%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_03_final_assessment_contract_and_provenance_chain PASSED [ 29%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_04_telemetry_immutability_with_rag_active PASSED [ 31%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_05_personal_record_isolation_rejection_in_supervisor PASSED [ 32%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_06_graceful_degradation_on_rag_service_failure PASSED [ 34%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_07_conflicting_knowledge_quarantined_in_evidence_registry PASSED [ 35%]
+ai-engine/agents/supervisor/tests/test_res_08_provenance_injection.py::test_01_missing_provenance_string_is_quarantined PASSED [ 37%]
+ai-engine/agents/supervisor/tests/test_res_08_provenance_injection.py::test_02_unknown_source_agent_is_quarantined PASSED [ 38%]
+ai-engine/agents/supervisor/tests/test_res_08_provenance_injection.py::test_03_malformed_provenance_causes_downstream_claim_failure PASSED [ 40%]
+ai-engine/agents/supervisor/tests/test_res_08_provenance_injection.py::test_04_fully_provenanced_evidence_remains_valid PASSED [ 41%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_01_nonexistent_evidence_id_rejected PASSED [ 43%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_02_vital_numerical_value_mismatch_rejected PASSED [ 44%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_03_contradictory_evidence_claiming_nominal_rejected PASSED [ 46%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_04_quarantined_evidence_claiming_nominal_rejected PASSED [ 47%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_05_unmeasured_vital_sign_assertion_rejected PASSED [ 49%]
+ai-engine/agents/supervisor/tests/test_semantic_traceability_negative.py::test_negative_06_trace_claims_fails_quarantined_and_mismatched PASSED [ 50%]
+ai-engine/agents/supervisor/tests/test_supervisor_e2e_integration.py::test_01_four_agent_end_to_end_integration_live PASSED [ 52%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_01_intake_node_initializes_workflow_state PASSED [ 53%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_02_input_validation_node_accepts_valid_ids PASSED [ 55%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_03_input_validation_node_rejects_missing_astronaut_id PASSED [ 56%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_04_input_validation_node_rejects_missing_session_id PASSED [ 58%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_05_evidence_validation_node_audits_and_quarantines_invalid_hrv PASSED [ 59%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_06_final_synthesis_node_compiles_assessment_and_response PASSED [ 61%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_07_persistence_node_writes_output PASSED [ 62%]
+ai-engine/agents/supervisor/tests/test_supervisor_nodes.py::test_08_final_response_node_records_completed_timestamp PASSED [ 64%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_01_no_trigger_detected_semantics_never_claims_total_health PASSED [ 65%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_02_insufficient_data_semantics_never_converts_to_low_risk PASSED [ 67%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_03_missing_symptoms_never_converted_to_negative_symptoms PASSED [ 68%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_04_evidence_provenance_preserved_across_all_registered_items PASSED [ 70%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_05_astronaut_communication_contains_required_safety_disclaimers PASSED [ 71%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_06_astronaut_communication_strictly_grounds_hrv_rmssd_without_sensor_artifact_speculation PASSED [ 73%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_07_astronaut_communication_strictly_grounds_temperature_without_ambient_conditions_speculation PASSED [ 74%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_08_astronaut_communication_strictly_grounds_cardiac_and_respiration_metrics PASSED [ 76%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_09_astronaut_communication_uses_configured_monitoring_domains_terminology PASSED [ 77%]
+ai-engine/agents/supervisor/tests/test_supervisor_safety.py::test_10_astronaut_communication_preserves_unsubmitted_symptom_distinction PASSED [ 79%]
+ai-engine/agents/supervisor/tests/test_supervisor_state.py::test_01_state_initialization_and_serialization PASSED [ 80%]
+ai-engine/agents/supervisor/tests/test_supervisor_state.py::test_02_request_schema_validation PASSED [ 82%]
+ai-engine/agents/supervisor/tests/test_supervisor_state.py::test_03_final_assessment_schema_contracts PASSED [ 83%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_01_router_branches_to_evidence_validation_on_validation_failure PASSED [ 85%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_02_workflow_runner_handles_invalid_astronaut_identity PASSED [ 86%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_03_workflow_runner_handles_missing_sensor_data_gracefully PASSED [ 88%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_04_workflow_runner_handles_upstream_pha_failure PASSED [ 89%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_05_workflow_runner_handles_upstream_ra_failure PASSED [ 91%]
+ai-engine/agents/supervisor/tests/test_supervisor_workflow.py::test_06_workflow_runner_handles_persistence_warning PASSED [ 92%]
+ai-engine/agents/supervisor/tests/test_timing_integrity.py::test_01_monotonic_clock_used_across_nodes PASSED [ 94%]
+ai-engine/agents/supervisor/tests/test_timing_integrity.py::test_02_persistence_reports_nonzero_latency PASSED [ 95%]
+ai-engine/agents/supervisor/tests/test_timing_integrity.py::test_03_workflow_total_covers_complete_pipeline PASSED [ 97%]
+ai-engine/agents/supervisor/tests/test_timing_integrity.py::test_04_supervisor_overhead_is_accurately_separated PASSED [ 98%]
+ai-engine/agents/supervisor/tests/test_timing_integrity.py::test_05_no_overlapping_or_double_counted_intervals PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 67 passed, 8 warnings in 168.53s (0:02:48) ==================

@@ -15,6 +15,59 @@ class PersonalHealthAdapter(BaseAgentAdapter):
 
     def run(self, state: Dict[str, Any]) -> Tuple[Dict[str, Any], AgentExecutionStatus]:
         cfg = get_supervisor_settings()
+        astronaut_id = state.get("astronaut_id", "AST-UNKNOWN")
+        session_id = state.get("session_id", "SESSION-UNKNOWN")
+
+        from personal_health.services.document_ingestion_service import DocumentIngestionService
+        from personal_health.repositories.medical_document_repository import MedicalDocumentRepository
+
+        doc_repo = MedicalDocumentRepository()
+        ingestion_service = DocumentIngestionService(repository=doc_repo)
+
+        document_paths = state.get("document_paths") or []
+        medical_docs = list(state.get("medical_documents") or [])
+        pending_records = list(state.get("pending_medical_records") or [])
+
+        for doc_path in document_paths:
+            p = Path(doc_path)
+            if p.exists() and p.is_file():
+                try:
+                    file_bytes = p.read_bytes()
+                    upload_res = ingestion_service.upload_document(
+                        file_bytes=file_bytes,
+                        filename=p.name,
+                        astronaut_id=astronaut_id
+                    )
+                    proc_res = ingestion_service.process_document(upload_res.document_id)
+                    medical_docs.append(proc_res.model_dump())
+                    records_for_doc = doc_repo.get_records_by_document(upload_res.document_id)
+                    for rfd in records_for_doc:
+                        if not any(pr.get("record_id") == rfd.record_id for pr in pending_records if isinstance(pr, dict)):
+                            pending_records.append({
+                                "record_id": rfd.record_id,
+                                "document_id": rfd.document_id,
+                                "astronaut_id": rfd.astronaut_id,
+                                "test_name": rfd.test_name,
+                                "extracted_value": rfd.extracted_value,
+                                "normalized_value": rfd.normalized_value,
+                                "original_unit": rfd.original_unit,
+                                "validation_status": rfd.validation_status
+                            })
+                except Exception as exc:
+                    medical_docs.append({
+                        "document_path": str(doc_path),
+                        "status": "FAILED",
+                        "error": str(exc)
+                    })
+
+        confirmed_records = list(state.get("confirmed_medical_records") or [])
+        if astronaut_id and astronaut_id not in ("AST-UNKNOWN", "UNKNOWN"):
+            existing_confirmed = doc_repo.get_confirmed_records(astronaut_id)
+            for ec in existing_confirmed:
+                ec_dict = ec.model_dump()
+                if not any(r.get("record_id") == ec.record_id for r in confirmed_records if isinstance(r, dict)):
+                    confirmed_records.append(ec_dict)
+
         existing = state.get("personal_health_result")
         if existing is not None:
             status = AgentExecutionStatus(
@@ -22,10 +75,12 @@ class PersonalHealthAdapter(BaseAgentAdapter):
                 status=AgentExecutionState.SUCCESS,
                 warnings=["Used pre-existing Personal Health assessment from state."]
             )
-            return {"personal_health_result": existing}, status
-
-        astronaut_id = state.get("astronaut_id", "AST-UNKNOWN")
-        session_id = state.get("session_id", "SESSION-UNKNOWN")
+            return {
+                "personal_health_result": existing,
+                "medical_documents": medical_docs,
+                "pending_medical_records": pending_records,
+                "confirmed_medical_records": confirmed_records
+            }, status
 
         from personal_health.services.health_profile_service import HealthProfileService
         from personal_health.services.sensor_integration_service import SensorIntegrationService
@@ -118,13 +173,25 @@ class PersonalHealthAdapter(BaseAgentAdapter):
             session_id=session_id
         )
 
-        if not escalation.required and feature_report.core_features:
+        baseline_dev = None
+        if feature_report.core_features:
             feat_dict = feature_report.core_features.to_feature_dict()
-            escalation = escalation_service.evaluate_immediate_escalation(
-                symptoms=reported_symptoms,
-                telemetry_features=feat_dict,
-                critical_sensors_available="ECG" in valid_streams,
-                sensor_quality_valid=sensor_context.can_proceed if sensor_context else False
+            if not escalation.required:
+                escalation = escalation_service.evaluate_immediate_escalation(
+                    symptoms=reported_symptoms,
+                    telemetry_features=feat_dict,
+                    critical_sensors_available="ECG" in valid_streams,
+                    sensor_quality_valid=sensor_context.can_proceed if sensor_context else False
+                )
+            sqa_scores = {}
+            if sqr_raw and isinstance(sqr_raw, dict):
+                for s_n, s_info in sqr_raw.get("sensors", {}).items():
+                    if isinstance(s_info, dict):
+                        sqa_scores[s_n] = float(s_info.get("quality_score", 1.0))
+            baseline_dev = baseline_service.evaluate_deviation(
+                astronaut_id=astronaut_id,
+                current_features=feat_dict,
+                sqa_scores=sqa_scores
             )
 
         ml_service = MLInferenceService()
@@ -211,6 +278,7 @@ class PersonalHealthAdapter(BaseAgentAdapter):
             execution_timestamp=datetime.utcnow(),
             assessment_status=assessment_status,
             baseline_status=baseline_stat,
+            personal_baseline_deviation=baseline_dev,
             sensor_quality_summary=sensor_context,
             core_features=feature_report.core_features,
             physiological_findings=feature_report.all_features,
@@ -244,5 +312,9 @@ class PersonalHealthAdapter(BaseAgentAdapter):
 
         return {
             "personal_health_result": assessment.model_dump(),
-            "personal_health_assessment": assessment.model_dump()
+            "personal_health_assessment": assessment.model_dump(),
+            "personal_baseline_deviation": baseline_dev,
+            "medical_documents": medical_docs,
+            "pending_medical_records": pending_records,
+            "confirmed_medical_records": confirmed_records
         }, status

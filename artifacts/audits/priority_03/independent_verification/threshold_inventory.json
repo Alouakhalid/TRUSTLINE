@@ -1,0 +1,149 @@
+{
+  "audit_timestamp": "2026-11-13T02:24:04.313766Z",
+  "total_thresholds_cataloged": 13,
+  "thresholds": [
+    {
+      "threshold_name": "rest_accelerometry_upper_bound",
+      "parameter_name": "acc_magnitude_mean <= 1.05",
+      "value": 1.05,
+      "unit": "g",
+      "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py:28",
+      "category": "Context Inference",
+      "justification_type": "Engineering Safety Bound",
+      "rationale": "Empirical threshold based on Earth 1-g resting postures with micro-movements under 0.05g above gravitational normal.",
+      "limitations_and_flight_readiness_risk": "FLIGHT READINESS DEFECT: In orbital microgravity (0-g), resting astronauts experience ~0.0g. Under current logic, 0.0g <= 1.05g qualifies as rest even if high manual translation occurs without torso acceleration. Must use differential acceleration norm (|a| - |g|) or scheduled context in orbit."
+    },
+    {
+      "threshold_name": "rest_accelerometry_jitter_bound",
+      "parameter_name": "acc_magnitude_std <= 0.04",
+      "value": 0.04,
+      "unit": "g",
+      "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py:28",
+      "category": "Context Inference",
+      "justification_type": "Empirical / Biomedical",
+      "rationale": "Standard deviation of accelerometry magnitude under quiet sitting/reclining across WESAD human biosignals.",
+      "limitations_and_flight_readiness_risk": "Calibrated on laboratory chest-worn RespiBAN. Wrist-worn sensors show higher tremor/fidget noise."
+    },
+    {
+      "threshold_name": "rest_heart_rate_ceiling",
+      "parameter_name": "hr_mean_bpm <= 78.0",
+      "value": 78.0,
+      "unit": "bpm",
+      "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py:29",
+      "category": "Context Inference",
+      "justification_type": "Population Limit / Research Limitation",
+      "rationale": "Standard clinical resting tachycardia boundary filter.",
+      "limitations_and_flight_readiness_risk": "PHILOSOPHICAL VIOLATION: Hardcodes population threshold in an individualized baseline engine. Elite astronaut athletes may have resting HR 45 bpm; astronauts with orthostatic intolerance or heat stress may exhibit resting HR 82 bpm."
+    },
+    {
+      "threshold_name": "activity_accelerometry_lower_bound",
+      "parameter_name": "acc_magnitude_mean > 1.15",
+      "value": 1.15,
+      "unit": "g",
+      "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py:24",
+      "category": "Context Inference",
+      "justification_type": "Engineering Safety Bound",
+      "rationale": "Locomotion threshold on Earth where walking/running dynamics generate sustained > 0.15g net linear force.",
+      "limitations_and_flight_readiness_risk": "Invalid in 0-g microgravity where treadmill (T2) or cycle ergometer (CEVIS) with vibration isolation produces different inertial patterns."
+    },
+    {
+      "threshold_name": "activity_accelerometry_jitter_bound",
+      "parameter_name": "acc_magnitude_std > 0.10",
+      "value": 0.1,
+      "unit": "g",
+      "source_file": "ai-engine/agents/personal_health/baseline/context_engine.py:24",
+      "category": "Context Inference",
+      "justification_type": "Empirical / Biomedical",
+      "rationale": "Standard deviation indicating sustained dynamic bodily locomotion.",
+      "limitations_and_flight_readiness_risk": "Good robustness on torso-worn accelerometry; may trigger false positives during vehicle thruster burns or docking vibrations."
+    },
+    {
+      "threshold_name": "min_sessions_provisional_readiness",
+      "parameter_name": "valid_count >= 3",
+      "value": 3,
+      "unit": "sessions",
+      "source_file": "ai-engine/agents/personal_health/baseline/data_pipeline.py:218",
+      "category": "Readiness Assessment",
+      "justification_type": "Mathematical / Statistical",
+      "rationale": "Absolute mathematical minimum required to calculate non-trivial Median and IQR without pure interpolation.",
+      "limitations_and_flight_readiness_risk": "3 sessions provide low statistical power; profile is strictly tagged PROVISIONAL with high uncertainty."
+    },
+    {
+      "threshold_name": "min_sessions_established_readiness",
+      "parameter_name": "valid_count >= 5 and distinct_days >= 2",
+      "value": 5,
+      "unit": "sessions",
+      "source_file": "ai-engine/agents/personal_health/baseline/data_pipeline.py:220",
+      "category": "Readiness Assessment",
+      "justification_type": "Engineering Safety Bound",
+      "rationale": "Requires multi-day observations (minimum 2 calendar days) to capture diurnal variation before baseline is ESTABLISHED.",
+      "limitations_and_flight_readiness_risk": "5 sessions is acceptable for research prototype; flight operations recommend 14 days of pre-launch quarantine telemetry."
+    },
+    {
+      "threshold_name": "stale_baseline_warning_span",
+      "parameter_name": "stale_days > 5.0",
+      "value": 5.0,
+      "unit": "days",
+      "source_file": "ai-engine/agents/personal_health/baseline/schemas.py:165",
+      "category": "Readiness Assessment",
+      "justification_type": "Biomedical Mission Rule",
+      "rationale": "Astronaut physiological adaptation in microgravity occurs rapidly during flight days 1-5 (fluid shift, space motion sickness). Baselines older than 5 days without updates risk missing adaptive shifts.",
+      "limitations_and_flight_readiness_risk": "Generates audit warning in health report, prompting recalibration."
+    },
+    {
+      "threshold_name": "recency_decay_half_life",
+      "parameter_name": "half_life_days = 30.0",
+      "value": 30.0,
+      "unit": "days",
+      "source_file": "ai-engine/agents/personal_health/baseline/schemas.py:170",
+      "category": "Readiness Assessment",
+      "justification_type": "Biomedical Mission Rule",
+      "rationale": "Long-duration spaceflight physiological remodeling occurs on a 30-day scale (cardiovascular deconditioning, plasma volume contraction).",
+      "limitations_and_flight_readiness_risk": "Assumes monotonic exponential adaptation; acute illnesses require explicit profile branching."
+    },
+    {
+      "threshold_name": "unusual_robust_z_threshold",
+      "parameter_name": "unusual_z_threshold = 3.0",
+      "value": 3.0,
+      "unit": "robust Z (MAD)",
+      "source_file": "ai-engine/agents/personal_health/baseline/deviation_engine.py:23",
+      "category": "Deviation Detection",
+      "justification_type": "Statistical / Biomedical Standard",
+      "rationale": "Under Gaussian distribution, 3.0 MAD corresponds to p < 0.0027 (~99.73% specificity). Minimizes false alarms in autonomous alerting.",
+      "limitations_and_flight_readiness_risk": "High specificity reduces sensitivity to gradual low-grade physiological decline (e.g. insidious subclinical dehydration)."
+    },
+    {
+      "threshold_name": "iqr_mad_scale_factor",
+      "parameter_name": "effective_mad = iqr / 1.349",
+      "value": 1.349,
+      "unit": "ratio",
+      "source_file": "ai-engine/agents/personal_health/baseline/statistical_engine.py:68",
+      "category": "Deviation Detection",
+      "justification_type": "Mathematical / Statistical",
+      "rationale": "Asymptotic normal distribution equivalence: IQR / (2 * sqrt(2) * erf^-1(0.5)) = IQR / 1.34898. Used to compute robust scale when MAD is 0.",
+      "limitations_and_flight_readiness_risk": "Exact for Gaussian distributions; slightly underestimates variance for heavy-tailed distributions."
+    },
+    {
+      "threshold_name": "min_sensor_quality_update_gate",
+      "parameter_name": "min_quality_score = 0.60 (or 0.70)",
+      "value": 0.6,
+      "unit": "SQA score [0.0 - 1.0]",
+      "source_file": "ai-engine/agents/personal_health/baseline/data_pipeline.py:56",
+      "category": "Update Anti-Contamination",
+      "justification_type": "Engineering Safety Bound",
+      "rationale": "Prevents noisy, artifact-ridden sensor telemetry from corrupting long-term personal baseline statistics.",
+      "limitations_and_flight_readiness_risk": "Strict gating drops valid data during severe sensor degradation; system correctly flags MISSING rather than imputing."
+    },
+    {
+      "threshold_name": "max_composite_anomaly_for_update",
+      "parameter_name": "max_composite_anomaly_for_update = 3.0",
+      "value": 3.0,
+      "unit": "composite anomaly score",
+      "source_file": "ai-engine/agents/personal_health/baseline/update_manager.py:28",
+      "category": "Update Anti-Contamination",
+      "justification_type": "Engineering Safety Bound",
+      "rationale": "Crucial anti-contamination guard: blocks updating baseline when patient is experiencing acute physiological distress or anomaly.",
+      "limitations_and_flight_readiness_risk": "If an astronaut undergoes sustained physiological shift (e.g. persistent microgravity elevation), updates will be blocked indefinitely until clinical supervisor forces recalibration."
+    }
+  ]
+}

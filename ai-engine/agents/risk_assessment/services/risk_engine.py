@@ -310,8 +310,8 @@ class RiskEngine:
                                     source_agent=hr_ev.source_agent,
                                     supporting_evidence_ids=[hr_ev.evidence_id],
                                     validity_status=EvidenceValidity.VALID,
-                                    applicable_criterion="Clinical Physiology Reference: Adult Resting Heart Rate (50-100 bpm; verifiable source: Harrison's Principles of Internal Medicine / Guyton & Hall); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
-                                    explanation=f"Resting heart rate ({float(hr_ev.observed_value):.1f} bpm) verified nominal within standard clinical reference limits (50-100 bpm; verifiable source: Harrison's Principles of Internal Medicine) with valid ECG.",
+                                    applicable_criterion="Clinical Physiology Reference: Adult Heart Rate (50-100 bpm; verifiable source: Harrison's Principles of Internal Medicine / Guyton & Hall; resting state unconfirmed in telemetry); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
+                                    explanation=f"Heart rate ({float(hr_ev.observed_value):.1f} bpm) verified nominal within standard clinical reference limits (50-100 bpm; verifiable source: Harrison's Principles of Internal Medicine; resting conditions unconfirmed in session) with valid ECG.",
                                     factor_type="NOMINAL_OBSERVATION"
                                 )
                             )
@@ -325,8 +325,8 @@ class RiskEngine:
                                 source_agent=resp_ev.source_agent,
                                 supporting_evidence_ids=[resp_ev.evidence_id],
                                 validity_status=EvidenceValidity.VALID,
-                                applicable_criterion="Clinical Physiology Reference: Adult Resting Eupnea (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine / Bates' Guide to Physical Examination); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
-                                explanation=f"Resting respiration rate ({float(resp_ev.observed_value):.1f} breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004]).",
+                                applicable_criterion="Clinical Physiology Reference: Adult Eupnea (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine / Bates' Guide to Physical Examination; resting state unconfirmed in telemetry); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
+                                explanation=f"Respiration rate ({float(resp_ev.observed_value):.1f} breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; resting conditions unconfirmed in session; in-mission monitoring capability per NASA-STD-3001-VOL-1 Rev C [V1 3004]).",
                                 factor_type="NOMINAL_OBSERVATION"
                             )
                         )

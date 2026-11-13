@@ -1,0 +1,111 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 86 items
+
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_01_escalation_state_no_trigger_detected PASSED [  1%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_02_escalation_state_insufficient_data PASSED [  2%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_03_escalation_state_assessment_failed PASSED [  3%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_04_escalation_state_review_required PASSED [  4%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_05_escalation_state_escalation_recommended PASSED [  5%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_06_redline_chest_pain_escalation_required PASSED [  6%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_07_extreme_tachycardia_escalation_required PASSED [  8%]
+ai-engine/agents/risk_assessment/tests/test_escalation_state_machine.py::test_08_elevated_co2_environmental_escalation PASSED [  9%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_01_invalid_hrv_excluded_confidence_recalculated PASSED [ 10%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_02_no_submitted_symptoms_unknown_general_domain PASSED [ 11%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_03_wesad_experimental_context_no_protective_factor PASSED [ 12%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_04_no_triggered_rules_not_protective_factor PASSED [ 13%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_05_degraded_skin_temperature_no_core_inference PASSED [ 15%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_06_partial_coverage_insufficient_data PASSED [ 16%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_07_valid_domain_specific_evidence_low_risk_isolation PASSED [ 17%]
+ai-engine/agents/risk_assessment/tests/test_evidence_integrity.py::test_08_llm_grounding_reflects_evidence_limitations PASSED [ 18%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_01_valid_payload PASSED [ 19%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_02_missing_astronaut_id PASSED [ 20%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_03_missing_session_id PASSED [ 22%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_04_astronaut_id_mismatch_in_sqr PASSED [ 23%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_05_rejection_of_pending_medical_records PASSED [ 24%]
+ai-engine/agents/risk_assessment/tests/test_input_validation.py::test_06_mission_context_invalid_ranges PASSED [ 25%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_01_valid_grounded_synthesis PASSED [ 26%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_02_rejection_of_forbidden_clinical_diagnoses PASSED [ 27%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_03_rejection_of_ungrounded_causal_attributions PASSED [ 29%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_04_rejection_of_hallucinated_mission_day PASSED [ 30%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_05_rejection_of_contradictory_risk_claims PASSED [ 31%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_06_rejection_of_contradictory_escalation_claims PASSED [ 32%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_07_deterministic_fallback_when_unavailable PASSED [ 33%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_08_deterministic_fallback_on_api_timeout PASSED [ 34%]
+ai-engine/agents/risk_assessment/tests/test_llm_grounding.py::test_09_grounding_failure_triggers_fallback PASSED [ 36%]
+ai-engine/agents/risk_assessment/tests/test_personal_health_integration.py::test_01_wesad_scope_separation PASSED [ 37%]
+ai-engine/agents/risk_assessment/tests/test_personal_health_integration.py::test_02_zero_rmssd_artifact_handling PASSED [ 38%]
+ai-engine/agents/risk_assessment/tests/test_personal_health_integration.py::test_03_baseline_not_available_scope PASSED [ 39%]
+ai-engine/agents/risk_assessment/tests/test_personal_health_integration.py::test_04_confirmed_medical_records_ingestion PASSED [ 40%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_a_negated_symptom_absence_positive PASSED [ 41%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_a_unnegated_symptom_absence_negative PASSED [ 43%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_b_unevaluated_domain_modal_negation_positive PASSED [ 44%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_b_unevaluated_domain_nominal_assertion_negative PASSED [ 45%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_c_evaluated_domains_low_risk_positive PASSED [ 46%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_c_overall_low_risk_contradiction_negative PASSED [ 47%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_d_cardiovascular_inferred_from_respiratory_negative PASSED [ 48%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_d_respiratory_protective_isolated_positive PASSED [ 50%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_e_protective_vs_nominal_observation_separation PASSED [ 51%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_f_missing_subjective_inputs_in_fallback PASSED [ 52%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_g_duplicate_uncertainty_and_punctuation_elimination PASSED [ 53%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_h_fallback_self_validation PASSED [ 54%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_i_corrupted_fallback_triggers_minimal_safe PASSED [ 55%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_scenario_j_escalation_and_evidence_integrity_protections PASSED [ 56%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_1_invalid_evidence_normality_claims_rejected PASSED [ 58%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_2_degraded_telemetry_overclaims_rejected PASSED [ 59%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_3_missing_symptoms_vs_negative_symptoms PASSED [ 60%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_4_missing_data_cannot_assert_emergency_escalation PASSED [ 61%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_5_recommendation_grounding_separation PASSED [ 62%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_6_unverified_reference_identification PASSED [ 63%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_audit_req_7_synthesis_consistency_deterministic_alignment PASSED [ 65%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_release_gate_1_absolute_escalation_statements_rejected PASSED [ 66%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_release_gate_2_act_nom_001_scope_overclaim_rejected PASSED [ 67%]
+ai-engine/agents/risk_assessment/tests/test_remediation_regression.py::test_release_gate_3_machine_readable_trace_generation PASSED [ 68%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_01_all_domains_evaluated_with_valid_evidence PASSED [ 69%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_02_five_domains_evaluated_five_unavailable PASSED [ 70%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_03_no_symptoms_submitted PASSED [ 72%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_04_explicitly_denied_symptoms PASSED [ 73%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_05_missing_symptom_data PASSED [ 74%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_06_valid_sensor_quality_report PASSED [ 75%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_07_missing_sensor_quality_report PASSED [ 76%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_08_no_rule_triggered_but_domains_remain_unevaluated PASSED [ 77%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_09_high_severity_evidence_with_low_confidence PASSED [ 79%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_10_no_approved_rule_for_domain PASSED [ 80%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_11_conflicting_evidence PASSED [ 81%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_12_llm_invents_nominal_finding PASSED [ 82%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_13_llm_invents_protective_factor PASSED [ 83%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_14_llm_changes_overall_risk_classification PASSED [ 84%]
+ai-engine/agents/risk_assessment/tests/test_risk_aggregation_audit.py::test_15_assessment_coverage_and_overall_status_consistency PASSED [ 86%]
+ai-engine/agents/risk_assessment/tests/test_risk_engine.py::test_01_zero_rules_triggered_nominal_full_coverage PASSED [ 87%]
+ai-engine/agents/risk_assessment/tests/test_risk_engine.py::test_02_single_rule_triggered_moderate_tachycardia PASSED [ 88%]
+ai-engine/agents/risk_assessment/tests/test_risk_engine.py::test_03_multiple_rules_severity_precedence PASSED [ 89%]
+ai-engine/agents/risk_assessment/tests/test_risk_engine.py::test_04_data_quality_failure_isolation PASSED [ 90%]
+ai-engine/agents/risk_assessment/tests/test_risk_engine.py::test_05_deterministic_repeatability PASSED [ 91%]
+ai-engine/agents/risk_assessment/tests/test_sensor_quality_gating.py::test_01_valid_sensor_telemetry_normalization PASSED [ 93%]
+ai-engine/agents/risk_assessment/tests/test_sensor_quality_gating.py::test_02_invalid_critical_sensor_gating PASSED [ 94%]
+ai-engine/agents/risk_assessment/tests/test_sensor_quality_gating.py::test_03_degraded_sensor_reduces_confidence PASSED [ 95%]
+ai-engine/agents/risk_assessment/tests/test_supervisor_integration.py::test_01_langgraph_node_state_transformation PASSED [ 96%]
+ai-engine/agents/risk_assessment/tests/test_supervisor_integration.py::test_02_supervisor_workflow_runner_end_to_end PASSED [ 97%]
+ai-engine/agents/risk_assessment/tests/test_supervisor_integration.py::test_03_handling_missing_upstream_telemetry PASSED [ 98%]
+ai-engine/agents/risk_assessment/tests/test_supervisor_integration.py::test_04_error_propagation_on_invalid_astronaut_id PASSED [100%]
+
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 86 passed, 7 warnings in 41.48s ========================

@@ -1,0 +1,32 @@
+{
+  "profiling_timestamp": "2026-11-13T02:01:06.562659",
+  "platform": "Darwin 25.5.0",
+  "metrics": {
+    "baseline_construction_ms": {
+      "mean": 2.372,
+      "median": 2.301,
+      "p95": 2.74,
+      "p99": 3.329
+    },
+    "baseline_retrieval_ms": {
+      "mean": 0.261,
+      "median": 0.249,
+      "p95": 0.318,
+      "p99": 0.411
+    },
+    "deviation_evaluation_ms": {
+      "mean": 0.027,
+      "median": 0.026,
+      "p95": 0.028,
+      "p99": 0.04
+    },
+    "safe_update_ms": {
+      "mean": 5.084,
+      "median": 5.006,
+      "p95": 6.32,
+      "p99": 6.636
+    },
+    "sqlite_db_size_bytes": 30982144,
+    "process_rss_mb": 388.22
+  }
+}

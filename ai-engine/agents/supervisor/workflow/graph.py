@@ -11,6 +11,7 @@ from .nodes import (
     input_validation_node,
     sensor_quality_node,
     personal_health_node,
+    medical_rag_node,
     risk_assessment_node,
     evidence_validation_node,
     final_synthesis_node,
@@ -20,13 +21,14 @@ from .nodes import (
 from .router import route_after_validation
 
 def create_supervisor_workflow() -> Any:
-    """Build and compile the 9-node LangGraph StateGraph orchestrator."""
+    """Build and compile the 10-node LangGraph StateGraph orchestrator."""
     graph = StateGraph(SupervisorMultiAgentState)
 
     graph.add_node("intake", intake_node)
     graph.add_node("input_validation", input_validation_node)
     graph.add_node("sensor_quality", sensor_quality_node)
     graph.add_node("personal_health", personal_health_node)
+    graph.add_node("medical_rag", medical_rag_node)
     graph.add_node("risk_assessment", risk_assessment_node)
     graph.add_node("evidence_validation", evidence_validation_node)
     graph.add_node("final_synthesis", final_synthesis_node)
@@ -46,7 +48,8 @@ def create_supervisor_workflow() -> Any:
     )
 
     graph.add_edge("sensor_quality", "personal_health")
-    graph.add_edge("personal_health", "risk_assessment")
+    graph.add_edge("personal_health", "medical_rag")
+    graph.add_edge("medical_rag", "risk_assessment")
     graph.add_edge("risk_assessment", "evidence_validation")
     graph.add_edge("evidence_validation", "final_synthesis")
     graph.add_edge("final_synthesis", "persistence")
@@ -91,6 +94,8 @@ class SupervisorWorkflowRunner:
                 state["voice_language"] = inp.voice_language
             if inp.mission_context:
                 state["mission_context"] = inp.mission_context
+            if inp.document_paths:
+                state["document_paths"] = inp.document_paths
 
         if not state.get("workflow_id"):
             state["workflow_id"] = f"WF-{uuid.uuid4().hex[:8].upper()}"

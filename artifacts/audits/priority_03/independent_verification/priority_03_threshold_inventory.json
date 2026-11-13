@@ -1,0 +1,75 @@
+{
+  "audit_timestamp": "2026-11-13T02:42:03.905780Z",
+  "parameters": [
+    {
+      "parameter": "Detector unusual Z threshold",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/deviation_engine.py:23",
+      "actual_value_in_production": 3.0,
+      "previously_reported_values": "2.5 and 3.0",
+      "reconciliation_finding": "DISCREPANCY RESOLVED: Production engine defaults to unusual_z_threshold = 3.0 (Gaussian 3-sigma analogue). benchmark.py explicitly passed unusual_z_threshold = 2.5 on line 193 for synthetic evaluation. Because synthetic perturbation was 16.0-sigma (+32 bpm), both 2.5 and 3.0 yield F1=1.0 on that synthetic benchmark. However, benchmark documentation incorrectly conflated 2.5 with 3.0."
+    },
+    {
+      "parameter": "Update anomaly contamination threshold",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/update_manager.py:28",
+      "actual_value_in_production": 3.0,
+      "previously_reported_values": "3.0",
+      "reconciliation_finding": "CONSISTENT: Blocks baseline assimilation if composite_deviation_score >= 3.0 or unusual_signals_count >= 2."
+    },
+    {
+      "parameter": "MIN_SESSIONS_COLD",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/data_pipeline.py:218",
+      "actual_value_in_production": 3,
+      "previously_reported_values": "3",
+      "reconciliation_finding": "CONSISTENT: Sessions < 3 assign BaselineReadinessState.INSUFFICIENT_DATA. 3 sessions is the absolute minimum to compute sample median and IQR without pure endpoint interpolation."
+    },
+    {
+      "parameter": "MIN_SESSIONS_WARM",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/data_pipeline.py:220",
+      "actual_value_in_production": 5,
+      "previously_reported_values": "5 or 7",
+      "reconciliation_finding": "DISCREPANCY RESOLVED: data_pipeline.py line 220 specifies: `elif valid_count < 5 or distinct_days < 2: state = PROVISIONAL else: state = ESTABLISHED`. The actual threshold is 5 sessions across >= 2 distinct calendar days. Earlier draft docs mentioned 7 sessions (one week), but 5 was implemented."
+    },
+    {
+      "parameter": "Minimum distinct observation calendar days",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/data_pipeline.py:220",
+      "actual_value_in_production": 2,
+      "previously_reported_values": "2 or 5",
+      "reconciliation_finding": "DISCREPANCY RESOLVED: Implemented value is distinct_days >= 2 in data_pipeline.py line 220. Earlier proposals recommended 5 days."
+    },
+    {
+      "parameter": "STALE_THRESHOLD_DAYS",
+      "actual_code_definition": "NOT IMPLEMENTED IN CODE (schemas.py:12 only defines BaselineReadinessState.STALE enum)",
+      "actual_value_in_production": null,
+      "previously_reported_values": "5 or 30 days",
+      "reconciliation_finding": "CRITICAL CITATION DISCREPANCY: Previous reports cited schemas.py:165 for STALE_THRESHOLD_DAYS=5.0. Inspection of schemas.py shows lines 152-165 define ObservationSession. No automated background staleness calculation or decay timer exists in the codebase. STALE is an available enum state, but staleness transitions are not automated."
+    },
+    {
+      "parameter": "RECENCY_DECAY_HALF_LIFE",
+      "actual_code_definition": "NOT IMPLEMENTED IN CODE",
+      "actual_value_in_production": null,
+      "previously_reported_values": "30 days",
+      "reconciliation_finding": "CRITICAL CITATION DISCREPANCY: Previous reports cited schemas.py:170 for RECENCY_DECAY_HALF_LIFE=30.0. Inspection shows line 170 is `from_version: int` in BaselineUpdateLog. RobustBaselineEngine computes standard unweighted sample median, MAD, and IQR over all valid calibration sessions. No exponential half-life decay function exists in statistical_engine.py."
+    },
+    {
+      "parameter": "MIN_SQA_SCORE",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/data_pipeline.py:56",
+      "actual_value_in_production": 0.6,
+      "previously_reported_values": "0.60 or 0.70",
+      "reconciliation_finding": "DISCREPANCY RESOLVED: BaselineDataPipeline defaults to min_quality_score = 0.60, with optional override min_sqa_score. Test docstrings referenced 0.70 from general SQA specifications, but actual code rejects when sqa_overall_score < 0.60 (or below caller override)."
+    },
+    {
+      "parameter": "IQR_SCALE_FACTOR",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/statistical_engine.py:68",
+      "actual_value_in_production": 1.349,
+      "previously_reported_values": "1.349",
+      "reconciliation_finding": "CONSISTENT: Code uses `effective_mad = float(iqr_val / 1.349)` when raw MAD is 0.0, derived from Gaussian asymptotic interquartile spread (2 * sqrt(2) * erf^-1(0.5) \u2248 1.34898)."
+    },
+    {
+      "parameter": "MAX_COMPOSITE_ANOMALY",
+      "actual_code_definition": "ai-engine/agents/personal_health/baseline/update_manager.py:28",
+      "actual_value_in_production": 3.0,
+      "previously_reported_values": "3.0",
+      "reconciliation_finding": "CONSISTENT: Used in SafeBaselineUpdateManager to reject sessions whose composite anomaly score >= 3.0."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 63 items
+
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_01_confirmed_document_retrieval PASSED [  1%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_02_pending_document_exclusion PASSED [  3%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_03_rejected_document_exclusion PASSED [  4%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_04_quarantined_document_exclusion PASSED [  6%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_05_missing_astronaut_identity PASSED [  7%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_06_cross_astronaut_isolation PASSED [  9%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_07_missing_document_provenance PASSED [ 11%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_08_document_status_changed_after_indexing PASSED [ 12%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_09_cache_isolation_between_astronauts PASSED [ 14%]
+ai-engine/agents/personal_health/tests/test_medical_rag_eligibility_and_security.py::test_10_re_ingestion_and_duplicate_document_behavior PASSED [ 15%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_01_embedding_provider_unavailable PASSED [ 17%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_02_vector_database_unavailable PASSED [ 19%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_03_retrieval_timeout_resilience PASSED [ 20%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_04_generation_provider_unavailable PASSED [ 22%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_05_empty_index_handling PASSED [ 23%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_06_corrupted_metadata_handling PASSED [ 25%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_07_malformed_query_handling PASSED [ 26%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_08_partial_retrieval_failure PASSED [ 28%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_09_repeated_requests_idempotency PASSED [ 30%]
+ai-engine/agents/personal_health/tests/test_medical_rag_failure_recovery.py::test_10_concurrent_requests_thread_safety PASSED [ 31%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_01_correct_answer_with_valid_source_citation PASSED [ 33%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_02_correct_refusal_when_evidence_absent PASSED [ 34%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_03_no_fabricated_values PASSED [ 36%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_04_no_fabricated_page_references PASSED [ 38%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_05_no_fabricated_dates PASSED [ 39%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_06_unsupported_medical_conclusions_blocked PASSED [ 41%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_07_correct_identification_of_conflicting_evidence PASSED [ 42%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_08_historical_evidence_never_presented_as_live_telemetry PASSED [ 44%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_09_correct_preservation_of_units PASSED [ 46%]
+ai-engine/agents/personal_health/tests/test_medical_rag_grounding.py::test_10_five_section_structural_separation PASSED [ 47%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_01_parse_pdf_knowledge PASSED [ 49%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_02_parse_docx_knowledge PASSED [ 50%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_03_parse_txt_and_markdown PASSED [ 52%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_04_parse_json_knowledge PASSED [ 53%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_05_content_hash_deduplication PASSED [ 55%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_06_corrupt_and_empty_file_handling PASSED [ 57%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_07_decompression_bomb_and_path_traversal_guards PASSED [ 58%]
+ai-engine/agents/personal_health/tests/test_medical_rag_ingestion.py::test_08_chunking_structure_awareness PASSED [ 60%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_01_dense_semantic_retrieval PASSED [ 61%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_02_bm25_lexical_keyword_retrieval PASSED [ 63%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_03_hybrid_reciprocal_rank_fusion PASSED [ 65%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_04_protocol_precedence_boost PASSED [ 66%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_05_metadata_domain_filtering PASSED [ 68%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_06_score_thresholding_insufficient_evidence PASSED [ 69%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_07_conflict_detection PASSED [ 71%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval.py::test_08_astronaut_personal_record_isolation PASSED [ 73%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_01_exact_medical_terminology_query PASSED [ 74%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_02_semantic_paraphrase_query PASSED [ 76%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_03_query_with_abbreviations PASSED [ 77%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_04_query_involving_units PASSED [ 79%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_05_query_involving_historical_dates PASSED [ 80%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_06_multi_document_information_retrieval PASSED [ 82%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_07_irrelevant_query_handling PASSED [ 84%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_08_query_with_no_supporting_evidence PASSED [ 85%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_09_duplicate_chunk_deduplication PASSED [ 87%]
+ai-engine/agents/personal_health/tests/test_medical_rag_retrieval_quality.py::test_10_conflicting_historical_records_retrieval PASSED [ 88%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_01_full_langgraph_medical_rag_execution PASSED [ 90%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_02_evidence_registry_compilation_and_provenance PASSED [ 92%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_03_final_assessment_contract_and_provenance_chain PASSED [ 93%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_04_telemetry_immutability_with_rag_active PASSED [ 95%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_05_personal_record_isolation_rejection_in_supervisor PASSED [ 96%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_06_graceful_degradation_on_rag_service_failure PASSED [ 98%]
+ai-engine/agents/supervisor/tests/test_medical_rag_supervisor_e2e.py::test_07_conflicting_knowledge_quarantined_in_evidence_registry PASSED [100%]
+
+=============================== warnings summary ===============================
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 63 passed, 8 warnings in 45.71s ========================

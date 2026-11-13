@@ -1,0 +1,25 @@
+{
+  "provider": "Groq LLM API",
+  "model_id": "llama-3.3-70b-versatile",
+  "http_status": 200,
+  "status": "SUCCESS",
+  "latency_seconds": 2.495,
+  "query": "What is the clinical protocol for sustained sinus tachycardia during extravehicular activity?",
+  "passages_retrieved": 3,
+  "citations": [
+    "ISS-MEDOPS-REDLINE-2025-V4.2",
+    "NASA-BHO-STRESS-2024-V2.0",
+    "SPR-EDA-STANDARDS-2022-88"
+  ],
+  "grounding_status": "PARTIALLY_GROUNDED",
+  "five_sections_verified": {
+    "section_1_facts": true,
+    "section_2_interpretation": true,
+    "section_3_uncertainty": true,
+    "section_4_citations": true,
+    "section_5_missing_info": true
+  },
+  "answer_preview": "**1. Retrieved Medical Facts:**\n- [ISS-MEDOPS-REDLINE-2025-V4.2] [Mission Medical Protocols | Emergency Clinical Protocols > Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol]\n- [NASA-BHO-STRESS-2024-V2.0] [Mission Medical Protocols | Operational Behavioral Medicine > Op...",
+  "claim_evidence_mapping_count": 9,
+  "secrets_exposed": false
+}

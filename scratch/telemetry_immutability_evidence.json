@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-11T22:01:21.737540Z",
+  "astronaut_id": "AST-001",
+  "session_before": "SES-LIVE-ONLY-1794427252",
+  "session_after": "SES-WITH-HIST-1794427252",
+  "live_metrics_before": {
+    "EV-PHY-HR-MEAN": 72.04116638078902,
+    "EV-PHY-RESP-RATE": 15.0
+  },
+  "live_metrics_after": {
+    "EV-PHY-HR-MEAN": 72.04116638078902,
+    "EV-PHY-RESP-RATE": 15.0
+  },
+  "delta": {
+    "hr_delta": 0.0,
+    "resp_delta": 0.0
+  },
+  "historical_record_added": {
+    "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794427252",
+    "is_historical": true,
+    "source_agent": "medical_records_repository"
+  },
+  "immutability_verified": true
+}

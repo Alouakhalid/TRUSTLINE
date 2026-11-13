@@ -1,0 +1,44 @@
+[
+  {
+    "leakage_type": "Subject Leakage",
+    "detected": false,
+    "evidence": "Baselines are partitioned and fitted strictly per-astronaut ID (AST-001 vs AST-002; S2 vs S3). No cross-subject profile pooling.",
+    "severity": "NONE",
+    "remediation": "Preserve strict identity isolation in repository queries."
+  },
+  {
+    "leakage_type": "Session / Temporal Leakage",
+    "detected": false,
+    "evidence": "Calibration sessions (sessions 0-9) strictly precede evaluation sessions (sessions starting after day 12). No future data leaks into calibration median/MAD.",
+    "severity": "NONE",
+    "remediation": "Preserve monotonic timestamp sorting in data pipeline."
+  },
+  {
+    "leakage_type": "Normalization / Scale Leakage",
+    "detected": false,
+    "evidence": "Feature medians and MAD dispersion scales are calculated solely over calibration windows; test session values are strictly normalized by frozen calibration statistics.",
+    "severity": "NONE",
+    "remediation": "Maintain read-only snapshot evaluation in deviation engine."
+  },
+  {
+    "leakage_type": "Hyperparameter / Threshold Tuning on Test",
+    "detected": false,
+    "evidence": "Thresholds (Z >= 2.5, Z >= 3.0) are derived from theoretical Gaussian sigma equivalents (p < 0.012), not optimized by post-hoc test grid search.",
+    "severity": "LOW (Theoretical prior assumption)",
+    "remediation": "Document threshold as research configuration."
+  },
+  {
+    "leakage_type": "Synthetic Perturbation Separation Artifact",
+    "detected": true,
+    "evidence": "In benchmark.py, synthetic stress was injected as +32 bpm HR against a base variance of 2.0 bpm (16-sigma separation). This synthetic artifact trivially guarantees 100% precision and recall.",
+    "severity": "HIGH (Invalidates real-world F1=1.0 claims)",
+    "remediation": "Re-evaluate on genuine human physiological recordings from wesad_window_features.csv (reproduced F1=0.9627, Recall=100%, FAR=9.02%)."
+  },
+  {
+    "leakage_type": "Overlapping Window Leakage",
+    "detected": false,
+    "evidence": "Calibration windows are taken from initial Baseline recording phase (first 10 windows), while evaluation windows are taken from distinct subsequent phases.",
+    "severity": "NONE",
+    "remediation": "Ensure minimum temporal separation between calibration and evaluation sets."
+  }
+]

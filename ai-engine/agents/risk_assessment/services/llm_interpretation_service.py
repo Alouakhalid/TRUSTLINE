@@ -18,7 +18,8 @@ class LLMInterpretationService:
         api_key: Optional[str] = None,
         model: Optional[str] = None,
         timeout: Optional[float] = None,
-        max_retries: int = 2
+        max_retries: int = 2,
+        router: Optional[Any] = None
     ):
         cfg = get_risk_settings()
         self.api_key = api_key if api_key is not None else (cfg.groq_api_key or os.environ.get("GROQ_API_KEY", ""))
@@ -30,8 +31,19 @@ class LLMInterpretationService:
         if self.api_key:
             self._client = Groq(api_key=self.api_key, timeout=self.timeout)
 
+        from hybrid_ai import HybridAIRouter, GroqProvider
+        if router is not None:
+            self.router = router
+        else:
+            groq_p = GroqProvider(api_key=self.api_key, model=self.model, timeout=self.timeout, max_retries=self.max_retries)
+            if self._client is not None:
+                groq_p._client = self._client
+            self.router = HybridAIRouter(groq_provider=groq_p)
+
     def is_available(self) -> bool:
-        """Check whether Groq credentials are configured."""
+        """Check whether Groq credentials or router are configured."""
+        if self.router and getattr(self.router, "mode", "") == "LOCAL_ONLY":
+            return True
         return self._client is not None and bool(self.api_key)
 
     @classmethod
@@ -116,56 +128,48 @@ class LLMInterpretationService:
             recommended_actions=recommended_actions
         )
 
-        attempt = 0
-        backoff = 1.0
-        while attempt <= self.max_retries:
-            attempt += 1
-            try:
-                assert self._client is not None
-                resp = self._client.chat.completions.create(
-                    model=self.model,
-                    messages=[
-                        {"role": "system", "content": RISK_ASSESSMENT_SYSTEM_PROMPT},
-                        {"role": "user", "content": prompt}
-                    ],
-                    temperature=0.1,
-                    max_tokens=1024
-                )
-                raw_text = resp.choices[0].message.content or ""
-                if not raw_text.strip():
-                    return fallback_text, "LLM_INVALID_RESPONSE"
+        from hybrid_ai import ProviderRequest, TaskCategory
+        req = ProviderRequest(
+            task_category=TaskCategory.RISK_ASSESSMENT_SYNTHESIS,
+            prompt=prompt,
+            system_prompt=RISK_ASSESSMENT_SYSTEM_PROMPT,
+            temperature=0.1,
+            max_tokens=1024,
+            timeout_seconds=self.timeout
+        )
 
-                is_valid, violations = ClaimGroundingValidator.validate_synthesis(
-                    text=raw_text,
-                    overall_risk=overall_risk,
-                    escalation_state=escalation_state,
-                    mission_day_supplied=mission_day_supplied,
-                    assessment_status=assessment_status,
-                    unevaluated_domains=unevaluated_domains,
-                    symptoms_explicitly_denied=symptoms_explicitly_denied,
-                    allowed_protective_domains=allowed_protective_domains
-                )
-                if not is_valid:
-                    return fallback_text, "LLM_GROUNDING_FAILED"
+        try:
+            resp = self.router.route_request(req)
+            raw_text = resp.content or ""
+            if not raw_text.strip():
+                return fallback_text, "LLM_INVALID_RESPONSE"
 
-                return raw_text.strip(), "LLM_SUCCESS"
+            is_valid, violations = ClaimGroundingValidator.validate_synthesis(
+                text=raw_text,
+                overall_risk=overall_risk,
+                escalation_state=escalation_state,
+                mission_day_supplied=mission_day_supplied,
+                assessment_status=assessment_status,
+                unevaluated_domains=unevaluated_domains,
+                symptoms_explicitly_denied=symptoms_explicitly_denied,
+                allowed_protective_domains=allowed_protective_domains
+            )
+            if not is_valid:
+                return fallback_text, "LLM_GROUNDING_FAILED"
 
-            except APITimeoutError:
-                if attempt > self.max_retries:
-                    return fallback_text, "LLM_TIMEOUT"
-                time.sleep(backoff)
-                backoff *= 2.0
-            except RateLimitError:
-                if attempt > self.max_retries:
-                    return fallback_text, "LLM_RATE_LIMIT"
-                time.sleep(backoff)
-                backoff *= 2.0
-            except APIError:
+            return raw_text.strip(), "LLM_SUCCESS"
+
+        except Exception as exc:
+            err_str = str(exc).lower()
+            if "timeout" in err_str:
+                return fallback_text, "LLM_TIMEOUT"
+            if "rate limit" in err_str:
+                return fallback_text, "LLM_RATE_LIMIT"
+            if "authentication" in err_str or "unauthorized" in err_str or "api_key" in err_str:
+                return fallback_text, "LLM_UNAVAILABLE"
+            if "api error" in err_str:
                 return fallback_text, "LLM_API_ERROR"
-            except Exception:
-                return fallback_text, "LLM_UNEXPECTED_ERROR"
-
-        return fallback_text, "LLM_FAILED_RETRIES"
+            return fallback_text, "LLM_UNEXPECTED_ERROR"
 
     def _build_deterministic_fallback(
         self,

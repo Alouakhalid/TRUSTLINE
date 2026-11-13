@@ -1,0 +1,24 @@
+{
+  "english": {
+    "audit": {
+      "structure_compliance": "5/5",
+      "citation_preserved": false,
+      "hr_grounded": true,
+      "spo2_grounded": true,
+      "uncertainty_expressed": true,
+      "unsupported_claims_detected": false
+    },
+    "sample_response": "1. Retrieved Medical Facts\n   - Heart Rate: 125 bpm\n   - SpO2: 98%\n   - Tachycardia threshold: >120 bpm (per NASA-STD-3001:Sec4.2)\n\n2. Clinical Interpretation\n   - The astronaut's heart rate is above the tachycardia threshold, indicating potential cardiac or physiological stress.\n   - SpO2 within normal range suggests no immediate respiratory issues.\n\n3. Uncertainty & Limitations\n   - Uncertainty exists regarding the exact cause of tachycardia without further diagnostic information.\n   - Limitations include the need for additional telemetry data and clinical history to determine the underlying cause.\n\n4. Source Citations\n   - NASA-STD-3001:Sec4.2\n\n5. Missing Information\n   - Symptoms or complaints of the astronaut\n   - Blood pressure and other vital signs\n   - Recent physical activity or stressors\n   - Medication history and current use"
+  },
+  "arabic": {
+    "audit": {
+      "structure_compliance": "4/5",
+      "citation_preserved": false,
+      "hr_grounded": true,
+      "spo2_grounded": true,
+      "uncertainty_expressed": true,
+      "unsupported_claims_detected": false
+    },
+    "sample_response": "1. الحقائق الطبية المسترجعة:\n- رائد الفضاء AST-001 يعاني من تسارع ضربات قلب ملحوظ، حيث بلغ معدل ضربات القلب 125 نبضة/دقيقة.\n- مستوى تشبع الأكسجين في الدم هو 98%.\n- ينطبق معيار NASA-STD-3001:Sec4.2 على حالة الرائد الفضاء، حيث يتطلب مراجعة لتسارع ضربات القلب فوق 120 نبضة/دقيقة في الجاذبية الصغرى.\n\n2. التفسير السريري:\nرائد الفضاء AST-001 قد يواجه بعض التوتر أو الضغط النفسي أثناء المهمة الفضائية، مما يؤدي إلى زيادة معدل ضربات القلب. ومع ذلك، مستوى تشبع الأكسجين الجيد يشير إلى أن الرائد الفضاء لا يعاني من نقص في الأكسجين.\n\n3. عدم اليقين والقيود:\n- قد يكون هناك عوامل أخرى غير مذكورة تساهم في تسارع ضربات القلب، مثل الت"
+  }
+}

@@ -1,730 +1,116 @@
 {
-  "assessment_id": "SUP-B817211D",
-  "astronaut_id": "AST-001",
-  "session_id": "SESSION-001",
-  "workflow_id": "WF-00C3683A",
-  "generation_timestamp": "2026-11-09 20:19:44.055150",
+  "assessment_id": "SUP-19D19C12",
+  "astronaut_id": "AST-999",
+  "session_id": "SES-999",
+  "workflow_id": "WF-B557FBE6",
+  "generation_timestamp": "2026-11-13 17:35:52.438524",
   "workflow_completion_status": "PARTIALLY_COMPLETED",
   "agent_execution_statuses": {
     "supervisor": {
       "agent_name": "supervisor_orchestrator",
       "status": "SUCCESS",
-      "execution_time_ms": 23.46,
+      "execution_time_ms": 4.67,
       "error_message": null,
       "warnings": []
     },
     "sensor_quality_agent": {
       "agent_name": "sensor_quality_agent",
-      "status": "SUCCESS",
-      "execution_time_ms": 3459.28,
+      "status": "SKIPPED",
+      "execution_time_ms": 0.05,
       "error_message": null,
       "warnings": [
-        "[ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-        "[ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
-        "[EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-        "[EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-        "[TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s)."
+        "No sensor manifest supplied; skipping sensor quality inspection."
       ]
     },
     "personal_health_agent": {
       "agent_name": "personal_health_agent",
-      "status": "SUCCESS",
-      "execution_time_ms": 7874.21,
+      "status": "PARTIAL",
+      "execution_time_ms": 4952.02,
       "error_message": null,
       "warnings": [
         "Individualized personal baseline is not yet established; population reference norms utilized.",
-        "Upstream sensor quality warning: [ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-        "Upstream sensor quality warning: [ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
-        "Upstream sensor quality warning: [EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-        "Upstream sensor quality warning: [EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-        "Upstream sensor quality warning: [TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s).",
-        "HRV metric (RMSSD=0.0 ms) exhibits zero beat-to-beat interval variability (synthetic periodic signal or unvarying rhythm); invalid for vagal parasympathetic evaluation.",
-        "hrv_rmssd_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-        "hrv_sdnn_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-        "mean_rr_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-        "pnn50 derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
         "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
       ]
     },
+    "medical_rag_agent": {
+      "agent_name": "medical_knowledge_rag_service",
+      "status": "SUCCESS",
+      "execution_time_ms": 732.093,
+      "error_message": null,
+      "warnings": []
+    },
     "risk_assessment_agent": {
       "agent_name": "risk_assessment_agent",
-      "status": "SUCCESS",
-      "execution_time_ms": 3914.35,
-      "error_message": null,
+      "status": "FAILED",
+      "execution_time_ms": 0.12,
+      "error_message": "Rule engine crash",
       "warnings": [
-        "Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE",
-        "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
-        "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
-        "Psychological domain lacks validated clinical psychiatric and cognitive testing; evidential confidence capped at MODERATE",
-        "Telemetry in domain THERMOREGULATORY is DEGRADED; evidential confidence attenuated to MODERATE",
-        "Thermoregulatory telemetry reflects peripheral skin temperature, not core body temperature",
-        "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
-        "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
-        "Domain GENERAL_PHYSIOLOGICAL is unevaluated: No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status",
-        "Telemetry in domain DATA_QUALITY_RELATED is DEGRADED; evidential confidence attenuated to MODERATE",
-        "Subjective symptoms were not submitted for this session; absence of reports does not establish clinical absence of symptoms",
-        "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (5/10 domains evaluated)"
+        "risk_assessment_agent raised uncaught exception: Rule engine crash"
       ]
     }
   },
   "timing_breakdown": {
-    "workflow_total_execution_time_ms": 15282.98,
-    "supervisor_overhead_time_ms": 35.14,
-    "sensor_quality_execution_time_ms": 3459.28,
-    "personal_health_execution_time_ms": 7874.21,
-    "risk_assessment_execution_time_ms": 3914.35,
-    "evidence_validation_time_ms": 0.83,
-    "final_synthesis_time_ms": 0.27,
-    "persistence_time_ms": 8.91,
-    "measured_supervisor_overhead_ms": 12.19
+    "workflow_total_execution_time_ms": 5692.44,
+    "supervisor_overhead_time_ms": 8.16,
+    "sensor_quality_execution_time_ms": 0.05,
+    "personal_health_execution_time_ms": 4952.02,
+    "medical_rag_execution_time_ms": 732.09,
+    "risk_assessment_execution_time_ms": 0.12,
+    "evidence_validation_time_ms": 0.08,
+    "final_synthesis_time_ms": 0.08,
+    "persistence_time_ms": 2.81,
+    "measured_supervisor_overhead_ms": 4.36
   },
   "overall_assessment_status": "PARTIALLY_COMPLETED",
-  "overall_risk": "INSUFFICIENT_DATA",
+  "overall_risk": "UNKNOWN",
   "overall_confidence": "MODERATE",
-  "escalation_state": "NO_TRIGGER_DETECTED",
+  "escalation_state": "ASSESSMENT_UNAVAILABLE",
   "escalation_required": false,
   "escalation_urgency": "NOMINAL",
   "coverage_summary": {
     "total_domains": 10,
-    "evaluated_domains": [
-      "CARDIOVASCULAR",
-      "RESPIRATORY",
-      "PSYCHOLOGICAL_AND_COGNITIVE",
-      "THERMOREGULATORY",
-      "DATA_QUALITY_RELATED"
-    ],
-    "unevaluated_domains": [
-      "NEUROLOGICAL",
-      "SLEEP_AND_FATIGUE",
-      "HYDRATION_AND_FLUID_BALANCE",
-      "MUSCULOSKELETAL",
-      "GENERAL_PHYSIOLOGICAL"
-    ],
+    "evaluated_domains": [],
+    "unevaluated_domains": [],
     "partially_evaluated_domains": [],
-    "domain_coverage_ratio": 0.5,
-    "coverage_status": "PARTIAL"
+    "domain_coverage_ratio": 0.0,
+    "coverage_status": "INSUFFICIENT"
   },
-  "sensor_quality_summary": {
-    "agent": "sensor_quality_agent",
-    "report_version": "1.0",
-    "astronaut_id": "AST-001",
-    "session_id": "SESSION-001",
-    "recording_id": "REC-001",
-    "execution_timestamp": "2026-11-09T20:19:32.240988+00:00",
-    "overall_quality": {
-      "score": 0.9639,
-      "status": "VALID",
-      "valid_sensors_count": 6,
-      "total_sensors_count": 6,
-      "degraded_sensors": [],
-      "rejected_sensors": []
-    },
-    "sensors": {
-      "ECG": {
-        "sensor": "ECG",
-        "quality_score": 0.9808,
-        "status": "VALID",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0099,
-          "flatline_ratio": 0.0,
-          "noise_index": 0.1149,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0,
-          "continuity_score": 1.0
-        },
-        "issues": [
-          {
-            "reason_code": "SIGNAL_SPIKES",
-            "sensor": "ECG",
-            "severity": "MODERATE",
-            "time_interval": null,
-            "evidence": [
-              {
-                "metric_name": "spike_ratio",
-                "measured_value": 0.00980952380952381,
-                "threshold_value": 0.005,
-                "units": "ratio",
-                "confidence": 0.9,
-                "additional_context": {
-                  "spike_count": 412,
-                  "z_threshold": 4.5
-                }
-              }
-            ],
-            "method": "Median Absolute Deviation (MAD) modified Z-score",
-            "explanation": "High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-            "recommended_handling": "Apply median filter or segment around spike intervals."
-          },
-          {
-            "reason_code": "ECG_HIGH_FREQUENCY_NOISE",
-            "sensor": "ECG",
-            "severity": "LOW",
-            "time_interval": null,
-            "evidence": [
-              {
-                "metric_name": "high_frequency_noise_ratio",
-                "measured_value": 0.5282115340232849,
-                "threshold_value": 0.35,
-                "units": "ratio",
-                "confidence": 0.85,
-                "additional_context": {}
-              }
-            ],
-            "method": "High-band spectral density evaluation (>45 Hz)",
-            "explanation": "High frequency electromyographic noise contamination detected (52.82% power).",
-            "recommended_handling": "Apply low-pass filter at 40 Hz cutoff."
-          }
-        ],
-        "recommendation": "ACCEPT",
-        "critical_failure": false,
-        "sampling_rate": 700.0,
-        "total_samples_analyzed": 42000,
-        "duration_seconds": 60.0
-      },
-      "EDA": {
-        "sensor": "EDA",
-        "quality_score": 0.9858,
-        "status": "VALID",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0333,
-          "flatline_ratio": 0.0,
-          "noise_index": 0.05,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0083,
-          "continuity_score": 1.0
-        },
-        "issues": [
-          {
-            "reason_code": "SIGNAL_SPIKES",
-            "sensor": "EDA",
-            "severity": "MODERATE",
-            "time_interval": null,
-            "evidence": [
-              {
-                "metric_name": "spike_ratio",
-                "measured_value": 0.025,
-                "threshold_value": 0.005,
-                "units": "ratio",
-                "confidence": 0.9,
-                "additional_context": {
-                  "spike_count": 6,
-                  "z_threshold": 4.5
-                }
-              }
-            ],
-            "method": "Median Absolute Deviation (MAD) modified Z-score",
-            "explanation": "High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-            "recommended_handling": "Apply median filter or segment around spike intervals."
-          }
-        ],
-        "recommendation": "ACCEPT",
-        "critical_failure": false,
-        "sampling_rate": 4.0,
-        "total_samples_analyzed": 240,
-        "duration_seconds": 60.0
-      },
-      "RESP": {
-        "sensor": "RESP",
-        "quality_score": 0.9925,
-        "status": "VALID",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0,
-          "flatline_ratio": 0.0,
-          "noise_index": 0.05,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0,
-          "continuity_score": 1.0
-        },
-        "issues": [],
-        "recommendation": "ACCEPT",
-        "critical_failure": false,
-        "sampling_rate": 700.0,
-        "total_samples_analyzed": 42000,
-        "duration_seconds": 60.0
-      },
-      "EMG": {
-        "sensor": "EMG",
-        "quality_score": 0.982,
-        "status": "VALID",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0525,
-          "flatline_ratio": 0.0,
-          "noise_index": 0.05,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0,
-          "continuity_score": 1.0
-        },
-        "issues": [
-          {
-            "reason_code": "SIGNAL_SPIKES",
-            "sensor": "EMG",
-            "severity": "MODERATE",
-            "time_interval": null,
-            "evidence": [
-              {
-                "metric_name": "spike_ratio",
-                "measured_value": 0.05245238095238095,
-                "threshold_value": 0.005,
-                "units": "ratio",
-                "confidence": 0.9,
-                "additional_context": {
-                  "spike_count": 2203,
-                  "z_threshold": 4.5
-                }
-              }
-            ],
-            "method": "Median Absolute Deviation (MAD) modified Z-score",
-            "explanation": "High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-            "recommended_handling": "Apply median filter or segment around spike intervals."
-          }
-        ],
-        "recommendation": "ACCEPT",
-        "critical_failure": false,
-        "sampling_rate": 700.0,
-        "total_samples_analyzed": 42000,
-        "duration_seconds": 60.0
-      },
-      "ACC": {
-        "sensor": "ACC",
-        "quality_score": 0.9925,
-        "status": "VALID",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0001,
-          "flatline_ratio": 0.0,
-          "noise_index": 0.05,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0,
-          "continuity_score": 1.0
-        },
-        "issues": [],
-        "recommendation": "ACCEPT",
-        "critical_failure": false,
-        "sampling_rate": 700.0,
-        "total_samples_analyzed": 42000,
-        "duration_seconds": 60.0
-      },
-      "TEMP": {
-        "sensor": "TEMP",
-        "quality_score": 0.85,
-        "status": "ACCEPTABLE_WITH_WARNING",
-        "metrics": {
-          "valid_sample_ratio": 1.0,
-          "missing_sample_ratio": 0.0,
-          "artifact_ratio": 0.0001,
-          "flatline_ratio": 0.0,
-          "noise_index": 1.0,
-          "timestamp_integrity": 1.0,
-          "saturation_ratio": 0.0001,
-          "continuity_score": 1.0
-        },
-        "issues": [
-          {
-            "reason_code": "TEMP_IMPLAUSIBLE_RATE_OF_CHANGE",
-            "sensor": "TEMP",
-            "severity": "HIGH",
-            "time_interval": null,
-            "evidence": [
-              {
-                "metric_name": "max_temp_rate_of_change",
-                "measured_value": 20.740127563476562,
-                "threshold_value": 0.5,
-                "units": "C/sec",
-                "confidence": 0.95,
-                "additional_context": {}
-              }
-            ],
-            "method": "Thermal derivative inspection",
-            "explanation": "Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s).",
-            "recommended_handling": "Verify thermal sensor surface contact."
-          }
-        ],
-        "recommendation": "ACCEPT_WITH_WARNING",
-        "critical_failure": false,
-        "sampling_rate": 700.0,
-        "total_samples_analyzed": 42000,
-        "duration_seconds": 60.0
-      }
-    },
-    "processing_decision": {
-      "can_proceed": true,
-      "warnings": [
-        "[ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-        "[ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
-        "[EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-        "[EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-        "[TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s)."
-      ],
-      "rejected_sensors": [],
-      "next_agent": "personal_health_agent"
-    },
-    "visualizations": [
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_ecg.png",
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_eda.png",
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_resp.png",
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_emg.png",
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_acc.png",
-      "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/agents/sensor_quality/data/output/visualizations/diagnostic_temp.png"
-    ],
-    "llm_explanation": null
-  },
+  "sensor_quality_summary": {},
   "personal_health_summary": {
-    "assessment_id": "PHA-9B732184",
-    "astronaut_id": "AST-001",
-    "session_id": "SESSION-001",
-    "execution_timestamp": "2026-11-09 20:19:40.117317",
-    "assessment_status": "COMPLETED",
+    "assessment_id": "PHA-22125FCC",
+    "astronaut_id": "AST-999",
+    "session_id": "SES-999",
+    "execution_timestamp": "2026-11-13 17:35:51.702555",
+    "assessment_status": "INSUFFICIENT_EVIDENCE",
     "baseline_status": "not_available",
-    "sensor_quality_summary": {
-      "astronaut_id": "AST-001",
-      "session_id": "SESSION-001",
-      "recording_id": "REC-001",
-      "overall_quality_score": 0.9639,
-      "overall_quality_status": "QualityStatus.VALID",
-      "can_proceed": true,
-      "valid_sensors": [
-        "ECG",
-        "EDA",
-        "RESP",
-        "EMG",
-        "ACC",
-        "TEMP"
-      ],
-      "degraded_sensors": [],
-      "quarantined_sensors": [],
-      "upstream_warnings": [
-        "[ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-        "[ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
-        "[EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-        "[EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-        "[TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s)."
-      ],
-      "upstream_llm_briefing": null
-    },
-    "core_features": {
-      "hr_mean_bpm": 72.04116638078902,
-      "hr_std_bpm": 0.0,
-      "hrv_rmssd_ms": 0.0,
-      "hrv_sdnn_ms": 1.1368683772161603e-13,
-      "eda_mean": 4.68982271750768,
-      "eda_std": 0.20365214142976784,
-      "eda_iqr": 0.24143099784851074,
-      "resp_rate_bpm": 15.0,
-      "resp_std": 1.41533759540527,
-      "temp_mean": 34.2694465856098,
-      "temp_std": 0.031340036324507776,
-      "emg_rms": 0.1337901051666067,
-      "acc_magnitude_mean": 0.9803928572841505,
-      "acc_magnitude_std": 0.02000362888639742
-    },
-    "physiological_findings": [
+    "personal_baseline_deviation": null,
+    "sensor_quality_summary": null,
+    "core_features": null,
+    "physiological_findings": [],
+    "hrv_diagnostics": null,
+    "ml_findings": [],
+    "symptom_findings": [
       {
-        "feature_name": "hr_mean_bpm",
-        "value": 72.04116638078902,
-        "unit": "bpm",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Peak-to-Peak R-Peak Inversion",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "hr_std_bpm",
-        "value": 0.0,
-        "unit": "bpm",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Standard deviation of instantaneous HR",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "hrv_rmssd_ms",
-        "value": 0.0,
-        "unit": "ms",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Root Mean Square of Successive RR Differences (Autonomic Regulation Metric)",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "INVALID",
-        "measurement_status": "insufficient_variance",
-        "status_reason": "Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.",
-        "exploratory_ultra_short_term": true
-      },
-      {
-        "feature_name": "hrv_sdnn_ms",
-        "value": 1.1368683772161603e-13,
-        "unit": "ms",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Standard Deviation of NN Intervals",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "INVALID",
-        "measurement_status": "insufficient_variance",
-        "status_reason": "Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.",
-        "exploratory_ultra_short_term": true
-      },
-      {
-        "feature_name": "mean_rr_ms",
-        "value": 832.857142857143,
-        "unit": "ms",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Mean inter-beat interval",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": true
-      },
-      {
-        "feature_name": "pnn50",
-        "value": 0.0,
-        "unit": "percent",
-        "sensor_source": "ECG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Percentage of successive RR differences > 50ms",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": true
-      },
-      {
-        "feature_name": "eda_mean",
-        "value": 4.68982271750768,
-        "unit": "uS",
-        "sensor_source": "EDA",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Empirical mean skin conductance",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "eda_std",
-        "value": 0.20365214142976784,
-        "unit": "uS",
-        "sensor_source": "EDA",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Standard deviation of skin conductance",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "eda_iqr",
-        "value": 0.24143099784851074,
-        "unit": "uS",
-        "sensor_source": "EDA",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Interquartile Range (Q75 - Q25)",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "eda_median",
-        "value": 4.702761888504028,
-        "unit": "uS",
-        "sensor_source": "EDA",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Median skin conductance",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "resp_rate_bpm",
-        "value": 15.0,
-        "unit": "breaths/min",
-        "sensor_source": "RESP",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Thoracic expansion peak detection",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "resp_std",
-        "value": 1.41533759540527,
-        "unit": "mV",
-        "sensor_source": "RESP",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Thoracic respiration amplitude variability",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "temp_mean",
-        "value": 34.2694465856098,
-        "unit": "C",
-        "sensor_source": "TEMP",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Mean skin surface temperature",
-        "quality_status": "QualityStatus.ACCEPTABLE_WITH_WARNING",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "temp_std",
-        "value": 0.031340036324507776,
-        "unit": "C",
-        "sensor_source": "TEMP",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Standard deviation of skin temperature",
-        "quality_status": "QualityStatus.ACCEPTABLE_WITH_WARNING",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "temp_rate_of_change_c_min",
-        "value": 0.0994110107421875,
-        "unit": "C/min",
-        "sensor_source": "TEMP",
-        "time_window_seconds": 60.0,
-        "extraction_method": "End-to-end first order thermal derivative",
-        "quality_status": "QualityStatus.ACCEPTABLE_WITH_WARNING",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "emg_rms",
-        "value": 0.1337901051666067,
-        "unit": "mV",
-        "sensor_source": "EMG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Root Mean Square of muscular potential",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "emg_mav",
-        "value": 0.06671445393664052,
-        "unit": "mV",
-        "sensor_source": "EMG",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Mean Absolute Value of muscular potential",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "acc_magnitude_mean",
-        "value": 0.9803928572841505,
-        "unit": "g",
-        "sensor_source": "ACC",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Mean Euclidean norm of tri-axial acceleration",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
-      },
-      {
-        "feature_name": "acc_magnitude_std",
-        "value": 0.02000362888639742,
-        "unit": "g",
-        "sensor_source": "ACC",
-        "time_window_seconds": 60.0,
-        "extraction_method": "Standard deviation of acceleration magnitude",
-        "quality_status": "QualityStatus.VALID",
-        "validity_status": "VALID",
-        "measurement_status": "available",
-        "status_reason": null,
-        "exploratory_ultra_short_term": false
+        "event_id": "SYM-05118DD1",
+        "astronaut_id": "AST-999",
+        "session_id": "SES-999",
+        "symptom_category": "GENERAL",
+        "symptom_type": "discomfort",
+        "description": "Status",
+        "severity": null,
+        "location": null,
+        "onset_time": null,
+        "duration": null,
+        "current_status": "active",
+        "associated_symptoms": [],
+        "potential_triggers": [],
+        "input_channel": "CHAT_TEXT",
+        "original_text_or_transcript": "Status",
+        "confirmation_status": "confirmed",
+        "event_timestamp": "2026-11-13 17:35:48.733356",
+        "data_provenance": "astronaut_self_report"
       }
     ],
-    "hrv_diagnostics": {
-      "ecg_sampling_rate": 700.0,
-      "ecg_duration_seconds": 60.0,
-      "total_r_peaks_detected": 73,
-      "valid_r_peaks": 73,
-      "total_rr_intervals": 72,
-      "valid_nn_intervals": 72,
-      "invalid_interval_count": 0,
-      "mean_rr_ms": 832.857142857143,
-      "median_rr_ms": 832.8571428571429,
-      "sdnn_ms": 1.1368683772161603e-13,
-      "rmssd_ms": 0.0,
-      "hrv_status": "ZERO_VARIABILITY",
-      "detection_algorithm": "SciPy find_peaks (Pan-Tompkins heuristic)",
-      "processing_warnings": [
-        "Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause."
-      ],
-      "calculation_validity": true
-    },
-    "ml_findings": [
-      {
-        "model_id": "HGB-WESAD-PROD-V1",
-        "model_name": "HistGradientBoosting Stress Classifier",
-        "version": "1.0.0",
-        "target_definition": "Binary acute psychological/cognitive stress state vs non-stress baseline",
-        "stress_probability": 0.1201,
-        "verdict": "NORMAL",
-        "threshold_applied": 0.5,
-        "raw_feature_values": {
-          "hr_mean_bpm": 72.04116638078902,
-          "hr_std_bpm": 0.0,
-          "hrv_rmssd_ms": 0.0,
-          "hrv_sdnn_ms": 1.1368683772161603e-13,
-          "eda_mean": 4.68982271750768,
-          "eda_std": 0.20365214142976784,
-          "eda_iqr": 0.24143099784851074,
-          "resp_rate_bpm": 15.0,
-          "resp_std": 1.41533759540527,
-          "temp_mean": 34.2694465856098,
-          "temp_std": 0.031340036324507776,
-          "emg_rms": 0.1337901051666067,
-          "acc_magnitude_mean": 0.9803928572841505,
-          "acc_magnitude_std": 0.02000362888639742
-        },
-        "inference_timestamp": "2026-11-09 20:19:39.770501",
-        "validity_status": "VALID",
-        "clinical_disclaimer": "Trained on laboratory stress induction protocols (TSST) from the WESAD benchmark. Predicts acute sympathovagal stress activation; not validated as general health or disease anomaly detector. Requires valid Core 14 physiological features centered with production RobustScaler."
-      }
-    ],
-    "symptom_findings": [],
     "symptom_assessment_status": "NO_SYMPTOMS_REPORTED",
     "health_profile_summary": {
       "age": 38,
@@ -748,735 +134,99 @@
     },
     "retrieved_evidence": [
       {
-        "doc_id": "MMP-002",
-        "collection": "mission_medical_protocols",
-        "title": "Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions",
-        "source_organization": "NASA / ESA Behavioral Health Operations Group",
-        "author": "Space Behavioral Health Directorate",
-        "publication_date": "2024-08-15",
-        "version": "2.0",
-        "medical_domain": "Operational Behavioral Medicine",
+        "doc_id": "KNOW-SPACE_HEALTH_RESEARCH-93792535",
+        "collection": "biomedical_knowledge",
+        "title": "Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity",
+        "source_organization": "Aerospace Medicine",
+        "author": null,
+        "publication_date": null,
+        "version": null,
+        "medical_domain": "Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity",
         "evidence_type": "APPROVED_MISSION_PROTOCOL",
-        "population_studied": "Astronauts on Long-Duration Exploration Missions",
+        "population_studied": null,
         "spaceflight_relevance": "high",
-        "approval_status": "flight_surgeon_approved",
-        "excerpt": "When sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
-        "relevance_score": 0.3791,
-        "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
-        "retrieval_timestamp": "2026-11-09 20:19:39.771393"
+        "approval_status": "approved_flight_medicine",
+        "excerpt": "[Space Health Research | Spaceflight Cardiovascular Physiology > Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity]\nTitle: Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity\nDomain: Spaceflight Cardiovascular Physiology\nCitation: NASA-HRP-CARDIO-2024-08\n\nWithin hours of orbital insertion, microgravity causes a cephalad redistribution of approximately 1.5 to 2.0 liters of venous blood and interstitial fluid. This central hypervolemia stimulates baroreceptors and atrial natriuretic peptide secretion, causing early plasma volume contraction. Resting heart rate may increase by 5-12 bpm during initial adaptation, and transient subjective head fullness and nasal congestion are standard adaptation symptoms.",
+        "relevance_score": 0.8476,
+        "citation_reference": "NASA-HRP-CARDIO-2024-08",
+        "retrieval_timestamp": "2026-11-13 17:35:49.806912"
       },
       {
-        "doc_id": "MMP-001",
-        "collection": "mission_medical_protocols",
-        "title": "Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol",
-        "source_organization": "NASA / International Space Station Medical Operations",
-        "author": "Chief Flight Surgeon Directorate",
-        "publication_date": "2025-02-01",
-        "version": "4.2",
-        "medical_domain": "Emergency Clinical Protocols",
+        "doc_id": "KNOW-MISSION_MEDICAL_PROTOCOLS-3AF1A95E",
+        "collection": "biomedical_knowledge",
+        "title": "Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions",
+        "source_organization": "Mission Medical Protocols",
+        "author": null,
+        "publication_date": null,
+        "version": null,
+        "medical_domain": "Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions",
         "evidence_type": "APPROVED_MISSION_PROTOCOL",
-        "population_studied": "Active Spaceflight Crewmembers",
-        "spaceflight_relevance": "critical",
-        "approval_status": "flight_surgeon_directive_mandatory",
-        "excerpt": "CRITICAL ESCALATION TRIGGER: Any reported acute severe chest pain, sudden respiratory distress, acute neurological deficit, syncope, or sustained heart rate exceeding 160 bpm or falling below 40 bpm at rest requires immediate emergency escalation. Under this protocol, autonomous AI systems must immediately trigger mission medical alerts to the Supervisor and Flight Surgeon, bypassing routine ML inference or general research retrieval pipelines.",
-        "relevance_score": 0.314,
-        "citation_reference": "ISS-MEDOPS-REDLINE-2025-V4.2",
-        "retrieval_timestamp": "2026-11-09 20:19:39.771386"
+        "population_studied": null,
+        "spaceflight_relevance": "high",
+        "approval_status": "approved_flight_medicine",
+        "excerpt": "[Mission Medical Protocols | Operational Behavioral Medicine > Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions]\nTitle: Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions\nDomain: Operational Behavioral Medicine\nCitation: NASA-BHO-STRESS-2024-V2.0\n\nWhen sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
+        "relevance_score": 0.7805,
+        "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
+        "retrieval_timestamp": "2026-11-13 17:35:49.806896"
       }
     ],
-    "possible_explanations": [
-      "WESAD acute stress model prediction: NORMAL (p=0.1201). Validated strictly as experimental acute stress classifier; does not evaluate general clinical health, pathology, or psychological stability."
-    ],
+    "possible_explanations": [],
     "evidence_conflicts": [],
     "uncertainties": [
       "Individualized personal baseline is not yet established; population reference norms utilized.",
-      "Upstream sensor quality warning: [ECG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (412 samples, 0.98%).",
-      "Upstream sensor quality warning: [ECG] ECG_HIGH_FREQUENCY_NOISE: High frequency electromyographic noise contamination detected (52.82% power).",
-      "Upstream sensor quality warning: [EDA] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (6 samples, 2.50%).",
-      "Upstream sensor quality warning: [EMG] SIGNAL_SPIKES: High-amplitude impulsive spikes detected (2203 samples, 5.25%).",
-      "Upstream sensor quality warning: [TEMP] TEMP_IMPLAUSIBLE_RATE_OF_CHANGE: Thermal rate of change (20.74 C/s) exceeds biological skin limits (0.50 C/s).",
-      "HRV metric (RMSSD=0.0 ms) exhibits zero beat-to-beat interval variability (synthetic periodic signal or unvarying rhythm); invalid for vagal parasympathetic evaluation.",
-      "hrv_rmssd_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-      "hrv_sdnn_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-      "mean_rr_ms derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
-      "pnn50 derived from short recording window (< 300s); classified as exploratory ultra-short-term measurement.",
       "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
     ],
-    "missing_information": [
-      "Symptom status: NO_SYMPTOMS_REPORTED. No subjective symptom survey was submitted; absence of reported symptoms does not constitute a confirmed negative clinical assessment."
-    ],
+    "missing_information": [],
     "recommended_follow_up": [
       "Maintain standard telemetry monitoring pending baseline establishment."
     ],
     "clarification_requests": [],
     "escalation": {
-      "status": "NO_TRIGGER_DETECTED",
+      "status": "INSUFFICIENT_DATA",
       "required": false,
-      "urgency_level": "NO_EMERGENCY_TRIGGER",
+      "urgency_level": "INDETERMINATE",
       "reason_codes": [],
       "triggers": [],
-      "immediate_actions": [],
-      "protocol_reference": null,
-      "uncertainty_notes": [
-        "NO_TRIGGER_DETECTED indicates only that no configured emergency escalation rule was triggered using the available valid evidence; this observation alone does not confirm that the astronaut is healthy or that no medical risk exists."
-      ],
-      "data_gaps": []
-    },
-    "next_agent": "risk_assessment_agent",
-    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-001 (Session SESSION-001) recorded a mean heart rate of 72.0 bpm and mean skin conductance of 4.69 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.1201 (verdict: NORMAL). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. No symptoms were recorded in the provided assessment. Lack of recorded symptoms does not constitute a confirmed negative clinical assessment.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is NO_TRIGGER_DETECTED with no configured escalation rule triggered using the available telemetry. This observation alone does not confirm that the astronaut is medically normal or that no health risk exists."
-  },
-  "risk_assessment_summary": {
-    "assessment_id": "RA-A55164AE",
-    "astronaut_id": "AST-001",
-    "session_id": "SESSION-001",
-    "assessment_timestamp": "2026-11-09 20:19:44.032521",
-    "assessment_status": "PARTIALLY_COMPLETED",
-    "evaluated_domains_risk": "LOW",
-    "overall_risk": "INSUFFICIENT_DATA",
-    "overall_confidence": "MODERATE",
-    "coverage": {
-      "total_domains": 10,
-      "evaluated_domains": [
-        "CARDIOVASCULAR",
-        "RESPIRATORY",
-        "PSYCHOLOGICAL_AND_COGNITIVE",
-        "THERMOREGULATORY",
-        "DATA_QUALITY_RELATED"
-      ],
-      "unevaluated_domains": [
-        "NEUROLOGICAL",
-        "SLEEP_AND_FATIGUE",
-        "HYDRATION_AND_FLUID_BALANCE",
-        "MUSCULOSKELETAL",
-        "GENERAL_PHYSIOLOGICAL"
-      ],
-      "partially_evaluated_domains": [],
-      "domain_coverage_ratio": 0.5,
-      "coverage_status": "PARTIAL",
-      "unavailable_domain_reasons": {
-        "NEUROLOGICAL": "No observational telemetry or validated records available. Required evidence: Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms.",
-        "SLEEP_AND_FATIGUE": "No observational telemetry or validated records available. Required evidence: Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy.",
-        "HYDRATION_AND_FLUID_BALANCE": "No observational telemetry or validated records available. Required evidence: Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers.",
-        "MUSCULOSKELETAL": "No observational telemetry or validated records available. Required evidence: Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry.",
-        "GENERAL_PHYSIOLOGICAL": "No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status."
-      }
-    },
-    "risk_domains": [
-      {
-        "domain": "CARDIOVASCULAR",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "MODERATE",
-        "supporting_evidence_ids": [
-          "EV-PHY-HR-MEAN"
-        ],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "Cardiac autonomic HRV evidence (RMSSD) is INVALID (ZERO_VARIABILITY artifact); autonomic regulation cannot be confirmed from HRV."
-        ],
-        "explanation": "All observed variables in CARDIOVASCULAR were within established reference limits; no rule triggered.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "RESPIRATORY",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "HIGH",
-        "supporting_evidence_ids": [
-          "EV-PHY-RESP-RATE"
-        ],
-        "triggered_rule_ids": [],
-        "limitations": [],
-        "explanation": "All observed variables in RESPIRATORY were within established reference limits; no rule triggered.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "NEUROLOGICAL",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No telemetry or subjective observations provided for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms)."
-        ],
-        "explanation": "Domain NEUROLOGICAL was not evaluated due to absence of domain telemetry.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "SLEEP_AND_FATIGUE",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No telemetry or subjective observations provided for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy)."
-        ],
-        "explanation": "Domain SLEEP_AND_FATIGUE was not evaluated due to absence of domain telemetry.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "MODERATE",
-        "supporting_evidence_ids": [
-          "EV-PHY-EDA-MEAN"
-        ],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "Psychological assessment limited to peripheral autonomic electrodermal activity (EDA) and experimental laboratory ML benchmark; validated clinical psychiatric and cognitive testing is unavailable."
-        ],
-        "explanation": "All observed variables in PSYCHOLOGICAL_AND_COGNITIVE were within established reference limits; no rule triggered.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "THERMOREGULATORY",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "MODERATE",
-        "supporting_evidence_ids": [
-          "EV-PHY-TEMP-MEAN"
-        ],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "Thermoregulatory telemetry reflects peripheral skin surface temperature (34.27 \u00b0C) with ACCEPTABLE_WITH_WARNING quality; core body temperature is not directly monitored."
-        ],
-        "explanation": "All observed variables in THERMOREGULATORY were within established reference limits; no rule triggered.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "HYDRATION_AND_FLUID_BALANCE",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No telemetry or subjective observations provided for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers)."
-        ],
-        "explanation": "Domain HYDRATION_AND_FLUID_BALANCE was not evaluated due to absence of domain telemetry.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "MUSCULOSKELETAL",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No telemetry or subjective observations provided for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry)."
-        ],
-        "explanation": "Domain MUSCULOSKELETAL was not evaluated due to absence of domain telemetry.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status."
-        ],
-        "explanation": "Domain GENERAL_PHYSIOLOGICAL was not evaluated due to absence of eligible domain telemetry or confirmed symptom assessments.",
-        "requires_human_review": false
-      },
-      {
-        "domain": "DATA_QUALITY_RELATED",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "MODERATE",
-        "supporting_evidence_ids": [
-          "EV-SQ-ECG",
-          "EV-SQ-EDA",
-          "EV-SQ-RESP",
-          "EV-SQ-EMG",
-          "EV-SQ-ACC",
-          "EV-SQ-TEMP"
-        ],
-        "triggered_rule_ids": [],
-        "limitations": [],
-        "explanation": "All observed variables in DATA_QUALITY_RELATED were within established reference limits; no rule triggered.",
-        "requires_human_review": false
-      }
-    ],
-    "identified_concerns": [],
-    "evidence_summary": [
-      {
-        "evidence_id": "EV-SQ-ECG",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "ECG_quality_score",
-        "observed_value_repr": "0.9808 score",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor ECG quality score 0.9808 (Status: VALID, Recommendation: ACCEPT)."
-      },
-      {
-        "evidence_id": "EV-SQ-EDA",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "EDA_quality_score",
-        "observed_value_repr": "0.9858 score",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor EDA quality score 0.9858 (Status: VALID, Recommendation: ACCEPT)."
-      },
-      {
-        "evidence_id": "EV-SQ-RESP",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "RESP_quality_score",
-        "observed_value_repr": "0.9925 score",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor RESP quality score 0.9925 (Status: VALID, Recommendation: ACCEPT)."
-      },
-      {
-        "evidence_id": "EV-SQ-EMG",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "EMG_quality_score",
-        "observed_value_repr": "0.982 score",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor EMG quality score 0.9820 (Status: VALID, Recommendation: ACCEPT)."
-      },
-      {
-        "evidence_id": "EV-SQ-ACC",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "ACC_quality_score",
-        "observed_value_repr": "0.9925 score",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor ACC quality score 0.9925 (Status: VALID, Recommendation: ACCEPT)."
-      },
-      {
-        "evidence_id": "EV-SQ-TEMP",
-        "source_agent": "sensor_quality_agent",
-        "domain": "DATA_QUALITY_RELATED",
-        "metric_name": "TEMP_quality_score",
-        "observed_value_repr": "0.85 score",
-        "validity_status": "DEGRADED",
-        "quality_status": "ACCEPTABLE_WITH_WARNING",
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Sensor TEMP quality score 0.8500 (Status: ACCEPTABLE_WITH_WARNING, Recommendation: ACCEPT_WITH_WARNING)."
-      },
-      {
-        "evidence_id": "EV-PHY-HR-MEAN",
-        "source_agent": "personal_health_agent",
-        "domain": "CARDIOVASCULAR",
-        "metric_name": "heart_rate_mean",
-        "observed_value_repr": "72.04116638078902 bpm",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": false,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Mean resting heart rate of 72.0 bpm extracted from ECG."
-      },
-      {
-        "evidence_id": "EV-PHY-HRV-RMSSD",
-        "source_agent": "personal_health_agent",
-        "domain": "CARDIOVASCULAR",
-        "metric_name": "hrv_rmssd",
-        "observed_value_repr": "0.0 ms",
-        "validity_status": "INVALID",
-        "quality_status": "VALID",
-        "is_confirmed": false,
-        "evidence_classification": "DATA_INTEGRITY_ARTIFACT",
-        "is_eligible_for_risk": false,
-        "relevance_summary": "Cardiac HRV RMSSD observed at 0.0 ms (HRV Status: ZERO_VARIABILITY). Notice: Invalid HRV artifact cannot be evaluated as physiological evidence."
-      },
-      {
-        "evidence_id": "EV-PHY-EDA-MEAN",
-        "source_agent": "personal_health_agent",
-        "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
-        "metric_name": "eda_mean",
-        "observed_value_repr": "4.68982271750768 uS",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": false,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Electrodermal skin conductance mean level of 4.69 uS."
-      },
-      {
-        "evidence_id": "EV-PHY-TEMP-MEAN",
-        "source_agent": "personal_health_agent",
-        "domain": "THERMOREGULATORY",
-        "metric_name": "temperature_mean",
-        "observed_value_repr": "34.2694465856098 \u00b0C",
-        "validity_status": "DEGRADED",
-        "quality_status": "ACCEPTABLE_WITH_WARNING",
-        "is_confirmed": false,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Mean skin surface temperature recorded at 34.27 \u00b0C (Sensor TEMP, sampling rate: 700.0 Hz, quality: ACCEPTABLE_WITH_WARNING). Notice: Peripheral skin temperature cannot be evaluated against core body temperature clinical thresholds without an approved conversion model."
-      },
-      {
-        "evidence_id": "EV-PHY-RESP-RATE",
-        "source_agent": "personal_health_agent",
-        "domain": "RESPIRATORY",
-        "metric_name": "respiratory_rate",
-        "observed_value_repr": "15.0 breaths/min",
-        "validity_status": "VALID",
-        "quality_status": "VALID",
-        "is_confirmed": false,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Respiration rate computed at 15.0 breaths/min."
-      },
-      {
-        "evidence_id": "EV-ML-WESAD-1",
-        "source_agent": "personal_health_agent",
-        "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
-        "metric_name": "experimental_lab_stress_probability",
-        "observed_value_repr": "0.1201 probability",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": false,
-        "evidence_classification": "EXPERIMENTAL_CONTEXT",
-        "is_eligible_for_risk": false,
-        "relevance_summary": "Experimental WESAD laboratory benchmark classifier 'HistGradientBoosting Stress Classifier' yielded acute laboratory stress probability 0.1201 (verdict: NORMAL). Notice: This is an experimental laboratory stress benchmark, not a clinical measure of astronaut distress."
-      },
-      {
-        "evidence_id": "EV-SYM-UNSUBMITTED",
-        "source_agent": "personal_health_agent",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "symptom_status_unsubmitted",
-        "observed_value_repr": "no_symptoms_submitted",
-        "validity_status": "NOT_AVAILABLE",
-        "quality_status": null,
-        "is_confirmed": false,
-        "evidence_classification": "UNSUBMITTED_STATUS",
-        "is_eligible_for_risk": false,
-        "relevance_summary": "No subjective symptoms were submitted in this monitoring session; absence of reports does not establish clinical absence of symptoms."
-      }
-    ],
-    "triggered_rules": [],
-    "non_triggered_rules": [
-      {
-        "rule_id": "RR-EMERG-CHEST-PAIN",
-        "rule_name": "Red-Line Trigger: Acute Severe Chest Pain Complaint",
-        "domain": "CARDIOVASCULAR",
-        "evaluated_variables": [
-          "symptom_chest_pain"
-        ],
-        "evaluation_reason": "Missing required observational variables: ['symptom_chest_pain']."
-      },
-      {
-        "rule_id": "RR-CARDIO-TACHY-EXTREME",
-        "rule_name": "Red-Line Trigger: Extreme Resting Tachycardia",
-        "domain": "CARDIOVASCULAR",
-        "evaluated_variables": [
-          "heart_rate_mean"
-        ],
-        "evaluation_reason": "Resting heart rate (72.04116638078902 bpm) does not exceed 160.0 bpm."
-      },
-      {
-        "rule_id": "RR-CARDIO-BRADY-EXTREME",
-        "rule_name": "Red-Line Trigger: Extreme Resting Bradycardia",
-        "domain": "CARDIOVASCULAR",
-        "evaluated_variables": [
-          "heart_rate_mean"
-        ],
-        "evaluation_reason": "Resting heart rate (72.04116638078902 bpm) is not below 40.0 bpm."
-      },
-      {
-        "rule_id": "RR-CARDIO-TACHY-MODERATE",
-        "rule_name": "Resting Moderate Tachycardia",
-        "domain": "CARDIOVASCULAR",
-        "evaluated_variables": [
-          "heart_rate_mean"
-        ],
-        "evaluation_reason": "Resting heart rate is not between 100 and 160 bpm."
-      },
-      {
-        "rule_id": "RR-RESP-DYSPNEA-ALERT",
-        "rule_name": "Respiratory Distress Complaint",
-        "domain": "RESPIRATORY",
-        "evaluated_variables": [
-          "symptom_dyspnea"
-        ],
-        "evaluation_reason": "Missing required observational variables: ['symptom_dyspnea']."
-      },
-      {
-        "rule_id": "RR-RESP-TACHYPNEA",
-        "rule_name": "Resting Tachypnea",
-        "domain": "RESPIRATORY",
-        "evaluated_variables": [
-          "respiratory_rate"
-        ],
-        "evaluation_reason": "Respiration rate does not exceed 26.0 breaths/min."
-      },
-      {
-        "rule_id": "RR-THERM-HYPERTHERMIA",
-        "rule_name": "Sustained Elevated Core Temperature",
-        "domain": "THERMOREGULATORY",
-        "evaluated_variables": [
-          "temperature_mean"
-        ],
-        "evaluation_reason": "Valid temperature telemetry unavailable."
-      },
-      {
-        "rule_id": "RR-ENV-CABIN-CO2-ELEVATED",
-        "rule_name": "Elevated Atmospheric Carbon Dioxide Concentration",
-        "domain": "RESPIRATORY",
-        "evaluated_variables": [
-          "cabin_co2_percent"
-        ],
-        "evaluation_reason": "Missing required observational variables: ['cabin_co2_percent']."
-      },
-      {
-        "rule_id": "RR-DATA-SENSOR-CRITICAL-FAIL",
-        "rule_name": "Critical Physiological Sensor Telemetry Failure",
-        "domain": "DATA_QUALITY_RELATED",
-        "evaluated_variables": [
-          "ECG_quality_score"
-        ],
-        "evaluation_reason": "ECG sensor telemetry is not classified as INVALID."
-      },
-      {
-        "rule_id": "RR-FATIGUE-ACUTE-DEPRIVATION",
-        "rule_name": "Acute Sleep Curtailment",
-        "domain": "SLEEP_AND_FATIGUE",
-        "evaluated_variables": [
-          "actual_sleep_hours"
-        ],
-        "evaluation_reason": "Missing required observational variables: ['actual_sleep_hours']."
-      }
-    ],
-    "uncertainties": [
-      "Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE",
-      "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
-      "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
-      "Psychological domain lacks validated clinical psychiatric and cognitive testing; evidential confidence capped at MODERATE",
-      "Telemetry in domain THERMOREGULATORY is DEGRADED; evidential confidence attenuated to MODERATE",
-      "Thermoregulatory telemetry reflects peripheral skin temperature, not core body temperature",
-      "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
-      "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
-      "Domain GENERAL_PHYSIOLOGICAL is unevaluated: No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status",
-      "Telemetry in domain DATA_QUALITY_RELATED is DEGRADED; evidential confidence attenuated to MODERATE",
-      "Subjective symptoms were not submitted for this session; absence of reports does not establish clinical absence of symptoms",
-      "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (5/10 domains evaluated)"
-    ],
-    "missing_information": [
-      "Observational evidence for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms).",
-      "Observational evidence for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy).",
-      "Observational evidence for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers).",
-      "Observational evidence for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry).",
-      "Observational evidence for GENERAL_PHYSIOLOGICAL (Multisystem lab panels, metabolic indicators, or general medical findings)."
-    ],
-    "nominal_observation_details": [
-      {
-        "factor_id": "OBS-RESP-WNL-01",
-        "domain": "RESPIRATORY",
-        "source_agent": "personal_health_agent",
-        "supporting_evidence_ids": [
-          "EV-PHY-RESP-RATE"
-        ],
-        "validity_status": "VALID",
-        "applicable_criterion": "Clinical Physiology Reference: Adult Resting Eupnea (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine / Bates' Guide to Physical Examination); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
-        "explanation": "Resting respiration rate (15.0 breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004]).",
-        "factor_type": "NOMINAL_OBSERVATION"
-      }
-    ],
-    "nominal_observations": [
-      "Resting respiration rate (15.0 breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004])."
-    ],
-    "protective_factor_details": [],
-    "protective_factors": [],
-    "escalation": {
-      "state": "NO_TRIGGER_DETECTED",
-      "required": false,
-      "urgency_level": "NOMINAL",
-      "reason": "No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.",
-      "supporting_rule_ids": [],
-      "destination": "ASTRONAUT_SELF_MONITORING",
       "immediate_actions": [
-        "Continue standard routine in-flight telemetry monitoring for evaluated parameters"
+        "Maintain active telemetry acquisition",
+        "Request sensor re-validation from Sensor Quality Agent"
+      ],
+      "protocol_reference": "ISS-MEDOPS-TELEMETRY-GAPS-V2.1",
+      "uncertainty_notes": [
+        "Emergency status cannot be conclusively confirmed as NOMINAL due to missing or unvalidated physiological telemetry; close monitoring maintained."
+      ],
+      "data_gaps": [
+        "Cardiac heart rate (hr_mean_bpm) telemetry unavailable or omitted",
+        "Critical physiological sensors (ECG) unavailable or quarantined",
+        "Sensor quality gate indicates unvalidated or compromised signal telemetry"
       ]
     },
-    "recommended_actions": [
-      {
-        "action_id": "ACT-NOM-001",
-        "action_type": "MONITORING",
-        "description": "Continue routine health telemetry acquisition for monitored parameters.",
-        "reason": "All observed parameters in evaluated streams within nominal reference boundaries. Unassessed domains require separate monitoring.",
-        "supporting_rule_ids": [],
-        "supporting_evidence_ids": [],
-        "destination": "ASTRONAUT_SELF_MONITORING",
-        "priority": "ROUTINE",
-        "requires_human_authorization": false
-      }
-    ],
-    "protocol_references": [],
-    "requires_human_review": false,
-    "processing_metadata": {
-      "normalized_evidence_count": 13,
-      "correlations_identified": 0,
-      "triggered_rules_count": 0,
-      "validation_warnings": [],
-      "correlations": [],
-      "coverage_status": "PARTIAL"
-    },
-    "llm_explanation": "Objective multi-agent risk assessment for Astronaut AST-001 (Session SESSION-001) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.50) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry (subjective symptom data was not submitted). No active alert rules were triggered across evaluated domains. No explicit protective factors documented. Nominal observations within reference limits: Resting respiration rate (15.0 breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004]).\n\nOperational handling and limitations: Unevaluated physiological domains (NEUROLOGICAL, SLEEP AND FATIGUE, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE; Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Psychological domain lacks validated clinical psychiatric and cognitive testing; evidential confidence capped at MODERATE; Telemetry in domain THERMOREGULATORY is DEGRADED; evidential confidence attenuated to MODERATE; Thermoregulatory telemetry reflects peripheral skin temperature, not core body temperature; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status; Telemetry in domain DATA_QUALITY_RELATED is DEGRADED; evidential confidence attenuated to MODERATE; Subjective symptoms were not submitted for this session; absence of reports does not establish clinical absence of symptoms; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (5/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
-    "llm_status": "LLM_RATE_LIMIT"
+    "next_agent": "risk_assessment_agent",
+    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-999 (Session SES-999) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
   },
+  "medical_rag_summary": {
+    "retrieval_status": "SUCCESS",
+    "grounding_status": "PARTIALLY_GROUNDED",
+    "generated_answer": "**1. Retrieved Medical Facts:**\n- [ISS-MEDOPS-REDLINE-2025-V4.2] [Mission Medical Protocols | Emergency Clinical Protocols > Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol]\n- [NASA-BHO-STRESS-2024-V2.0] [Mission Medical Protocols | Operational Behavioral Medicine > Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions]\n- [DEDUP_TEST-V1.0-Sec1-P1] [Dedup Test Protocol | SECTION 1.0 EMERGENCY PROTOCOL]\n\n**2. Clinical Interpretation:** Based on the retrieved spaceflight guidelines, the protocol recommends monitoring indicators aligned with Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol.\n\n**3. Uncertainty & Limitations:** Grounded strictly in 3 indexed passage(s). This decision support prototype does not replace a certified Flight Surgeon.\n\n**4. Source Citations:** [ISS-MEDOPS-REDLINE-2025-V4.2], [NASA-BHO-STRESS-2024-V2.0], [DEDUP_TEST-V1.0-Sec1-P1]\n\n**5. Missing Information:** Prospective individual astronaut baseline history.",
+    "source_citations": [
+      "ISS-MEDOPS-REDLINE-2025-V4.2",
+      "NASA-BHO-STRESS-2024-V2.0",
+      "DEDUP_TEST-V1.0-Sec1-P1"
+    ],
+    "passages_count": 3
+  },
+  "risk_assessment_summary": {},
   "detected_concerns": [],
-  "nominal_observations": [
-    {
-      "factor_id": "OBS-RESP-WNL-01",
-      "domain": "RESPIRATORY",
-      "source_agent": "personal_health_agent",
-      "supporting_evidence_ids": [
-        "EV-PHY-RESP-RATE"
-      ],
-      "validity_status": "VALID",
-      "applicable_criterion": "Clinical Physiology Reference: Adult Resting Eupnea (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine / Bates' Guide to Physical Examination); In-Mission Medical Care Vital Signs Capability per NASA-STD-3001 Volume 1 Revision C [V1 3004] (numerical range is a clinical reference, not a direct NASA standard threshold requirement)",
-      "explanation": "Resting respiration rate (15.0 breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004]).",
-      "factor_type": "NOMINAL_OBSERVATION"
-    }
-  ],
+  "nominal_observations": [],
   "protective_factors": [],
-  "uncertainties": [
-    "Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE",
-    "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
-    "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
-    "Psychological domain lacks validated clinical psychiatric and cognitive testing; evidential confidence capped at MODERATE",
-    "Telemetry in domain THERMOREGULATORY is DEGRADED; evidential confidence attenuated to MODERATE",
-    "Thermoregulatory telemetry reflects peripheral skin temperature, not core body temperature",
-    "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
-    "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
-    "Domain GENERAL_PHYSIOLOGICAL is unevaluated: No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status",
-    "Telemetry in domain DATA_QUALITY_RELATED is DEGRADED; evidential confidence attenuated to MODERATE",
-    "Subjective symptoms were not submitted for this session; absence of reports does not establish clinical absence of symptoms",
-    "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (5/10 domains evaluated)"
-  ],
+  "uncertainties": [],
   "missing_information": [
-    "Observational evidence for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms).",
-    "Observational evidence for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy).",
-    "Observational evidence for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers).",
-    "Observational evidence for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry).",
-    "Observational evidence for GENERAL_PHYSIOLOGICAL (Multisystem lab panels, metabolic indicators, or general medical findings).",
-    "Subjective symptom questionnaire was not submitted.",
+    "Sensor telemetry manifest was not provided for this session.",
     "External confirmed medical records were not submitted.",
     "Mission operational context parameters were not provided."
   ],
-  "recommended_actions": [
-    {
-      "action_id": "ACT-NOM-001",
-      "action_type": "MONITORING",
-      "description": "Continue routine health telemetry acquisition for monitored parameters.",
-      "reason": "All observed parameters in evaluated streams within nominal reference boundaries. Unassessed domains require separate monitoring.",
-      "supporting_rule_ids": [],
-      "supporting_evidence_ids": [],
-      "destination": "ASTRONAUT_SELF_MONITORING",
-      "priority": "ROUTINE",
-      "requires_human_authorization": false
-    }
-  ],
+  "recommended_actions": [],
   "evidence_references": [
-    {
-      "evidence_id": "EV-SQ-ECG",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "ECG_quality_score",
-      "observed_value": 0.9808,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (ECG)"
-    },
-    {
-      "evidence_id": "EV-SQ-EDA",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "EDA_quality_score",
-      "observed_value": 0.9858,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (EDA)"
-    },
-    {
-      "evidence_id": "EV-SQ-RESP",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "RESP_quality_score",
-      "observed_value": 0.9925,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (RESP)"
-    },
-    {
-      "evidence_id": "EV-SQ-EMG",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "EMG_quality_score",
-      "observed_value": 0.982,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (EMG)"
-    },
-    {
-      "evidence_id": "EV-SQ-ACC",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "ACC_quality_score",
-      "observed_value": 0.9925,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (ACC)"
-    },
-    {
-      "evidence_id": "EV-SQ-TEMP",
-      "source_agent": "sensor_quality_agent",
-      "domain": "DATA_QUALITY_RELATED",
-      "metric_name": "TEMP_quality_score",
-      "observed_value": 0.85,
-      "validity_status": "ACCEPTABLE_WITH_WARNING",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Sensor Quality Agent DSP Pipeline (TEMP)"
-    },
-    {
-      "evidence_id": "EV-PHY-HR-MEAN",
-      "source_agent": "personal_health_agent",
-      "domain": "CARDIOVASCULAR",
-      "metric_name": "heart_rate_mean",
-      "observed_value": 72.04116638078902,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Personal Health Agent ECG Core-14 Extraction"
-    },
     {
       "evidence_id": "EV-PHY-HRV-RMSSD",
       "source_agent": "personal_health_agent",
@@ -1489,64 +239,79 @@
       "provenance": "Personal Health Agent ECG R-Peak Timing"
     },
     {
-      "evidence_id": "EV-PHY-RESP-RATE",
+      "evidence_id": "EV-BASE-STATUS",
       "source_agent": "personal_health_agent",
-      "domain": "RESPIRATORY",
-      "metric_name": "respiratory_rate",
-      "observed_value": 15.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Personal Health Agent Respiration Peak Frequency Analysis"
-    },
-    {
-      "evidence_id": "EV-PHY-TEMP-MEAN",
-      "source_agent": "personal_health_agent",
-      "domain": "THERMOREGULATORY",
-      "metric_name": "temperature_mean",
-      "observed_value": 34.2694465856098,
-      "validity_status": "DEGRADED",
-      "is_quarantined": false,
-      "quarantine_reason": "Peripheral skin temperature; degraded for core thermoregulatory inference",
-      "provenance": "Personal Health Agent Thermal Telemetry"
-    },
-    {
-      "evidence_id": "EV-PHY-EDA-MEAN",
-      "source_agent": "personal_health_agent",
-      "domain": "PSYCHOLOGICAL_AND_COGNITIVE",
-      "metric_name": "eda_mean",
-      "observed_value": 4.68982271750768,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Personal Health Agent Electrodermal Tonic Mean"
-    },
-    {
-      "evidence_id": "EV-SYM-UNSUBMITTED",
-      "source_agent": "personal_health_agent",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "symptom_status_unsubmitted",
-      "observed_value": "no_symptoms_submitted",
+      "domain": "PHYSIOLOGICAL_BASELINE",
+      "metric_name": "baseline_readiness_status",
+      "observed_value": "not_available",
       "validity_status": "NOT_AVAILABLE",
       "is_quarantined": false,
-      "quarantine_reason": "Unsubmitted symptoms represent unknown symptom status, not clinical absence of symptoms",
-      "provenance": "Personal Health Intake (No Questionnaire Submitted)"
+      "quarantine_reason": "Personal baseline unestablished; population reference or deferred comparison active",
+      "provenance": "Personal Health Baseline Readiness Registry"
+    },
+    {
+      "evidence_id": "EV-SYM-1-DISCOMFORT",
+      "source_agent": "personal_health_agent",
+      "domain": "GENERAL_PHYSIOLOGICAL",
+      "metric_name": "reported_symptom_discomfort",
+      "observed_value": "Status",
+      "validity_status": "VALID",
+      "is_quarantined": false,
+      "quarantine_reason": null,
+      "provenance": "Personal Health Agent Symptom Intake (Severity: None)"
+    },
+    {
+      "evidence_id": "EV-KNOW-KNOW-MISSION_MEDICAL_PROTOCOLS-3AF1A95E_c001",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_mission_medical_protocols_3af1a95e_c001",
+      "observed_value": "[Mission Medical Protocols | Emergency Clinical Protocols > Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol]\nTitle: Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol\nDomain: Emergency Clinical Protocols\nCitation: ISS-MEDOPS-REDLINE-2025-V4.2\n\nCRITICAL ESCALATION TRIGGER: Any reported acute severe chest pain, sudden respiratory distress, acute neurological deficit, syncope, or sustained heart rate exceeding 160 bpm or falling below 40 bpm at rest requires immediate emergency escalation. Under this protocol, autonomous AI systems must immediately trigger mission medical alerts to the Supervisor and Flight Surgeon, bypassing routine ML inference or general research retrieval pipelines.",
+      "validity_status": "VALID",
+      "is_quarantined": false,
+      "quarantine_reason": null,
+      "provenance": "Medical RAG Hybrid Retrieval (Flight Surgeon Directive: Immediate Telemetry Red-Line and Escalation Protocol, Ref: ISS-MEDOPS-REDLINE-2025-V4.2, Source: Mission Medical Protocols, Score: 0.333)"
+    },
+    {
+      "evidence_id": "EV-KNOW-KNOW-MISSION_MEDICAL_PROTOCOLS-3AF1A95E_c002",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_mission_medical_protocols_3af1a95e_c002",
+      "observed_value": "[Mission Medical Protocols | Operational Behavioral Medicine > Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions]\nTitle: Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions\nDomain: Operational Behavioral Medicine\nCitation: NASA-BHO-STRESS-2024-V2.0\n\nWhen sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
+      "validity_status": "VALID",
+      "is_quarantined": false,
+      "quarantine_reason": null,
+      "provenance": "Medical RAG Hybrid Retrieval (Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions, Ref: NASA-BHO-STRESS-2024-V2.0, Source: Mission Medical Protocols, Score: 0.300)"
+    },
+    {
+      "evidence_id": "EV-KNOW-KNOW-DEDUP_TEST-676EB932_c001",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_dedup_test_676eb932_c001",
+      "observed_value": "[Dedup Test Protocol | SECTION 1.0 EMERGENCY PROTOCOL]\nResting heart rate > 160 bpm is critical red-line.",
+      "validity_status": "VALID",
+      "is_quarantined": false,
+      "quarantine_reason": null,
+      "provenance": "Medical RAG Hybrid Retrieval (SECTION 1.0 EMERGENCY PROTOCOL, Ref: DEDUP_TEST-V1.0-Sec1-P1, Source: Aerospace Medicine, Score: 0.294)"
     }
   ],
   "provenance_chain": [
     {
       "agent": "sensor_quality_agent",
-      "status": "SUCCESS"
+      "status": "SKIPPED"
     },
     {
       "agent": "personal_health_agent",
+      "status": "PARTIAL"
+    },
+    {
+      "agent": "medical_rag_agent",
       "status": "SUCCESS"
     },
     {
       "agent": "risk_assessment_agent",
-      "status": "SUCCESS"
+      "status": "FAILED"
     }
   ],
-  "executive_synthesis": "Objective multi-agent risk assessment for Astronaut AST-001 (Session SESSION-001) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.50) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry (subjective symptom data was not submitted). No active alert rules were triggered across evaluated domains. No explicit protective factors documented. Nominal observations within reference limits: Resting respiration rate (15.0 breaths/min) verified nominal within standard clinical reference limits (10-20 breaths/min; verifiable source: Harrison's Principles of Internal Medicine; in-mission monitoring per NASA-STD-3001-VOL-1 Rev C [V1 3004]).\n\nOperational handling and limitations: Unevaluated physiological domains (NEUROLOGICAL, SLEEP AND FATIGUE, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Cardiovascular HRV RMSSD is INVALID (ZERO_VARIABILITY); autonomic cardiac regulation confidence attenuated to MODERATE; Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Psychological domain lacks validated clinical psychiatric and cognitive testing; evidential confidence capped at MODERATE; Telemetry in domain THERMOREGULATORY is DEGRADED; evidential confidence attenuated to MODERATE; Thermoregulatory telemetry reflects peripheral skin temperature, not core body temperature; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: No eligible observational evidence or confirmed symptom reports submitted. Unsubmitted symptoms represent unknown symptom status; Telemetry in domain DATA_QUALITY_RELATED is DEGRADED; evidential confidence attenuated to MODERATE; Subjective symptoms were not submitted for this session; absence of reports does not establish clinical absence of symptoms; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (5/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
-  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-001 (Session SESSION-001)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Subjective Symptoms\nNo subjective symptoms were submitted for this session. The absence of submitted symptoms reflects an unassessed symptom status (EV-SYM-UNSUBMITTED) and must not be interpreted as a confirmed clinical absence of symptoms. Please log a symptom report if you experience fatigue, nausea, headache, or other discomfort.\n\n### Monitored Systems Summary\n- **Coverage:** 50% of configured monitoring domains evaluated (5/10 domains).\n- **Active Monitored Streams:** CARDIOVASCULAR, RESPIRATORY, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, DATA_QUALITY_RELATED.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Resting heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: NEUROLOGICAL, SLEEP_AND_FATIGUE, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
+  "executive_synthesis": "Objective physiological telemetry for Astronaut AST-999 (Session SES-999) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised.",
+  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-999 (Session SES-999)**\n\n### \u26a0\ufe0f Monitoring Notice: Risk Assessment Engine Unavailable\nAutomated clinical risk assessment could not be performed due to an execution failure in the Risk Assessment Agent.\nClinical risk status is UNKNOWN and must NOT be interpreted as nominal or low risk. Independent Flight Surgeon review is required.\n\n### Response to Your Query\nRegarding your query: *\"Status\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.\n\n### Reported Symptoms\n- discomfort (Severity: None)\n\n### Monitored Systems Summary\n- **Coverage:** 0% of configured monitoring domains evaluated (0/10 domains).\n- **Active Monitored Streams:** None.\n- **Overall Risk State:** `UNKNOWN` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm [clinical adult reference; resting conditions unconfirmed in this session]) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: .\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- Continue standard in-flight health monitoring routine.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
 }

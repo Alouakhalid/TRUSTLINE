@@ -39,6 +39,61 @@ class ClaimGroundingValidator:
         return clauses
 
     @classmethod
+    def _build_evidence_maps(
+        cls,
+        evidence_items: Optional[List[Any]] = None,
+        evidence_registry: Optional[Any] = None
+    ) -> Tuple[Dict[str, Dict[str, Any]], Dict[str, Dict[str, Any]]]:
+        ev_by_id: Dict[str, Dict[str, Any]] = {}
+        ev_by_metric: Dict[str, Dict[str, Any]] = {}
+
+        raw_list: List[Any] = []
+        if evidence_items is not None:
+            raw_list.extend(evidence_items)
+        if evidence_registry is not None:
+            if isinstance(evidence_registry, list):
+                raw_list.extend(evidence_registry)
+            elif isinstance(evidence_registry, dict):
+                raw_list.extend(evidence_registry.values())
+
+        for item in raw_list:
+            if isinstance(item, dict):
+                eid = item.get("evidence_id")
+                metric = item.get("metric_name")
+                val = item.get("observed_value")
+                val_status = item.get("validity_status", "VALID")
+                is_q = item.get("is_quarantined", False)
+                unit = item.get("unit")
+                s_agent = item.get("source_agent")
+                prov = item.get("provenance")
+            else:
+                eid = getattr(item, "evidence_id", None)
+                metric = getattr(item, "metric_name", None)
+                val = getattr(item, "observed_value", None)
+                val_status = getattr(item, "validity_status", "VALID")
+                is_q = getattr(item, "is_quarantined", False)
+                unit = getattr(item, "unit", None)
+                s_agent = getattr(item, "source_agent", None)
+                prov = getattr(item, "provenance", None)
+
+            if eid:
+                norm_dict = {
+                    "evidence_id": eid,
+                    "metric_name": metric,
+                    "observed_value": val,
+                    "validity_status": val_status.value if hasattr(val_status, "value") else str(val_status),
+                    "is_quarantined": bool(is_q),
+                    "unit": unit,
+                    "source_agent": s_agent,
+                    "provenance": prov
+                }
+                ev_by_id[eid] = norm_dict
+                if metric:
+                    ev_by_metric[metric] = norm_dict
+
+        return ev_by_id, ev_by_metric
+
+    @classmethod
     def validate_synthesis(
         cls,
         text: str,
@@ -49,7 +104,9 @@ class ClaimGroundingValidator:
         unevaluated_domains: Optional[List[str]] = None,
         symptoms_explicitly_denied: bool = False,
         allowed_protective_domains: Optional[List[str]] = None,
-        protective_factors: Optional[List[str]] = None
+        protective_factors: Optional[List[str]] = None,
+        evidence_items: Optional[List[Any]] = None,
+        evidence_registry: Optional[Any] = None
     ) -> Tuple[bool, List[str]]:
         """Verify generated text strictly conforms to empirical boundaries and coverage constraints."""
         violations: List[str] = []
@@ -290,6 +347,72 @@ class ClaimGroundingValidator:
                 "Synthesis improperly asserts degraded telemetry is fully reliable."
             )
 
+        ev_by_id, ev_by_metric = cls._build_evidence_maps(evidence_items, evidence_registry)
+        if ev_by_id:
+            cited_ids = re.findall(r"\b(EV-[A-Z0-9\-]+)\b", text)
+            for cid in set(cited_ids):
+                if cid not in ev_by_id:
+                    violations.append(f"Synthesis cites non-existent Evidence ID: '{cid}'.")
+                else:
+                    ev_info = ev_by_id[cid]
+                    if ev_info.get("is_quarantined") or ev_info.get("validity_status") == "INVALID":
+                        if any(term in lower for term in ("nominal", "normal", "healthy", "protective", "reliable")):
+                            violations.append(f"Synthesis asserts nominal/valid status for quarantined or invalid evidence '{cid}'.")
+
+        if ev_by_id or ev_by_metric:
+            hr_ev = ev_by_metric.get("heart_rate_mean") or ev_by_id.get("EV-PHY-HR-MEAN")
+            if hr_ev and hr_ev.get("observed_value") is not None:
+                try:
+                    ev_hr = float(hr_ev["observed_value"])
+                    hr_matches = re.finditer(r"(?:heart\s+rate|hr)[^\d\.\n]{1,25}(\d+(?:\.\d+)?)\s*(?:bpm)?", lower)
+                    for m in hr_matches:
+                        syn_hr = float(m.group(1))
+                        if abs(syn_hr - ev_hr) > 2.0:
+                            violations.append(f"Synthesis asserts numerical heart rate {syn_hr:.1f} bpm which contradicts empirical evidence value {ev_hr:.1f} bpm.")
+                    if (ev_hr > 160.0 or ev_hr < 40.0) and not hr_ev.get("is_quarantined"):
+                        if re.search(r"(?:heart\s+rate|cardiac)[^\.\n]*(?:nominal|within\s+reference|normal|healthy)", lower):
+                            violations.append(f"Synthesis claims nominal status for heart rate despite empirical evidence showing critical value {ev_hr:.1f} bpm.")
+                except (ValueError, TypeError):
+                    pass
+
+            resp_ev = ev_by_metric.get("respiratory_rate") or ev_by_id.get("EV-PHY-RESP-RATE")
+            if resp_ev and resp_ev.get("observed_value") is not None:
+                try:
+                    ev_resp = float(resp_ev["observed_value"])
+                    resp_matches = re.finditer(r"(?:respiration\s+rate|respiratory\s+rate|resp\s+rate)[^\d\.\n]{1,25}(\d+(?:\.\d+)?)\s*(?:breaths/min|bpm)?", lower)
+                    for m in resp_matches:
+                        syn_resp = float(m.group(1))
+                        if abs(syn_resp - ev_resp) > 1.5:
+                            violations.append(f"Synthesis asserts numerical respiration rate {syn_resp:.1f} breaths/min which contradicts empirical evidence value {ev_resp:.1f} breaths/min.")
+                    if (ev_resp > 26.0 or ev_resp < 8.0) and not resp_ev.get("is_quarantined"):
+                        if re.search(r"(?:respiration|respiratory)[^\.\n]*(?:nominal|within\s+reference|normal|healthy)", lower):
+                            violations.append(f"Synthesis claims nominal status for respiration rate despite empirical evidence showing abnormal value {ev_resp:.1f} breaths/min.")
+                except (ValueError, TypeError):
+                    pass
+
+            temp_ev = ev_by_metric.get("temperature_mean") or ev_by_id.get("EV-PHY-TEMP-MEAN")
+            if temp_ev and temp_ev.get("observed_value") is not None:
+                try:
+                    ev_temp = float(temp_ev["observed_value"])
+                    temp_matches = re.finditer(r"(?:temperature|skin\s+temp|core\s+temp)[^\d\.\n]{1,25}(\d+(?:\.\d+)?)\s*(?:°c|c)?", lower)
+                    for m in temp_matches:
+                        syn_temp = float(m.group(1))
+                        if abs(syn_temp - ev_temp) > 0.5:
+                            violations.append(f"Synthesis asserts numerical temperature {syn_temp:.2f} °C which contradicts empirical evidence value {ev_temp:.2f} °C.")
+                except (ValueError, TypeError):
+                    pass
+
+            unsupported_params = (
+                ("blood pressure", ("blood_pressure", "bp_sys", "bp_dia", "EV-PHY-BP")),
+                ("spo2", ("spo2", "pulse_ox", "EV-PHY-SPO2")),
+                ("blood glucose", ("blood_glucose", "glucose", "EV-LAB-GLUCOSE"))
+            )
+            for label, metric_keys in unsupported_params:
+                if re.search(rf"\b{re.escape(label)}\b[^\.\n]*(?:is|measured|was|recorded|observed|\d+)", lower):
+                    has_ev = any(k in ev_by_metric or k in ev_by_id for k in metric_keys)
+                    if not has_ev:
+                        violations.append(f"Synthesis asserts unmeasured parameter '{label}' with zero supporting evidence in registry.")
+
         is_valid = len(violations) == 0
         return is_valid, violations
 
@@ -304,7 +427,9 @@ class ClaimGroundingValidator:
         unevaluated_domains: Optional[List[str]] = None,
         symptoms_explicitly_denied: bool = False,
         allowed_protective_domains: Optional[List[str]] = None,
-        output_filepath: Optional[str] = None
+        output_filepath: Optional[str] = None,
+        evidence_items: Optional[List[Any]] = None,
+        evidence_registry: Optional[Any] = None
     ) -> List[Dict[str, Any]]:
         """Extract discrete assertions from synthesis, evaluate each against validator rules, and record machine-readable trace."""
         import json
@@ -313,6 +438,7 @@ class ClaimGroundingValidator:
         paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
         claims: List[Dict[str, Any]] = []
         claim_counter = 1
+        ev_by_id, ev_by_metric = cls._build_evidence_maps(evidence_items, evidence_registry)
 
         for p_idx, para in enumerate(paragraphs, start=1):
             sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", para) if s.strip() and not s.startswith("**")]
@@ -325,7 +451,9 @@ class ClaimGroundingValidator:
                     assessment_status=assessment_status,
                     unevaluated_domains=unevaluated_domains,
                     symptoms_explicitly_denied=symptoms_explicitly_denied,
-                    allowed_protective_domains=allowed_protective_domains
+                    allowed_protective_domains=allowed_protective_domains,
+                    evidence_items=evidence_items,
+                    evidence_registry=evidence_registry
                 )
 
                 ev_ids: List[str] = []
@@ -369,6 +497,21 @@ class ClaimGroundingValidator:
                 if any(ud.lower().replace("_", " ") in sent_lower for ud in (unevaluated_domains or [])):
                     ev_validity = "DATA_GAP"
                     provenance = "Coverage Verification Engine (Unmonitored Telemetry)"
+
+                cited_in_sent = re.findall(r"\b(EV-[A-Z0-9\-]+)\b", sent)
+                for cid in cited_in_sent:
+                    if cid not in ev_ids:
+                        ev_ids.append(cid)
+
+                if ev_by_id and ev_ids:
+                    for eid in ev_ids:
+                        if eid in ev_by_id:
+                            item_info = ev_by_id[eid]
+                            if item_info.get("is_quarantined") or item_info.get("validity_status") == "INVALID":
+                                ev_validity = "INVALID"
+                                if is_valid:
+                                    is_valid = False
+                                    violations.append(f"Supporting evidence '{eid}' is quarantined or invalid.")
 
                 evidence_supports_claim = False
                 val_result = "PASS"

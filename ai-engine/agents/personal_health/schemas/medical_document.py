@@ -74,3 +74,13 @@ class ConfirmedMedicalFinding(BaseModel):
     laboratory_name: Optional[str] = None
     confirmation_timestamp: datetime = Field(default_factory=datetime.utcnow)
     confirmed_by: str
+    is_historical: bool = Field(default=True, description="Marks record as historical clinical data, distinct from live telemetry")
+    source_type: Optional[str] = None
+    source_location: Optional[str] = None
+    extraction_method: Optional[str] = None
+    extraction_confidence: float = 1.0
+    original_text: Optional[str] = None
+    conflict_detected: bool = False
+    conflicting_records: List[str] = Field(default_factory=list)
+    abnormality_flag: Optional[str] = None
+    document_date: Optional[str] = None

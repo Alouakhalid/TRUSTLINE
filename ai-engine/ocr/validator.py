@@ -205,6 +205,8 @@ class MedicalDocumentValidator:
             else:
                 for r in group:
                     r.validation_status = ValidationStatus.CONFLICTING_EXTRACTION
+                    r.conflict_detected = True
+                    r.conflicting_records = [other.record_id for other in group if other.record_id != r.record_id]
                     r.validation_warnings.append(
                         f"Conflicting values detected for test '{r.test_name}' across extractions ({list(unique_values)})."
                     )

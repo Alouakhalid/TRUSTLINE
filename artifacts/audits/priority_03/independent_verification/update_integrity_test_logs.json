@@ -1,0 +1,54 @@
+{
+  "audit_timestamp": "2026-11-13T02:24:04.315509Z",
+  "module_under_test": "SafeBaselineUpdateManager",
+  "verification_dimensions": [
+    {
+      "dimension": "Anti-Contamination Anomaly Guard",
+      "test_id": "test_update_anti_contamination_guard",
+      "assertion": "rejects update when composite_deviation_score >= 3.0 or unusual_signals >= 2",
+      "outcome": "PASSED",
+      "rejection_reason_observed": "ANOMALOUS_OBSERVATION",
+      "baseline_version_preserved": true
+    },
+    {
+      "dimension": "Low Sensor Quality Gate",
+      "test_id": "test_update_rejection_low_sqa",
+      "assertion": "rejects update when session sqa_overall_score < min_quality_score",
+      "outcome": "PASSED",
+      "rejection_reason_observed": "POOR_SENSOR_QUALITY",
+      "baseline_version_preserved": true
+    },
+    {
+      "dimension": "Cross-Astronaut Identity Isolation",
+      "test_id": "test_update_cross_astronaut_rejection",
+      "assertion": "rejects session if session.astronaut_id != current_profile.astronaut_id",
+      "outcome": "PASSED",
+      "rejection_reason_observed": "CROSS_ASTRONAUT_VIOLATION",
+      "baseline_version_preserved": true
+    },
+    {
+      "dimension": "Monotonic Versioning and Audit Trail",
+      "test_id": "test_baseline_monotonic_versioning",
+      "assertion": "successful update increments baseline_version strictly by +1 and creates immutable BaselineUpdateLog",
+      "outcome": "PASSED",
+      "version_sequence": [
+        1,
+        2,
+        3
+      ],
+      "audit_trail_complete": true
+    },
+    {
+      "dimension": "Non-Destructive Rollback Monotonicity",
+      "test_id": "test_rollback_version_monotonicity",
+      "assertion": "rollback does not decrement or delete version history, but increments version forward (e.g., v1 -> v2 -> v3 [rollback to v1])",
+      "outcome": "PASSED",
+      "rollback_sequence": {
+        "pre_rollback_version": 2,
+        "target_restore_version": 1,
+        "post_rollback_version": 3
+      },
+      "audit_trail_preserved": true
+    }
+  ]
+}

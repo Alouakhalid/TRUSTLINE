@@ -1,0 +1,75 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.10.0rc2, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.10/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/alikhalidalikhalid/TRUSTLINE
+plugins: langsmith-0.6.8, dash-3.3.0, asyncio-1.4.0, anyio-4.14.2
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 46 items
+
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_01_missing_ecg_telemetry_stream PASSED [  2%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_02_missing_eda_telemetry_stream PASSED [  4%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_03_missing_resp_telemetry_stream PASSED [  6%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_04_missing_emg_telemetry_stream PASSED [  8%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_05_missing_acc_telemetry_stream PASSED [ 10%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_06_missing_temp_telemetry_stream PASSED [ 13%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_07_multiple_sensors_missing_simultaneously PASSED [ 15%]
+ai-engine/agents/supervisor/tests/stress/test_stress_01_missing_sensor_data.py::test_08_all_sensors_missing_complete_telemetry_blackout PASSED [ 17%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_01_nan_and_infinity_in_signal_buffer PASSED [ 19%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_02_empty_signal_arrays PASSED [ 21%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_03_constant_flatline_signals PASSED [ 23%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_04_zero_length_timestamps PASSED [ 26%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_05_duplicate_timestamps PASSED [ 28%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_06_non_monotonic_timestamps PASSED [ 30%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_07_extreme_impulsive_spikes PASSED [ 32%]
+ai-engine/agents/supervisor/tests/stress/test_stress_02_invalid_corrupted_telemetry.py::test_08_zero_variance_rr_rmssd_quarantined PASSED [ 34%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_01_no_symptoms_submitted_never_interpreted_as_no_symptoms PASSED [ 36%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_02_explicitly_submitted_severe_chest_pain_triggers_emergency_escalation PASSED [ 39%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_03_shortness_of_breath_triggers_escalation PASSED [ 41%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_04_arabic_red_line_symptom_triggers_escalation PASSED [ 43%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_05_dizziness_and_headache_handled_without_unauthorized_diagnosis PASSED [ 45%]
+ai-engine/agents/supervisor/tests/stress/test_stress_03_symptoms_and_communication.py::test_06_ambiguous_and_malformed_symptom_handling PASSED [ 47%]
+ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py::test_01_pha_timeout_capture PASSED [ 50%]
+ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py::test_02_feature_extraction_exception_isolated PASSED [ 52%]
+ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py::test_03_ml_inference_exception_gracefully_degrades PASSED [ 54%]
+ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py::test_04_rag_retrieval_failure_handled_gracefully PASSED [ 56%]
+ai-engine/agents/supervisor/tests/stress/test_stress_04_personal_health_failure.py::test_05_workflow_isolates_pha_failure_and_preserves_sqr PASSED [ 58%]
+ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py::test_01_ra_timeout_isolated_cleanly PASSED [ 60%]
+ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py::test_02_ra_rule_engine_exception_does_not_default_to_low_risk PASSED [ 63%]
+ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py::test_03_missing_escalation_fields_safely_handled PASSED [ 65%]
+ai-engine/agents/supervisor/tests/stress/test_stress_05_risk_assessment_failure.py::test_04_claims_referencing_quarantined_evidence_fail_validation PASSED [ 67%]
+ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py::test_01_trace_claims_rejects_unsupported_protective_factors PASSED [ 69%]
+ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py::test_02_trace_claims_rejects_missing_data_equaling_normal_health PASSED [ 71%]
+ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py::test_03_trace_claims_rejects_invented_environmental_explanations PASSED [ 73%]
+ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py::test_04_trace_claims_marks_metadata_claims_as_insufficient_evidence PASSED [ 76%]
+ai-engine/agents/supervisor/tests/stress/test_stress_06_evidence_traceability.py::test_05_astronaut_communication_sentence_by_sentence_grounding PASSED [ 78%]
+ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py::test_01_sqr_marks_ecg_invalid_quarantines_pha_cardiac_telemetry PASSED [ 80%]
+ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py::test_02_symptom_concern_overrides_nominal_telemetry_in_escalation PASSED [ 82%]
+ai-engine/agents/supervisor/tests/stress/test_stress_07_conflicting_agent_outputs.py::test_03_pha_insufficient_evidence_preserves_conflict_against_low_risk PASSED [ 84%]
+ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py::test_01_sqlite_unavailable_records_warning_without_crash PASSED [ 86%]
+ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py::test_02_json_write_failure_handled_safely PASSED [ 89%]
+ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py::test_03_persistence_failure_degrades_workflow_completion_status PASSED [ 91%]
+ai-engine/agents/supervisor/tests/stress/test_stress_08_persistence_and_recovery.py::test_04_duplicate_workflow_execution_idempotency PASSED [ 93%]
+ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py::test_01_concurrent_workflows_maintain_state_isolation PASSED [ 95%]
+ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py::test_02_simultaneous_multi_agent_failures_handled_gracefully PASSED [ 97%]
+ai-engine/agents/supervisor/tests/stress/test_stress_09_timeout_concurrency.py::test_03_same_astronaut_multiple_sessions_isolated PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/langgraph/cache/base/__init__.py:8: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:241
+  <frozen importlib._bootstrap>:241: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 46 passed, 8 warnings in 86.72s (0:01:26) ===================

@@ -1,0 +1,105 @@
+{
+  "PRIORITY_05_INITIAL_AUDIT.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_INITIAL_AUDIT.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_INITIAL_AUDIT.md",
+    "sha256": "956d46c171f09b84854fbd82325261d158035155399b1403a46a5e9be5573ff2",
+    "size_bytes": 4934
+  },
+  "PRIORITY_05_MODEL_SELECTION.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_MODEL_SELECTION.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_MODEL_SELECTION.md",
+    "sha256": "32af490bde282225a0a717857c587fde4d01d37cd5c93e453ab74f92e1fa88ca",
+    "size_bytes": 4535
+  },
+  "PRIORITY_05_RLHF_MODEL_ARCHITECTURE.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_RLHF_MODEL_ARCHITECTURE.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_RLHF_MODEL_ARCHITECTURE.md",
+    "sha256": "678d6e89e6c31cb754fd73a75cf45a97573988a65733c100930693088c77fd4e",
+    "size_bytes": 4134
+  },
+  "PRIORITY_05_HUGGINGFACE_API_INTEGRATION.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_HUGGINGFACE_API_INTEGRATION.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_HUGGINGFACE_API_INTEGRATION.md",
+    "sha256": "e6f99e439768f286ee826421e9f86f02a78d72050fd11db7496a9576c0440fbb",
+    "size_bytes": 5535
+  },
+  "PRIORITY_05_AGENT_INTEGRATION.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_AGENT_INTEGRATION.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_AGENT_INTEGRATION.md",
+    "sha256": "379229dcae0181d352d1418d94710e47d94714ca3e7fff5f0a1621baec430245",
+    "size_bytes": 5500
+  },
+  "PRIORITY_05_FEEDBACK_COLLECTION.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_FEEDBACK_COLLECTION.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_FEEDBACK_COLLECTION.md",
+    "sha256": "f02eb9a077af90e673b062fd0ca973ed2dbd936e290773a20d5815be274c789a",
+    "size_bytes": 4326
+  },
+  "PRIORITY_05_SECURITY_AUDIT.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_SECURITY_AUDIT.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_SECURITY_AUDIT.md",
+    "sha256": "fe8339a2823f36a7fd781936f4796aa8810c72ac21f5d14de3a4547739e10560",
+    "size_bytes": 3771
+  },
+  "PRIORITY_05_TEST_REPORT.md": {
+    "artifact_path": "artifacts/audits/priority_05/PRIORITY_05_TEST_REPORT.md",
+    "docs_path": "docs/audits/priority_05/PRIORITY_05_TEST_REPORT.md",
+    "sha256": "3e02772995c615b0b2163df3b3ec4e073a939ff3cd1e6893f8b76d18a6e49cdf",
+    "size_bytes": 4187
+  },
+  "PRIORITY_05_FINAL_REPORT.md": {
+    "relative_path": "PRIORITY_05_FINAL_REPORT.md",
+    "sha256": "9cfc51008db922607a1101b01da42a273babd189f69bf71ba20fe26212ea0fbc",
+    "size_bytes": 6960
+  },
+  "PRIORITY_05_FINAL_INDEPENDENT_VERIFICATION.md": {
+    "relative_path": "PRIORITY_05_FINAL_INDEPENDENT_VERIFICATION.md",
+    "sha256": "b9fffec16168563248dfe8ef21f45bef30f69c848552958318af8770da40e276",
+    "size_bytes": 23184
+  },
+  "PRIORITY_05_CLOSURE_AND_LIMITATIONS.md": {
+    "relative_path": "PRIORITY_05_CLOSURE_AND_LIMITATIONS.md",
+    "sha256": "a32093cb081bf43efc7bbe00f807b69492abd6d8c2690e1caa727ef85e1976b0",
+    "size_bytes": 21990
+  },
+  "full_regression_execution_p05.log": {
+    "relative_path": "artifacts/audits/priority_05/full_regression_execution_p05.log",
+    "sha256": "12b3a73020fca0348f476e5e21207bd6310e43b82d6de625845acaf90f964e45",
+    "size_bytes": 65723
+  },
+  "language_evaluation_results.json": {
+    "relative_path": "artifacts/audits/priority_05/language_evaluation_results.json",
+    "sha256": "de8329f391c7252db49e9e5136299b1e36d8923ad8111a70a363748d06e77590",
+    "size_bytes": 2496
+  },
+  "huggingface_provider.py": {
+    "relative_path": "ai-engine/hybrid_ai/huggingface_provider.py",
+    "sha256": "36e35e0823bb8fe1336011f7e5b043d7343a539041ec75591056eac23da2f79e",
+    "size_bytes": 12031
+  },
+  "rlhf_schemas.py": {
+    "relative_path": "ai-engine/RLHF/schemas.py",
+    "sha256": "02faac4473d215e73d71a0182c28c82c98831619785a29e695718cdee11c2458",
+    "size_bytes": 2965
+  },
+  "feedback_collector.py": {
+    "relative_path": "ai-engine/RLHF/feedback_collector.py",
+    "sha256": "7daa75f1821a4a2e496f82133d4de681e496bb26c0617da3a048681005b0bb30",
+    "size_bytes": 10613
+  },
+  "test_huggingface_provider.py": {
+    "relative_path": "ai-engine/tests/test_huggingface_provider.py",
+    "sha256": "cc4f9591ffde838ae4178377869a81363b416e9725bb5b298d012b9ebd53887d",
+    "size_bytes": 9923
+  },
+  "test_p05_rlhf_multi_agent_integration.py": {
+    "relative_path": "ai-engine/tests/test_p05_rlhf_multi_agent_integration.py",
+    "sha256": "61f0760b544b675ab917f097fd6e29f79fbbb6fbbd55cf53ac90d1165a5fdc7b",
+    "size_bytes": 11940
+  },
+  "test_rlhf_feedback_collection.py": {
+    "relative_path": "ai-engine/tests/test_rlhf_feedback_collection.py",
+    "sha256": "f71a3b2222ab480f20335a87c0efb4d63cb39252c95cc4c383186f72f4d8c240",
+    "size_bytes": 8582
+  }
+}

@@ -63,6 +63,10 @@ class PendingMedicalRecordModel(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    @property
+    def conflict_detected(self) -> bool:
+        return self.validation_status == "CONFLICTING_EXTRACTION" or "conflicting" in (self.validation_warnings_json or "").lower()
+
 class MedicalDocumentRepository:
     """Repository managing document persistence, extraction results, and review decisions."""
 
@@ -284,6 +288,20 @@ class MedicalDocumentRepository:
         finally:
             session.close()
 
+    def get_document_by_hash(self, file_hash: str, astronaut_id: Optional[str] = None) -> Optional[MedicalDocumentModel]:
+        """Fetch existing medical document record by cryptographic SHA-256 hash."""
+        session = SessionFactory()
+        try:
+            q = session.query(MedicalDocumentModel).filter_by(file_hash=file_hash)
+            if astronaut_id:
+                q = q.filter_by(astronaut_id=astronaut_id)
+            rec = q.first()
+            if rec:
+                session.expunge(rec)
+            return rec
+        finally:
+            session.close()
+
     def get_confirmed_records(self, astronaut_id: str) -> List[ConfirmedMedicalFinding]:
         """Query all confirmed clinical laboratory records for an astronaut."""
         session = SessionFactory()
@@ -307,7 +325,14 @@ class MedicalDocumentRepository:
                     collection_date=r.collection_date,
                     laboratory_name=r.laboratory_name,
                     confirmation_timestamp=r.review_timestamp or datetime.utcnow(),
-                    confirmed_by=r.reviewed_by or "system"
+                    confirmed_by=r.reviewed_by or "system",
+                    is_historical=True,
+                    source_type=r.source_type,
+                    source_location=r.source_location,
+                    extraction_method=r.extraction_method,
+                    extraction_confidence=r.extraction_confidence,
+                    original_text=r.source_text,
+                    conflict_detected=(r.validation_status == "CONFLICTING_EXTRACTION")
                 )
                 findings.append(finding)
             return findings
