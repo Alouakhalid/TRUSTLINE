@@ -617,13 +617,9 @@ def radiation_limits() -> dict[str, Any]:
 
 @app.get("/ai/providers/status")
 def get_providers_status() -> dict[str, Any]:
-    """Inspect configured AI model providers (Ollama, Groq, Hugging Face, Deterministic)."""
-    hf_token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGINGFACE_API_KEY", "")
-    hf_configured = bool(hf_token.strip())
-    hf_masked = f"{hf_token[:7]}...{hf_token[-4:]}" if len(hf_token) >= 12 else ("CONFIGURED" if hf_configured else "NONE")
-
+    """Inspect configured AI model providers (Ollama Edge AI, Deterministic Protocol Engine)."""
     return {
-        "router_mode": os.getenv("AI_ROUTER_MODE", "HYBRID"),
+        "router_mode": "LOCAL_ONLY (AIR-GAPPED / FLIGHT SAFE)",
         "providers": [
             {
                 "name": "Ollama Edge AI",
@@ -632,29 +628,7 @@ def get_providers_status() -> dict[str, Any]:
                 "status": "active",
                 "statusLabel": "ACTIVE / OPERATIONAL",
                 "details": "Locally resident on spacecraft hardware at http://127.0.0.1:11434. Primary offline intelligence.",
-                "lastCheck": "Live",
-            },
-            {
-                "name": "Groq Cloud LPU",
-                "tier": "cloud",
-                "modelId": "qwen/qwen3.8-27b",
-                "status": "standby",
-                "statusLabel": "STANDBY (CLINICAL CLOUD)",
-                "details": "Cloud high-throughput inference & Groq Vision OCR. Enabled when DSN ground-link is open.",
-                "lastCheck": "Reachable",
-            },
-            {
-                "name": "Hugging Face RLHF",
-                "tier": "cloud",
-                "modelId": os.environ.get("HF_MODEL_ID", "meta-llama/Llama-3.1-8B-Instruct"),
-                "status": "active" if hf_configured else "standby",
-                "statusLabel": f"AUTHENTICATED ({hf_masked})" if hf_configured else "CREDITS EXHAUSTED (HTTP 402)",
-                "details": (
-                    f"Authenticated user 'ali-khalid' (Token: {hf_masked}). Primary cloud RLHF inference model."
-                    if hf_configured
-                    else "Inference credits depleted (HTTP 402). Truthfully isolated; traffic automatically reroutes to Ollama/Groq."
-                ),
-                "lastCheck": "Live Authenticated" if hf_configured else "HTTP 402",
+                "lastCheck": "Live (Edge)",
             },
             {
                 "name": "Deterministic Engine",

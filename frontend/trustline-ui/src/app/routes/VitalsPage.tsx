@@ -143,7 +143,14 @@ export default function VitalsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <Oscilloscope data={effectiveEcg} color="#2E6B72" height={150} label="mV / time" />
+            <Oscilloscope
+              data={effectiveEcg}
+              color="#2E6B72"
+              height={150}
+              label="LEAD-II ECG // PRECORDIAL [250 Hz]"
+              unit="mV"
+              variant="ecg"
+            />
           </CardContent>
         </Card>
 
@@ -160,7 +167,14 @@ export default function VitalsPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <Oscilloscope data={effectiveResp} color="#E8913C" height={150} label="Impedance Δ" />
+            <Oscilloscope
+              data={effectiveResp}
+              color="#E8913C"
+              height={150}
+              label="THORACIC IMPEDANCE // TIDAL [50 Hz]"
+              unit="ΔΩ"
+              variant="respiration"
+            />
           </CardContent>
         </Card>
       </div>

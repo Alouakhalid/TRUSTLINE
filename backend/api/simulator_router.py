@@ -1,6 +1,7 @@
 """Simulator control router exposing the existing data-engineering/simulator engine to the frontend."""
 from __future__ import annotations
 
+import asyncio
 import sys
 import threading
 import time
@@ -28,6 +29,16 @@ router = APIRouter(prefix="/simulator", tags=["Biomedical Sensor Simulator"])
 _LOCK = threading.Lock()
 _engine = ScenarioEngine(astronaut_id="AST-001", session_id="SESSION-SIM-DEMO")
 _is_running = False
+_sim_task: Optional[asyncio.Task] = None
+
+
+async def _autonomous_stream() -> None:
+    while _is_running:
+        try:
+            await generate_step(duration_sec=1.0)
+        except Exception:
+            pass
+        await asyncio.sleep(1.0)
 
 
 class SimulatorConfigureRequest(BaseModel):
@@ -80,8 +91,8 @@ def configure_simulator(req: SimulatorConfigureRequest) -> Dict[str, Any]:
 
 
 @router.post("/start")
-def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Dict[str, Any]:
-    global _is_running
+async def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Dict[str, Any]:
+    global _is_running, _sim_task
     with _LOCK:
         if req:
             _engine.astronaut_id = req.astronaut_id
@@ -90,15 +101,19 @@ def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Dict[str
                     _engine.set_scenario(s)
                     break
         _is_running = True
-        return {"status": "started", "scenario": _engine.current_scenario.value}
+    if _sim_task is None or _sim_task.done():
+        _sim_task = asyncio.create_task(_autonomous_stream())
+    return {"status": "started", "scenario": _engine.current_scenario.value}
 
 
 @router.post("/stop")
-def stop_simulator() -> Dict[str, Any]:
-    global _is_running
+async def stop_simulator() -> Dict[str, Any]:
+    global _is_running, _sim_task
     with _LOCK:
         _is_running = False
-        return {"status": "stopped"}
+    if _sim_task and not _sim_task.done():
+        _sim_task.cancel()
+    return {"status": "stopped"}
 
 
 @router.post("/step")

@@ -27,14 +27,29 @@ export default function TwinPage() {
   const healthStatus = multiAgentDecision?.overall_risk || manualHealthStatus;
   const activeSpot = HOTSPOTS.find((h) => h.id === selectedHotspot) || HOTSPOTS[0];
 
-  const activeVal = readings?.get(activeSpot.id)?.value ?? (
-    activeSpot.id === 'ecg' ? (readings?.get('heart_rate')?.value ?? readings?.get('HR')?.value) :
-    activeSpot.id === 'respiration' ? readings?.get('respiration')?.value :
-    activeSpot.id === 'temp' ? (readings?.get('temperature')?.value ?? readings?.get('core_temp')?.value) :
-    activeSpot.id === 'spo2' ? readings?.get('spo2')?.value :
-    activeSpot.id === 'eda' ? readings?.get('eda')?.value :
-    activeSpot.id === 'imu' ? readings?.get('imu')?.value : undefined
-  );
+  const getSpotValue = (spotId: string) => {
+    if (spotId === 'ecg') {
+      return readings?.get('heart_rate')?.value ?? readings?.get('hr')?.value ?? readings?.get('HR')?.value;
+    }
+    if (spotId === 'respiration') {
+      return readings?.get('respiration')?.value ?? readings?.get('resp')?.value;
+    }
+    if (spotId === 'temp') {
+      return readings?.get('temperature')?.value ?? readings?.get('core_temp')?.value ?? readings?.get('temp')?.value;
+    }
+    if (spotId === 'spo2') {
+      return readings?.get('spo2')?.value ?? readings?.get('SPO2')?.value;
+    }
+    if (spotId === 'eda') {
+      return readings?.get('eda')?.value ?? readings?.get('EDA')?.value;
+    }
+    if (spotId === 'imu') {
+      return readings?.get('imu')?.value ?? readings?.get('IMU')?.value;
+    }
+    return readings?.get(spotId)?.value;
+  };
+
+  const activeVal = getSpotValue(activeSpot.id);
   const displayActive = activeVal !== undefined ? (typeof activeVal === 'number' ? activeVal.toFixed(1) : String(activeVal)) : activeSpot.nominalValue;
   const activeStatus = readings?.get(activeSpot.id)?.status || healthStatus;
 
@@ -320,14 +335,7 @@ export default function TwinPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {HOTSPOTS.map((h) => {
                 const isSelected = selectedHotspot === h.id;
-                const liveVal = readings?.get(h.id)?.value ?? (
-                  h.id === 'ecg' ? (readings?.get('heart_rate')?.value ?? readings?.get('HR')?.value) :
-                  h.id === 'respiration' ? readings?.get('respiration')?.value :
-                  h.id === 'temp' ? (readings?.get('temperature')?.value ?? readings?.get('core_temp')?.value) :
-                  h.id === 'spo2' ? readings?.get('spo2')?.value :
-                  h.id === 'eda' ? readings?.get('eda')?.value :
-                  h.id === 'imu' ? readings?.get('imu')?.value : undefined
-                );
+                const liveVal = getSpotValue(h.id);
                 const displayVal = liveVal !== undefined ? (typeof liveVal === 'number' ? liveVal.toFixed(1) : String(liveVal)) : h.nominalValue;
                 const spotStatus = readings?.get(h.id)?.status || healthStatus;
 
