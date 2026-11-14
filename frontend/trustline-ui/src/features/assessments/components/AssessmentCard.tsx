@@ -23,7 +23,7 @@ export function AssessmentCard({ className = '' }: { className?: string }) {
   useEffect(() => {
     async function load() {
       try {
-        const data = await listAssessments(astronautId, 5);
+        const data = await listAssessments(astronautId || undefined, 5);
         setAssessments(data as unknown as Assessment[]);
       } catch {
         /* ignore */

@@ -102,13 +102,13 @@ export default function LandingPage() {
         </p>
 
         <div className="landing-cta">
-          <Link to="/register">
+          <Link to="/portal">
             <Button variant="primary" size="lg">
               Get Started <ChevronRight size={16} style={{ marginLeft: '4px' }} />
             </Button>
           </Link>
-          <Link to="/login">
-            <Button variant="secondary" size="lg">Sign In</Button>
+          <Link to="/portal">
+            <Button variant="secondary" size="lg">Enter Mission Control</Button>
           </Link>
         </div>
 

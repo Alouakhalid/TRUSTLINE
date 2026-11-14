@@ -27,7 +27,7 @@ export default function DocumentsPage() {
     setIsUploading(true);
     setUploadStatus(`Uploading ${file.name}...`);
     try {
-      const res = await api.uploadDocument(file, astronautId);
+      const res = await api.uploadDocument(file, astronautId || 'UNASSIGNED');
       const newDoc: UploadedDoc = {
         id: (res.document_id as string) || `DOC-${Date.now().toString(16).toUpperCase()}`,
         filename: file.name,

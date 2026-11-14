@@ -149,6 +149,40 @@ class SQLiteStore:
             from_state TEXT, to_state TEXT NOT NULL, reason TEXT,
             created_at TEXT NOT NULL, is_demo INTEGER NOT NULL DEFAULT 0
         );
+        CREATE TABLE IF NOT EXISTS medical_documents (
+            id TEXT PRIMARY KEY, astronaut_id TEXT NOT NULL,
+            uploaded_by_user_id TEXT, title TEXT NOT NULL,
+            document_type TEXT NOT NULL DEFAULT 'LAB_REPORT',
+            storage_path TEXT NOT NULL, file_size_bytes INTEGER NOT NULL DEFAULT 0,
+            mime_type TEXT NOT NULL DEFAULT 'application/octet-stream',
+            processing_status TEXT NOT NULL DEFAULT 'PENDING',
+            error_message TEXT, is_demo INTEGER NOT NULL DEFAULT 0,
+            created_at TEXT NOT NULL, updated_at TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS medical_evidence (
+            id TEXT PRIMARY KEY, document_id TEXT,
+            astronaut_id TEXT NOT NULL, clinical_domain TEXT NOT NULL,
+            parameter_name TEXT NOT NULL, parameter_value REAL,
+            value_text TEXT, unit TEXT, reference_range_low REAL,
+            reference_range_high REAL, is_abnormal INTEGER NOT NULL DEFAULT 0,
+            verification_status TEXT NOT NULL DEFAULT 'QUARANTINED',
+            verified_by_doctor_id TEXT, verified_at TEXT,
+            metadata_json TEXT NOT NULL DEFAULT '{}',
+            is_demo INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL,
+            FOREIGN KEY(document_id) REFERENCES medical_documents(id)
+        );
+        CREATE TABLE IF NOT EXISTS agent_execution_traces (
+            id TEXT PRIMARY KEY, session_id TEXT, workflow_id TEXT,
+            agent_name TEXT NOT NULL, input_summary TEXT, output_summary TEXT,
+            duration_ms REAL NOT NULL DEFAULT 0.0, status TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS doctor_assignments (
+            id TEXT PRIMARY KEY, doctor_user_id TEXT NOT NULL,
+            astronaut_id TEXT NOT NULL, assigned_at TEXT NOT NULL,
+            active INTEGER NOT NULL DEFAULT 1, notes TEXT,
+            UNIQUE(doctor_user_id, astronaut_id)
+        );
         CREATE INDEX IF NOT EXISTS idx_sessions_user_mode ON chat_sessions(user_id, is_demo, updated_at);
         CREATE INDEX IF NOT EXISTS idx_messages_session ON chat_messages(session_id, created_at);
         CREATE INDEX IF NOT EXISTS idx_memory_scope ON agent_memories(astronaut_id, namespace, is_demo);
@@ -156,6 +190,8 @@ class SQLiteStore:
         CREATE INDEX IF NOT EXISTS idx_telemetry_scope ON telemetry_packets(astronaut_id, sensor_type, timestamp_epoch_ms, is_demo);
         CREATE INDEX IF NOT EXISTS idx_assessments_scope ON assessments(astronaut_id, is_demo, created_at);
         CREATE INDEX IF NOT EXISTS idx_transitions_kind ON provider_transitions(kind, is_demo, created_at);
+        CREATE INDEX IF NOT EXISTS idx_medical_docs_scope ON medical_documents(astronaut_id, is_demo, created_at);
+        CREATE INDEX IF NOT EXISTS idx_medical_evidence_status ON medical_evidence(astronaut_id, verification_status, is_demo);
         """
         with self.connection() as conn:
             conn.executescript(ddl)
@@ -191,6 +227,139 @@ class SQLiteStore:
     def run(self, query: str, params: tuple[Any, ...] = ()) -> None:
         with self.connection() as conn:
             conn.execute(query, params)
+
+    def sync_to_supabase(self, table: str, record: dict[str, Any]) -> None:
+        """Attempt to dual-persist record to Supabase if configured."""
+        try:
+            from backend.database.supabase_client import supabase_client
+            if supabase_client.is_configured():
+                supabase_client.upsert(table, record)
+        except Exception:
+            pass  # Resilient fallback: local persistence remains authoritative
+
+    def save_medical_document(
+        self,
+        doc_id: str,
+        astronaut_id: str,
+        title: str,
+        storage_path: str,
+        file_size_bytes: int = 0,
+        mime_type: str = "application/octet-stream",
+        document_type: str = "LAB_REPORT",
+        uploaded_by_user_id: str | None = None,
+        is_demo: bool = False,
+    ) -> dict[str, Any]:
+        now = utc_now()
+        self.run(
+            "INSERT INTO medical_documents(id, astronaut_id, uploaded_by_user_id, title, document_type, storage_path, file_size_bytes, mime_type, processing_status, is_demo, created_at, updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            (doc_id, astronaut_id, uploaded_by_user_id, title, document_type, storage_path, file_size_bytes, mime_type, "PENDING", int(is_demo), now, now),
+        )
+        record = {
+            "id": doc_id,
+            "astronaut_id": astronaut_id,
+            "uploaded_by_user_id": uploaded_by_user_id,
+            "title": title,
+            "document_type": document_type,
+            "storage_path": storage_path,
+            "file_size_bytes": file_size_bytes,
+            "mime_type": mime_type,
+            "processing_status": "PENDING",
+            "is_demo": is_demo,
+            "created_at": now,
+            "updated_at": now,
+        }
+        self.sync_to_supabase("medical_documents", record)
+        return record
+
+    def get_medical_documents(self, astronaut_id: str, is_demo: bool = False, limit: int = 50) -> list[dict[str, Any]]:
+        rows = self.many(
+            "SELECT * FROM medical_documents WHERE astronaut_id=? AND is_demo=? ORDER BY created_at DESC LIMIT ?",
+            (astronaut_id, int(is_demo), limit),
+        )
+        return [dict(r) for r in rows]
+
+    def save_medical_evidence(
+        self,
+        evidence_id: str,
+        document_id: str | None,
+        astronaut_id: str,
+        clinical_domain: str,
+        parameter_name: str,
+        parameter_value: float | None = None,
+        value_text: str | None = None,
+        unit: str | None = None,
+        ref_low: float | None = None,
+        ref_high: float | None = None,
+        is_abnormal: bool = False,
+        verification_status: str = "QUARANTINED",
+        metadata: dict[str, Any] | None = None,
+        is_demo: bool = False,
+    ) -> dict[str, Any]:
+        now = utc_now()
+        import json
+        meta_json = json.dumps(metadata or {})
+        self.run(
+            "INSERT INTO medical_evidence(id, document_id, astronaut_id, clinical_domain, parameter_name, parameter_value, value_text, unit, reference_range_low, reference_range_high, is_abnormal, verification_status, metadata_json, is_demo, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            (evidence_id, document_id, astronaut_id, clinical_domain, parameter_name, parameter_value, value_text, unit, ref_low, ref_high, int(is_abnormal), verification_status, meta_json, int(is_demo), now),
+        )
+        record = {
+            "id": evidence_id,
+            "document_id": document_id,
+            "astronaut_id": astronaut_id,
+            "clinical_domain": clinical_domain,
+            "parameter_name": parameter_name,
+            "parameter_value": parameter_value,
+            "value_text": value_text,
+            "unit": unit,
+            "reference_range_low": ref_low,
+            "reference_range_high": ref_high,
+            "is_abnormal": is_abnormal,
+            "verification_status": verification_status,
+            "metadata_json": metadata or {},
+            "is_demo": is_demo,
+            "created_at": now,
+        }
+        self.sync_to_supabase("medical_evidence", record)
+        return record
+
+    def get_medical_evidence(self, astronaut_id: str, verification_status: str | None = None, is_demo: bool = False, limit: int = 100) -> list[dict[str, Any]]:
+        import json
+        if verification_status:
+            rows = self.many(
+                "SELECT * FROM medical_evidence WHERE astronaut_id=? AND verification_status=? AND is_demo=? ORDER BY created_at DESC LIMIT ?",
+                (astronaut_id, verification_status, int(is_demo), limit),
+            )
+        else:
+            rows = self.many(
+                "SELECT * FROM medical_evidence WHERE astronaut_id=? AND is_demo=? ORDER BY created_at DESC LIMIT ?",
+                (astronaut_id, int(is_demo), limit),
+            )
+        results = []
+        for r in rows:
+            d = dict(r)
+            try:
+                d["metadata"] = json.loads(d.get("metadata_json") or "{}")
+            except Exception:
+                d["metadata"] = {}
+            results.append(d)
+        return results
+
+    def update_evidence_status(self, evidence_id: str, status: str, doctor_id: str | None = None) -> bool:
+        now = utc_now()
+        self.run(
+            "UPDATE medical_evidence SET verification_status=?, verified_by_doctor_id=?, verified_at=? WHERE id=?",
+            (status, doctor_id, now, evidence_id),
+        )
+        return True
+
+    def record_execution_trace(self, session_id: str | None, workflow_id: str | None, agent_name: str, input_summary: str, output_summary: str, duration_ms: float, status: str) -> str:
+        trace_id = self.new_id("TRC")
+        now = utc_now()
+        self.run(
+            "INSERT INTO agent_execution_traces(id, session_id, workflow_id, agent_name, input_summary, output_summary, duration_ms, status, created_at) VALUES(?,?,?,?,?,?,?,?,?)",
+            (trace_id, session_id, workflow_id, agent_name, input_summary, output_summary, duration_ms, status, now),
+        )
+        return trace_id
 
     @staticmethod
     def new_id(prefix: str) -> str:

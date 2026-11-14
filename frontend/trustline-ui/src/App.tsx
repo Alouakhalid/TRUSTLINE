@@ -1,11 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from '@/features/auth/stores/auth-store';
 
 import PublicLayout from '@/app/layouts/PublicLayout';
 import DashboardLayout from '@/app/layouts/DashboardLayout';
 import LandingPage from '@/app/routes/LandingPage';
-import LoginPage from '@/app/routes/LoginPage';
-import RegisterPage from '@/app/routes/RegisterPage';
 
 import AstronautPortal from '@/app/routes/AstronautPortal';
 import MedicalPortal from '@/app/routes/MedicalPortal';
@@ -24,8 +23,28 @@ import SyncPage from '@/app/routes/SyncPage';
 import AuditPage from '@/app/routes/AuditPage';
 
 function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) {
-  const { token, role } = useAuthStore();
-  if (!token) return <Navigate to="/login" replace />;
+  const { token, role, initDirectEntry } = useAuthStore();
+  const [initializing, setInitializing] = useState(!token);
+
+  useEffect(() => {
+    if (!token) {
+      initDirectEntry().finally(() => setInitializing(false));
+    } else {
+      setInitializing(false);
+    }
+  }, [token, initDirectEntry]);
+
+  if (initializing) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--color-bg)' }}>
+        <div className="dark-label" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span className="dot-indicator dot-teal animate-pulse" />
+          ESTABLISHING SECURE MISSION CONTROL TELEMETRY SESSION...
+        </div>
+      </div>
+    );
+  }
+
   if (allowedRoles && !allowedRoles.includes(role)) return <Navigate to="/portal" replace />;
   return <>{children}</>;
 }
@@ -45,8 +64,9 @@ export default function App() {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        {/* Legacy login & registration routes redirect directly into Mission Control */}
+        <Route path="/login" element={<Navigate to="/portal" replace />} />
+        <Route path="/register" element={<Navigate to="/portal" replace />} />
       </Route>
 
       <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>

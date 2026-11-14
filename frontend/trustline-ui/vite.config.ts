@@ -2,14 +2,18 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-const htmlBypass = (req: { headers: { accept?: string } }) => {
+const htmlBypass = (req) => {
   if (req.headers.accept?.includes('text/html')) {
     return '/index.html';
   }
 };
 
+// Use environment variable for backend URL if provided (for Railway deployment), fallback to localhost for dev
+const API_TARGET = process.env.VITE_API_URL || 'http://localhost:8000';
+const WS_TARGET = API_TARGET.replace(/^http/, 'ws');
+
 const apiProxy = {
-  target: 'http://localhost:8000',
+  target: API_TARGET,
   changeOrigin: true,
   bypass: htmlBypass,
 };
@@ -22,7 +26,12 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    host: '0.0.0.0',
+    port: process.env.PORT || 3000,
+    allowedHosts: [
+      'trustline-production-c57addcb.up.railway.app',
+      true, // Allows all external hosts (handy for dynamic preview URLs)
+    ],
     proxy: {
       '/auth': apiProxy,
       '/chat': apiProxy,
@@ -35,8 +44,9 @@ export default defineConfig({
       '/simulator': apiProxy,
       '/health': apiProxy,
       '/ws': {
-        target: 'ws://localhost:8000',
+        target: WS_TARGET,
         ws: true,
+        changeOrigin: true,
       },
     },
   },

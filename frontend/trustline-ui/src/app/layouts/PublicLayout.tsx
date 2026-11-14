@@ -1,5 +1,5 @@
 import { Outlet, Link } from 'react-router-dom';
-import { Satellite } from 'lucide-react';
+import { Satellite, ArrowRight } from 'lucide-react';
 import { Button } from '@/shared/components/Button';
 
 export default function PublicLayout() {
@@ -15,11 +15,10 @@ export default function PublicLayout() {
           </span>
         </Link>
         <div className="public-nav-links">
-          <Link to="/login">
-            <Button variant="ghost" size="sm">Sign In</Button>
-          </Link>
-          <Link to="/register">
-            <Button variant="primary" size="sm">Get Started</Button>
+          <Link to="/portal">
+            <Button variant="primary" size="sm">
+              Enter Mission Control <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+            </Button>
           </Link>
         </div>
       </nav>

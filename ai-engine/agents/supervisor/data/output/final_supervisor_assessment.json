@@ -1,22 +1,22 @@
 {
-  "assessment_id": "SUP-E9074809",
-  "astronaut_id": "AST-001",
-  "session_id": "CHAT-E30A2112FF68",
-  "workflow_id": "WF-0D00FA00",
-  "generation_timestamp": "2026-11-14 09:01:25.224437",
+  "assessment_id": "SUP-510B8F79",
+  "astronaut_id": "AST-003",
+  "session_id": "CHAT-95D22FDE6D70",
+  "workflow_id": "WF-8758EA5E",
+  "generation_timestamp": "2026-11-14 16:11:51.429342",
   "workflow_completion_status": "PARTIALLY_COMPLETED",
   "agent_execution_statuses": {
     "supervisor": {
       "agent_name": "supervisor_orchestrator",
       "status": "SUCCESS",
-      "execution_time_ms": 10.4,
+      "execution_time_ms": 14.87,
       "error_message": null,
       "warnings": []
     },
     "sensor_quality_agent": {
       "agent_name": "sensor_quality_agent",
       "status": "SKIPPED",
-      "execution_time_ms": 0.05,
+      "execution_time_ms": 0.04,
       "error_message": null,
       "warnings": [
         "No sensor manifest supplied; skipping sensor quality inspection."
@@ -25,33 +25,34 @@
     "personal_health_agent": {
       "agent_name": "personal_health_agent",
       "status": "PARTIAL",
-      "execution_time_ms": 16622.18,
+      "execution_time_ms": 11704.86,
       "error_message": null,
-      "warnings": []
+      "warnings": [
+        "Individualized personal baseline is not yet established; population reference norms utilized.",
+        "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
+      ]
     },
     "medical_rag_agent": {
       "agent_name": "medical_knowledge_rag_service",
-      "status": "PARTIAL",
-      "execution_time_ms": 1072.98,
+      "status": "SUCCESS",
+      "execution_time_ms": 6175.483,
       "error_message": null,
-      "warnings": [
-        "Medical RAG returned NO_RELEVANT_SOURCES for query."
-      ]
+      "warnings": []
     },
     "risk_assessment_agent": {
       "agent_name": "risk_assessment_agent",
       "status": "SUCCESS",
-      "execution_time_ms": 7059.48,
+      "execution_time_ms": 5387.26,
       "error_message": null,
       "warnings": [
         "Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms",
         "Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms",
-        "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
         "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
         "Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators",
         "Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry",
         "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
         "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
+        "Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings",
         "Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors",
         "Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified",
         "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated)"
@@ -59,16 +60,16 @@
     }
   },
   "timing_breakdown": {
-    "workflow_total_execution_time_ms": 24778.39,
-    "supervisor_overhead_time_ms": 23.7,
-    "sensor_quality_execution_time_ms": 0.05,
-    "personal_health_execution_time_ms": 16622.18,
-    "medical_rag_execution_time_ms": 1072.98,
-    "risk_assessment_execution_time_ms": 7059.48,
-    "evidence_validation_time_ms": 0.71,
-    "final_synthesis_time_ms": 0.47,
-    "persistence_time_ms": 8.87,
-    "measured_supervisor_overhead_ms": 12.78
+    "workflow_total_execution_time_ms": 23294.84,
+    "supervisor_overhead_time_ms": 27.2,
+    "sensor_quality_execution_time_ms": 0.04,
+    "personal_health_execution_time_ms": 11704.86,
+    "medical_rag_execution_time_ms": 6175.48,
+    "risk_assessment_execution_time_ms": 5387.26,
+    "evidence_validation_time_ms": 0.27,
+    "final_synthesis_time_ms": 0.28,
+    "persistence_time_ms": 10.27,
+    "measured_supervisor_overhead_ms": 14.74
   },
   "overall_assessment_status": "PARTIALLY_COMPLETED",
   "overall_risk": "INSUFFICIENT_DATA",
@@ -79,17 +80,17 @@
   "coverage_summary": {
     "total_domains": 10,
     "evaluated_domains": [
-      "GENERAL_PHYSIOLOGICAL"
+      "NEUROLOGICAL"
     ],
     "unevaluated_domains": [
       "CARDIOVASCULAR",
       "RESPIRATORY",
-      "NEUROLOGICAL",
       "SLEEP_AND_FATIGUE",
       "PSYCHOLOGICAL_AND_COGNITIVE",
       "THERMOREGULATORY",
       "HYDRATION_AND_FLUID_BALANCE",
       "MUSCULOSKELETAL",
+      "GENERAL_PHYSIOLOGICAL",
       "DATA_QUALITY_RELATED"
     ],
     "partially_evaluated_domains": [],
@@ -98,12 +99,12 @@
   },
   "sensor_quality_summary": {},
   "personal_health_summary": {
-    "assessment_id": "PHA-9AB00ADC",
-    "astronaut_id": "AST-001",
-    "session_id": "CHAT-E30A2112FF68",
-    "execution_timestamp": "2026-11-14 09:01:17.078144",
+    "assessment_id": "PHA-607D7E08",
+    "astronaut_id": "AST-003",
+    "session_id": "CHAT-95D22FDE6D70",
+    "execution_timestamp": "2026-11-14 16:11:39.851875",
     "assessment_status": "INSUFFICIENT_EVIDENCE",
-    "baseline_status": "available",
+    "baseline_status": "not_available",
     "personal_baseline_deviation": null,
     "sensor_quality_summary": null,
     "core_features": null,
@@ -112,13 +113,13 @@
     "ml_findings": [],
     "symptom_findings": [
       {
-        "event_id": "SYM-05BF46B0",
-        "astronaut_id": "AST-001",
-        "session_id": "CHAT-E30A2112FF68",
-        "symptom_category": "GENERAL",
-        "symptom_type": "discomfort",
-        "description": "still here",
-        "severity": null,
+        "event_id": "SYM-BD470BDF",
+        "astronaut_id": "AST-003",
+        "session_id": "CHAT-95D22FDE6D70",
+        "symptom_category": "NEUROLOGICAL",
+        "symptom_type": "headache",
+        "description": "mild headache after exercise, otherwise feeling fine",
+        "severity": "MILD",
         "location": null,
         "onset_time": null,
         "duration": null,
@@ -126,9 +127,9 @@
         "associated_symptoms": [],
         "potential_triggers": [],
         "input_channel": "CHAT_TEXT",
-        "original_text_or_transcript": "still here",
+        "original_text_or_transcript": "mild headache after exercise, otherwise feeling fine",
         "confirmation_status": "confirmed",
-        "event_timestamp": "2026-11-14 09:01:07.535138",
+        "event_timestamp": "2026-11-14 16:11:33.677906",
         "data_provenance": "astronaut_self_report"
       }
     ],
@@ -146,7 +147,7 @@
       "current_activity": null,
       "planned_sleep_hours": null,
       "actual_sleep_hours": null,
-      "cabin_pressure_kpa": 101.3,
+      "cabin_pressure_kpa": null,
       "cabin_o2_percent": null,
       "cabin_co2_percent": null,
       "cabin_temperature_c": null,
@@ -168,9 +169,9 @@
         "spaceflight_relevance": "high",
         "approval_status": "approved_flight_medicine",
         "excerpt": "[Space Health Research | Spaceflight Cardiovascular Physiology > Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity]\nTitle: Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity\nDomain: Spaceflight Cardiovascular Physiology\nCitation: NASA-HRP-CARDIO-2024-08\n\nWithin hours of orbital insertion, microgravity causes a cephalad redistribution of approximately 1.5 to 2.0 liters of venous blood and interstitial fluid. This central hypervolemia stimulates baroreceptors and atrial natriuretic peptide secretion, causing early plasma volume contraction. Resting heart rate may increase by 5-12 bpm during initial adaptation, and transient subjective head fullness and nasal congestion are standard adaptation symptoms.",
-        "relevance_score": 0.6817,
+        "relevance_score": 0.8686,
         "citation_reference": "NASA-HRP-CARDIO-2024-08",
-        "retrieval_timestamp": "2026-11-14 09:01:10.186844"
+        "retrieval_timestamp": "2026-11-14 16:11:34.346084"
       },
       {
         "doc_id": "KNOW-MISSION_MEDICAL_PROTOCOLS-3AF1A95E",
@@ -186,14 +187,17 @@
         "spaceflight_relevance": "high",
         "approval_status": "approved_flight_medicine",
         "excerpt": "[Mission Medical Protocols | Operational Behavioral Medicine > Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions]\nTitle: Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions\nDomain: Operational Behavioral Medicine\nCitation: NASA-BHO-STRESS-2024-V2.0\n\nWhen sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
-        "relevance_score": 0.4715,
+        "relevance_score": 0.7356,
         "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
-        "retrieval_timestamp": "2026-11-14 09:01:10.186987"
+        "retrieval_timestamp": "2026-11-14 16:11:34.346120"
       }
     ],
     "possible_explanations": [],
     "evidence_conflicts": [],
-    "uncertainties": [],
+    "uncertainties": [
+      "Individualized personal baseline is not yet established; population reference norms utilized.",
+      "Personal baseline status: NOT_AVAILABLE. Individualized baseline comparison was not performed; current telemetry represents an unvalidated single-session observation and must not be registered as a confirmed personal baseline."
+    ],
     "missing_information": [],
     "recommended_follow_up": [
       "Maintain standard telemetry monitoring pending baseline establishment."
@@ -220,20 +224,24 @@
       ]
     },
     "next_agent": "risk_assessment_agent",
-    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-001 (Session CHAT-E30A2112FF68) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
+    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-003 (Session CHAT-95D22FDE6D70) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
   },
   "medical_rag_summary": {
-    "retrieval_status": "NO_RELEVANT_SOURCES",
-    "grounding_status": "FULLY_GROUNDED",
-    "generated_answer": "**1. Retrieved Medical Facts:** No relevant medical guidelines or research documents found matching this query in the authorized knowledge corpus.\n\n**2. Clinical Interpretation:** The medical knowledge base does not contain verified aerospace clinical protocols for this specific inquiry.\n\n**3. Uncertainty & Limitations:** Retrieval returned 0 qualifying passages above the relevance threshold.\n\n**4. Source Citations:** None.\n\n**5. Missing Information:** Authoritative operational guidelines for this specific query are unmonitored or unindexed.",
-    "source_citations": [],
-    "passages_count": 0
+    "retrieval_status": "SUCCESS",
+    "grounding_status": "PARTIALLY_GROUNDED",
+    "generated_answer": "**1. Retrieved Medical Facts:**\n- [NASA-HRP-CARDIO-2024-08] [Space Health Research | Spaceflight Cardiovascular Physiology > Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity]\n- [AAS-NLSD-2023-V2.1-P44] [Biomedical Knowledge | Autonomic Neurocardiology > Autonomic Nervous System Regulation and Acute Stress Markers]\n- [JAP-THERM-2022-771] [Biomedical Knowledge | Human Thermoregulation > Thermoregulatory Dynamics and Core-to-Peripheral Heat Flux]\n\n**2. Clinical Interpretation:** Based on the retrieved spaceflight guidelines, the protocol recommends monitoring indicators aligned with Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity.\n\n**3. Uncertainty & Limitations:** Grounded strictly in 3 indexed passage(s). This decision support prototype does not replace a certified Flight Surgeon.\n\n**4. Source Citations:** [NASA-HRP-CARDIO-2024-08], [AAS-NLSD-2023-V2.1-P44], [JAP-THERM-2022-771]\n\n**5. Missing Information:** Prospective individual astronaut baseline history.",
+    "source_citations": [
+      "NASA-HRP-CARDIO-2024-08",
+      "AAS-NLSD-2023-V2.1-P44",
+      "JAP-THERM-2022-771"
+    ],
+    "passages_count": 3
   },
   "risk_assessment_summary": {
-    "assessment_id": "RA-352D47BD",
-    "astronaut_id": "AST-001",
-    "session_id": "CHAT-E30A2112FF68",
-    "assessment_timestamp": "2026-11-14 09:01:25.218694",
+    "assessment_id": "RA-56CCAEA5",
+    "astronaut_id": "AST-003",
+    "session_id": "CHAT-95D22FDE6D70",
+    "assessment_timestamp": "2026-11-14 16:11:51.427012",
     "assessment_status": "PARTIALLY_COMPLETED",
     "evaluated_domains_risk": "LOW",
     "overall_risk": "INSUFFICIENT_DATA",
@@ -241,17 +249,17 @@
     "coverage": {
       "total_domains": 10,
       "evaluated_domains": [
-        "GENERAL_PHYSIOLOGICAL"
+        "NEUROLOGICAL"
       ],
       "unevaluated_domains": [
         "CARDIOVASCULAR",
         "RESPIRATORY",
-        "NEUROLOGICAL",
         "SLEEP_AND_FATIGUE",
         "PSYCHOLOGICAL_AND_COGNITIVE",
         "THERMOREGULATORY",
         "HYDRATION_AND_FLUID_BALANCE",
         "MUSCULOSKELETAL",
+        "GENERAL_PHYSIOLOGICAL",
         "DATA_QUALITY_RELATED"
       ],
       "partially_evaluated_domains": [],
@@ -260,12 +268,12 @@
       "unavailable_domain_reasons": {
         "CARDIOVASCULAR": "No observational telemetry or validated records available. Required evidence: Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms.",
         "RESPIRATORY": "No observational telemetry or validated records available. Required evidence: Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms.",
-        "NEUROLOGICAL": "No observational telemetry or validated records available. Required evidence: Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms.",
         "SLEEP_AND_FATIGUE": "No observational telemetry or validated records available. Required evidence: Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy.",
         "PSYCHOLOGICAL_AND_COGNITIVE": "No observational telemetry or validated records available. Required evidence: Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators.",
         "THERMOREGULATORY": "No observational telemetry or validated records available. Required evidence: Core body temperature or continuous skin temperature telemetry.",
         "HYDRATION_AND_FLUID_BALANCE": "No observational telemetry or validated records available. Required evidence: Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers.",
         "MUSCULOSKELETAL": "No observational telemetry or validated records available. Required evidence: Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry.",
+        "GENERAL_PHYSIOLOGICAL": "No observational telemetry or validated records available. Required evidence: Multisystem lab panels, metabolic indicators, or general medical findings.",
         "DATA_QUALITY_RELATED": "No observational telemetry or validated records available. Required evidence: Sensor Quality Agent report covering active physiological sensors."
       }
     },
@@ -298,15 +306,15 @@
       },
       {
         "domain": "NEUROLOGICAL",
-        "assessment_status": "NOT_EVALUATED",
-        "risk_level": "UNKNOWN",
-        "confidence": "UNDETERMINED",
-        "supporting_evidence_ids": [],
-        "triggered_rule_ids": [],
-        "limitations": [
-          "No telemetry or subjective observations provided for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms)."
+        "assessment_status": "EVALUATED",
+        "risk_level": "LOW",
+        "confidence": "HIGH",
+        "supporting_evidence_ids": [
+          "EV-SYM-1"
         ],
-        "explanation": "Domain NEUROLOGICAL was not evaluated due to absence of domain telemetry.",
+        "triggered_rule_ids": [],
+        "limitations": [],
+        "explanation": "All observed variables in NEUROLOGICAL were within established reference limits; no rule triggered.",
         "requires_human_review": false
       },
       {
@@ -376,40 +384,15 @@
       },
       {
         "domain": "GENERAL_PHYSIOLOGICAL",
-        "assessment_status": "EVALUATED",
-        "risk_level": "LOW",
-        "confidence": "HIGH",
-        "supporting_evidence_ids": [
-          "EV-SYM-1",
-          "EV-MED-CONFIRMED-1",
-          "EV-MED-CONFIRMED-2",
-          "EV-MED-CONFIRMED-3",
-          "EV-MED-CONFIRMED-4",
-          "EV-MED-CONFIRMED-5",
-          "EV-MED-CONFIRMED-6",
-          "EV-MED-CONFIRMED-7",
-          "EV-MED-CONFIRMED-8",
-          "EV-MED-CONFIRMED-9",
-          "EV-MED-CONFIRMED-10",
-          "EV-MED-CONFIRMED-11",
-          "EV-MED-CONFIRMED-12",
-          "EV-MED-CONFIRMED-13",
-          "EV-MED-CONFIRMED-14",
-          "EV-MED-CONFIRMED-15",
-          "EV-MED-CONFIRMED-16",
-          "EV-MED-CONFIRMED-17",
-          "EV-MED-CONFIRMED-18",
-          "EV-MED-CONFIRMED-19",
-          "EV-MED-CONFIRMED-20",
-          "EV-MED-CONFIRMED-21",
-          "EV-MED-CONFIRMED-22",
-          "EV-MED-CONFIRMED-23",
-          "EV-MED-CONFIRMED-24",
-          "EV-MED-CONFIRMED-25"
-        ],
+        "assessment_status": "NOT_EVALUATED",
+        "risk_level": "UNKNOWN",
+        "confidence": "UNDETERMINED",
+        "supporting_evidence_ids": [],
         "triggered_rule_ids": [],
-        "limitations": [],
-        "explanation": "All observed variables in GENERAL_PHYSIOLOGICAL were within established reference limits; no rule triggered.",
+        "limitations": [
+          "No telemetry or subjective observations provided for GENERAL_PHYSIOLOGICAL (Multisystem lab panels, metabolic indicators, or general medical findings)."
+        ],
+        "explanation": "Domain GENERAL_PHYSIOLOGICAL was not evaluated due to absence of domain telemetry.",
         "requires_human_review": false
       },
       {
@@ -431,340 +414,15 @@
       {
         "evidence_id": "EV-SYM-1",
         "source_agent": "personal_health_agent",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "symptom_discomfort",
-        "observed_value_repr": "REPORTED",
+        "domain": "NEUROLOGICAL",
+        "metric_name": "symptom_headache",
+        "observed_value_repr": "MILD",
         "validity_status": "VALID",
         "quality_status": null,
         "is_confirmed": false,
         "evidence_classification": "CLINICAL_OBSERVATION",
         "is_eligible_for_risk": true,
-        "relevance_summary": "Subjective complaint of discomfort (Severity: REPORTED): still here."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-1",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: FLIGHT_SURGEON_01)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-2",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-3",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-4",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-5",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-6",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: SURGEON-ALPHA)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-7",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: SURGEON-ALPHA)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-8",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-9",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: SURGEON-ALPHA)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-10",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-11",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-12",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: SURGEON-ALPHA)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-13",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-14",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "glucose",
-        "observed_value_repr": "95.0 mg/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Glucose = 95 mg/dL mg/dL (Ref: 70-99, Confirmed by: SURGEON-ALPHA)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-15",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-16",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-17",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-18",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-19",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-20",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-21",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-22",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-23",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-24",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
-      },
-      {
-        "evidence_id": "EV-MED-CONFIRMED-25",
-        "source_agent": "medical_records_repository",
-        "domain": "GENERAL_PHYSIOLOGICAL",
-        "metric_name": "hemoglobin",
-        "observed_value_repr": "15.4 g/dL",
-        "validity_status": "VALID",
-        "quality_status": null,
-        "is_confirmed": true,
-        "evidence_classification": "CLINICAL_OBSERVATION",
-        "is_eligible_for_risk": true,
-        "relevance_summary": "Confirmed clinical finding: Hemoglobin = 15.4 g/dL (Ref: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)."
+        "relevance_summary": "Subjective complaint of headache (Severity: MILD): mild headache after exercise, otherwise feeling fine."
       }
     ],
     "triggered_rules": [],
@@ -881,12 +539,12 @@
     "uncertainties": [
       "Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms",
       "Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms",
-      "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
       "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
       "Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators",
       "Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry",
       "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
       "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
+      "Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings",
       "Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors",
       "Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified",
       "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated)"
@@ -894,12 +552,12 @@
     "missing_information": [
       "Observational evidence for CARDIOVASCULAR (Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms).",
       "Observational evidence for RESPIRATORY (Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms).",
-      "Observational evidence for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms).",
       "Observational evidence for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy).",
       "Observational evidence for PSYCHOLOGICAL_AND_COGNITIVE (Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators).",
       "Observational evidence for THERMOREGULATORY (Core body temperature or continuous skin temperature telemetry).",
       "Observational evidence for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers).",
       "Observational evidence for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry).",
+      "Observational evidence for GENERAL_PHYSIOLOGICAL (Multisystem lab panels, metabolic indicators, or general medical findings).",
       "Observational evidence for DATA_QUALITY_RELATED (Sensor Quality Agent report covering active physiological sensors)."
     ],
     "nominal_observation_details": [],
@@ -933,14 +591,14 @@
     "protocol_references": [],
     "requires_human_review": false,
     "processing_metadata": {
-      "normalized_evidence_count": 26,
+      "normalized_evidence_count": 1,
       "correlations_identified": 0,
       "triggered_rules_count": 0,
       "validation_warnings": [],
       "correlations": [],
       "coverage_status": "PARTIAL"
     },
-    "llm_explanation": "Objective multi-agent risk assessment for Astronaut AST-001 (Session CHAT-E30A2112FF68) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, NEUROLOGICAL, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
+    "llm_explanation": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-95D22FDE6D70) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
     "llm_status": "LLM_API_ERROR"
   },
   "detected_concerns": [],
@@ -949,12 +607,12 @@
   "uncertainties": [
     "Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms",
     "Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms",
-    "Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms",
     "Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy",
     "Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators",
     "Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry",
     "Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers",
     "Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry",
+    "Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings",
     "Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors",
     "Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified",
     "Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated)"
@@ -962,12 +620,12 @@
   "missing_information": [
     "Observational evidence for CARDIOVASCULAR (Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms).",
     "Observational evidence for RESPIRATORY (Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms).",
-    "Observational evidence for NEUROLOGICAL (Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms).",
     "Observational evidence for SLEEP_AND_FATIGUE (Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy).",
     "Observational evidence for PSYCHOLOGICAL_AND_COGNITIVE (Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators).",
     "Observational evidence for THERMOREGULATORY (Core body temperature or continuous skin temperature telemetry).",
     "Observational evidence for HYDRATION_AND_FLUID_BALANCE (Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers).",
     "Observational evidence for MUSCULOSKELETAL (Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry).",
+    "Observational evidence for GENERAL_PHYSIOLOGICAL (Multisystem lab panels, metabolic indicators, or general medical findings).",
     "Observational evidence for DATA_QUALITY_RELATED (Sensor Quality Agent report covering active physiological sensors).",
     "Sensor telemetry manifest was not provided for this session.",
     "External confirmed medical records were not submitted."
@@ -1002,297 +660,55 @@
       "source_agent": "personal_health_agent",
       "domain": "PHYSIOLOGICAL_BASELINE",
       "metric_name": "baseline_readiness_status",
-      "observed_value": "available",
-      "validity_status": "VALID",
+      "observed_value": "not_available",
+      "validity_status": "NOT_AVAILABLE",
       "is_quarantined": false,
-      "quarantine_reason": null,
+      "quarantine_reason": "Personal baseline unestablished; population reference or deferred comparison active",
       "provenance": "Personal Health Baseline Readiness Registry"
     },
     {
-      "evidence_id": "EV-SYM-1-DISCOMFORT",
+      "evidence_id": "EV-SYM-1-HEADACHE",
       "source_agent": "personal_health_agent",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "reported_symptom_discomfort",
-      "observed_value": "still here",
+      "domain": "NEUROLOGICAL",
+      "metric_name": "reported_symptom_headache",
+      "observed_value": "mild headache after exercise, otherwise feeling fine",
       "validity_status": "VALID",
       "is_quarantined": false,
       "quarantine_reason": null,
-      "provenance": "Personal Health Agent Symptom Intake (Severity: None)"
+      "provenance": "Personal Health Agent Symptom Intake (Severity: MILD)"
     },
     {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-TEST_0",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
+      "evidence_id": "EV-KNOW-KNOW-SPACE_HEALTH_RESEARCH-93792535_c001",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_space_health_research_93792535_c001",
+      "observed_value": "[Space Health Research | Spaceflight Cardiovascular Physiology > Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity]\nTitle: Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity\nDomain: Spaceflight Cardiovascular Physiology\nCitation: NASA-HRP-CARDIO-2024-08\n\nWithin hours of orbital insertion, microgravity causes a cephalad redistribution of approximately 1.5 to 2.0 liters of venous blood and interstitial fluid. This central hypervolemia stimulates baroreceptors and atrial natriuretic peptide secretion, causing early plasma volume contraction. Resting heart rate may increase by 5-12 bpm during initial adaptation, and transient subjective head fullness and nasal congestion are standard adaptation symptoms.",
       "validity_status": "VALID",
       "is_quarantined": false,
       "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-TEST_0, Coll: 2026-01-15, Confirmed by: FLIGHT_SURGEON_01)"
+      "provenance": "Medical RAG Hybrid Retrieval (Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity, Ref: NASA-HRP-CARDIO-2024-08, Source: Aerospace Medicine, Score: 0.386)"
     },
     {
-      "evidence_id": "EV-MED-CONFIRMED-REC-D77A4E24",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
+      "evidence_id": "EV-KNOW-KNOW-BIOMEDICAL_KNOWLEDGE-56C3A780_c001",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_biomedical_knowledge_56c3a780_c001",
+      "observed_value": "[Biomedical Knowledge | Autonomic Neurocardiology > Autonomic Nervous System Regulation and Acute Stress Markers]\nTitle: Autonomic Nervous System Regulation and Acute Stress Markers\nDomain: Autonomic Neurocardiology\nCitation: AAS-NLSD-2023-V2.1-P44\n\nAcute physiological stress induces simultaneous sympathetic activation and parasympathetic vagal withdrawal. This autonomic state is characterized by an elevated instantaneous heart rate, marked reduction in beat-to-beat variability (RMSSD collapse below 20 ms), and rapid bursts of skin conductance (phasic EDA spikes). Resting RMSSD reflecting cardiac parasympathetic tone must be distinguished from transient task-related reductions.",
       "validity_status": "VALID",
       "is_quarantined": false,
       "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-F58672A2, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
+      "provenance": "Medical RAG Hybrid Retrieval (Autonomic Nervous System Regulation and Acute Stress Markers, Ref: AAS-NLSD-2023-V2.1-P44, Source: Cardiovascular Dynamics, Score: 0.352)"
     },
     {
-      "evidence_id": "EV-MED-CONFIRMED-REC-9772FF9C",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
+      "evidence_id": "EV-KNOW-KNOW-BIOMEDICAL_KNOWLEDGE-56C3A780_c002",
+      "source_agent": "medical_knowledge_rag_service",
+      "domain": "CLINICAL_KNOWLEDGE",
+      "metric_name": "knowledge_passage_know_biomedical_knowledge_56c3a780_c002",
+      "observed_value": "[Biomedical Knowledge | Human Thermoregulation > Thermoregulatory Dynamics and Core-to-Peripheral Heat Flux]\nTitle: Thermoregulatory Dynamics and Core-to-Peripheral Heat Flux\nDomain: Human Thermoregulation\nCitation: JAP-THERM-2022-771\n\nPeripheral skin temperature exhibits gradual thermodynamic drift under steady ambient conditions. Acute rates of change exceeding 0.50 C/min indicate rapid environmental displacement, intense evaporative cooling, or severe cutaneous vasoconstriction due to acute adrenergic surges. Baseline normothermic skin temperature typically ranges from 32.5 C to 35.0 C depending on skin-contact sensor placement.",
       "validity_status": "VALID",
       "is_quarantined": false,
       "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-13AC1FE1, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-04F67E09",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-7A55DD33, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-2D7C1A3E",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-5008EF14, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794338318",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-AST001-1794338318, Coll: N/A, Confirmed by: SURGEON-ALPHA)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794338829",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-AST001-1794338829, Coll: N/A, Confirmed by: SURGEON-ALPHA)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-634B0444",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-95578430, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794417505",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-AST001-1794417505, Coll: N/A, Confirmed by: SURGEON-ALPHA)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-CA6988AD",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-D9EBB8F6, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-C95F3891",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-2AE6BFEF, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794425565",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-AST001-1794425565, Coll: N/A, Confirmed by: SURGEON-ALPHA)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-504CEC5E",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-09DC9FAD, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-GLUC-AST001-1794427252",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "glucose",
-      "observed_value": 95.0,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-HIST-AST001-1794427252, Coll: N/A, Confirmed by: SURGEON-ALPHA)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-415EAF72",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-399B8542, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-425A9ED8",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-061C2208, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-2E10449A",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-7E25677C, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-EC458656",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-3EA0BD51, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-880ADDEC",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-BAEA2417, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-25A2287C",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-FDED3232, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-D85F5F26",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-C7ECA51B, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-F05550CB",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-8CB7D2D8, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-B398FC49",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-DCBAA4CE, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-939759A9",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-2D306F39, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
-    },
-    {
-      "evidence_id": "EV-MED-CONFIRMED-REC-8B2352CC",
-      "source_agent": "medical_records_repository",
-      "domain": "GENERAL_PHYSIOLOGICAL",
-      "metric_name": "hemoglobin",
-      "observed_value": 15.4,
-      "validity_status": "VALID",
-      "is_quarantined": false,
-      "quarantine_reason": null,
-      "provenance": "Historical Clinical Record (DOC-6A1F942C, Coll: N/A, Confirmed by: FLIGHT_SURGEON_CHIEF)"
+      "provenance": "Medical RAG Hybrid Retrieval (Thermoregulatory Dynamics and Core-to-Peripheral Heat Flux, Ref: JAP-THERM-2022-771, Source: Cardiovascular Dynamics, Score: 0.347)"
     }
   ],
   "provenance_chain": [
@@ -1306,13 +722,13 @@
     },
     {
       "agent": "medical_rag_agent",
-      "status": "PARTIAL"
+      "status": "SUCCESS"
     },
     {
       "agent": "risk_assessment_agent",
       "status": "SUCCESS"
     }
   ],
-  "executive_synthesis": "Objective multi-agent risk assessment for Astronaut AST-001 (Session CHAT-E30A2112FF68) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, NEUROLOGICAL, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain NEUROLOGICAL is unevaluated: Telemetry unavailable for Neurological/cognitive assessment, EEG telemetry, or neuro-vestibular symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
-  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-001 (Session CHAT-E30A2112FF68)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Response to Your Query\nRegarding your query: *\"still here\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.\n\n### Reported Symptoms\n- discomfort (Severity: None)\n\n### Monitored Systems Summary\n- **Coverage:** 10% of configured monitoring domains evaluated (1/10 domains).\n- **Active Monitored Streams:** GENERAL_PHYSIOLOGICAL.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm [clinical adult reference; resting conditions unconfirmed in this session]) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: CARDIOVASCULAR, RESPIRATORY, NEUROLOGICAL, SLEEP_AND_FATIGUE, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, DATA_QUALITY_RELATED.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Confirmed Historical Medical Records\nHistorical laboratory records represent baseline clinical history and not current real-time telemetry:\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-TEST_0, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-D77A4E24, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-9772FF9C, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-04F67E09, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-2D7C1A3E, VALID)\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-AST001-1794338318, VALID)\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-AST001-1794338829, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-634B0444, VALID)\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-AST001-1794417505, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-CA6988AD, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-C95F3891, VALID)\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-AST001-1794425565, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-504CEC5E, VALID)\n- **Glucose**: 95.0 (EV-MED-CONFIRMED-REC-GLUC-AST001-1794427252, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-415EAF72, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-425A9ED8, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-2E10449A, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-EC458656, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-880ADDEC, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-25A2287C, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-D85F5F26, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-F05550CB, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-B398FC49, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-939759A9, VALID)\n- **Hemoglobin**: 15.4 (EV-MED-CONFIRMED-REC-8B2352CC, VALID)\n\n### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
+  "executive_synthesis": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-95D22FDE6D70) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
+  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-003 (Session CHAT-95D22FDE6D70)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Response to Your Query\nRegarding your query: *\"mild headache after exercise, otherwise feeling fine\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.\n\n### Reported Symptoms\n- headache (Severity: MILD)\n\n### Monitored Systems Summary\n- **Coverage:** 10% of configured monitoring domains evaluated (1/10 domains).\n- **Active Monitored Streams:** NEUROLOGICAL.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm [clinical adult reference; resting conditions unconfirmed in this session]) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: CARDIOVASCULAR, RESPIRATORY, SLEEP_AND_FATIGUE, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL, DATA_QUALITY_RELATED.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
 }

@@ -15,6 +15,7 @@ export function ChatPanel() {
   } = useChat();
 
   const [input, setInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +23,12 @@ export function ChatPanel() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const filteredSessions = sessions.filter((s) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return s.title.toLowerCase().includes(q) || (s.latest_preview || '').toLowerCase().includes(q);
+  });
 
   const handleSend = () => {
     if ((!input.trim() && !selectedFile) || isSending || isAssessing) return;
@@ -53,16 +60,37 @@ export function ChatPanel() {
             New Chat
           </Button>
           <div style={{ marginTop: '8px' }}>
+            <input
+              type="text"
+              placeholder="Search conversations..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '6px 10px',
+                background: 'var(--color-surface, #14171A)',
+                border: '1px solid var(--color-hairline, rgba(255,255,255,0.1))',
+                borderRadius: '4px',
+                color: 'var(--color-ink, #FFFFFF)',
+                fontSize: '11px',
+                fontFamily: 'var(--font-mono, monospace)',
+                outline: 'none',
+              }}
+            />
+          </div>
+          <div style={{ marginTop: '8px' }}>
             <ProviderStatus />
           </div>
         </div>
         <div className="chat-session-list">
           {isLoadingSessions ? (
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', padding: '12px' }}>Loading...</p>
-          ) : sessions.length === 0 ? (
-            <p style={{ fontSize: '12px', color: 'var(--text-muted)', padding: '12px' }}>No sessions yet</p>
+          ) : filteredSessions.length === 0 ? (
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', padding: '12px' }}>
+              {searchQuery ? 'No matching sessions' : 'No sessions yet'}
+            </p>
           ) : (
-            sessions.map((s) => (
+            filteredSessions.map((s) => (
               <div
                 key={s.id}
                 className={`chat-session-item ${activeSessionId === s.id ? 'chat-session-item--active' : ''}`}

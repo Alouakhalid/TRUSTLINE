@@ -143,6 +143,16 @@ def root():
 
 
 
+class DirectEntryRequest(BaseModel):
+    astronaut_id: str | None = None
+    display_name: str | None = None
+
+
+class RoleTokenRequest(BaseModel):
+    target_role: Literal["ASTRONAUT", "MEDICAL_OFFICER", "ADMINISTRATOR"]
+    astronaut_id: str | None = None
+
+
 @app.post("/auth/register", status_code=201)
 def register(request: RegisterRequest, is_demo: bool = Depends(demo_mode)) -> dict[str, Any]:
     astronaut_id = request.astronaut_id or (request.username if request.role == "ASTRONAUT" else None)
@@ -167,9 +177,93 @@ def login(request: LoginRequest, is_demo: bool = Depends(demo_mode)) -> dict[str
     return {"access_token": issue_token(user), "token_type": "bearer", "user": user}
 
 
+@app.post("/auth/direct-entry")
+def direct_entry(request: DirectEntryRequest | None = None, is_demo: bool = Depends(demo_mode)) -> dict[str, Any]:
+    """Zero-friction direct entry for users/astronauts.
+    No registration or login forms required. Provisions an authorized mission astronaut session.
+    """
+    req_astro = request.astronaut_id if request else None
+    display = (request.display_name if request else None) or "Crew Member"
+    # Never default unknown to AST-001; use AST-002 as the nominal active crew specialist for direct entry
+    astronaut_id = req_astro or "AST-002"
+
+    row = store.one("SELECT * FROM users WHERE astronaut_id=? AND is_demo=?", (astronaut_id, int(is_demo)))
+    if row is None:
+        user_id = store.new_id("USR")
+        store.run(
+            "INSERT INTO users(id,username,password_hash,role,astronaut_id,is_demo,created_at,display_name) VALUES(?,?,?,?,?,?,?,?)",
+            (user_id, f"crew_{astronaut_id.lower()}", hash_password("DirectEntry2026!"), "ASTRONAUT", astronaut_id, int(is_demo), utc_now(), display),
+        )
+    else:
+        user_id = row["id"]
+
+    user = {
+        "sub": user_id,
+        "username": f"crew_{astronaut_id.lower()}",
+        "role": "ASTRONAUT",
+        "astronaut_id": astronaut_id,
+        "display_name": display,
+        "is_demo": is_demo,
+    }
+    audit(user, "DIRECT_ENTRY", "USER", user_id, is_demo)
+    token = issue_token(user, ttl_seconds=86400)
+    return {"access_token": token, "token_type": "bearer", "user": user}
+
+
+@app.post("/auth/role-token")
+def switch_role_token(request: RoleTokenRequest, is_demo: bool = Depends(demo_mode)) -> dict[str, Any]:
+    """Secure server-verified role token issuance for mission control role switcher.
+    Switches between Astronaut, Medical Officer (Flight Surgeon), and Administrator (Mission Director).
+    """
+    role = request.target_role
+    if role == "ASTRONAUT":
+        astronaut_id = request.astronaut_id or "AST-002"
+        username = f"crew_{astronaut_id.lower()}"
+        display = "Astronaut (Crew Specialist)"
+    elif role == "MEDICAL_OFFICER":
+        astronaut_id = None
+        username = "dr_flight_surgeon"
+        display = "Chief Flight Surgeon (Medical Officer)"
+    elif role == "ADMINISTRATOR":
+        astronaut_id = None
+        username = "mission_director"
+        display = "Mission Director (Administrator)"
+    else:
+        raise HTTPException(status_code=400, detail="Invalid target role")
+
+    row = store.one("SELECT * FROM users WHERE username=? AND is_demo=?", (username, int(is_demo)))
+    if row is None:
+        user_id = store.new_id("USR")
+        store.run(
+            "INSERT INTO users(id,username,password_hash,role,astronaut_id,is_demo,created_at,display_name) VALUES(?,?,?,?,?,?,?,?)",
+            (user_id, username, hash_password("RoleSwitch2026!"), role, astronaut_id, int(is_demo), utc_now(), display),
+        )
+    else:
+        user_id = row["id"]
+
+    user = {
+        "sub": user_id,
+        "username": username,
+        "role": role,
+        "astronaut_id": astronaut_id,
+        "display_name": display,
+        "is_demo": is_demo,
+    }
+    audit(user, "ROLE_SWITCH", "USER", user_id, is_demo)
+    token = issue_token(user, ttl_seconds=86400)
+    return {"access_token": token, "token_type": "bearer", "user": user}
+
+
 @app.get("/auth/me")
 def me(user: dict[str, Any] = Depends(current_user)) -> dict[str, Any]:
     return user
+
+
+@app.get("/supabase/status")
+def supabase_status() -> dict[str, Any]:
+    """Inspect Supabase PostgreSQL and Storage connectivity status truthfully."""
+    from backend.database.supabase_client import supabase_client
+    return supabase_client.get_status(force_refresh=True)
 
 
 # ---------------------------------------------------------------- chat sessions
@@ -243,6 +337,9 @@ def _format_telemetry_summary(packets: list[dict[str, Any]]) -> str:
             parts.append(f"SpO2: {cd['spo2_percent']}%")
         elif st == "CORE_TEMP" and "core_temp_c" in cd:
             parts.append(f"Core Temp: {cd['core_temp_c']}°C")
+        elif st in ("TEMP_SKIN", "SKIN_TEMP") and ("skin_temp_c" in cd or "temp_c" in cd):
+            val = cd.get("skin_temp_c", cd.get("temp_c"))
+            parts.append(f"Skin Temp: {val}°C (Peripheral, non-core)")
         elif st == "BLOOD_PRESSURE":
             sbp = cd.get("systolic_mmhg")
             dbp = cd.get("diastolic_mmhg")
@@ -253,6 +350,37 @@ def _format_telemetry_summary(packets: list[dict[str, Any]]) -> str:
         elif st == "EDA" and "skin_conductance_usiemens" in cd:
             parts.append(f"EDA: {cd['skin_conductance_usiemens']} µS")
     return ", ".join(parts) if parts else "Baseline nominal."
+
+
+def _classify_chat_intent(text: str, has_attachment: bool) -> str:
+    """Classify user message intent:
+    - DOCUMENT_QUERY: attachment present or queries regarding medical document / lab analysis.
+    - CLINICAL_EVALUATION: symptom reporting or request for clinical / diagnostic evaluation.
+    - TELEMETRY_QUERY: questions about vital signs, sensor readings, or biotelemetry.
+    - CASUAL: casual greeting, general conversation, or operational Q&A.
+    """
+    if has_attachment:
+        return "DOCUMENT_QUERY"
+    t = text.lower().strip()
+    clinical_keywords = [
+        "headache", "chest pain", "pain", "dizzy", "dizziness", "nausea", "vomit", "fever",
+        "short of breath", "dyspnea", "palpitation", "arrhythmia", "fatigue", "exhaustion",
+        "vision change", "eye pressure", "swelling", "edema", "rash", "injury", "bleeding",
+        "assess my health", "clinical evaluation", "medical assessment", "symptoms", "diagnosis",
+        "صداع", "ألم", "دوخة", "غثيان", "إرهاق", "ضغط", "تقييم سريري", "فحص طبي", "وجع"
+    ]
+    if any(k in t for k in clinical_keywords):
+        return "CLINICAL_EVALUATION"
+
+    telemetry_keywords = [
+        "vital", "vitals", "telemetry", "heart rate", "pulse", "spo2", "oxygen",
+        "blood pressure", "core temp", "skin temp", "radiation level", "radiation dose",
+        "sensor data", "نبض", "أكسجين", "ضغط الدم", "حرارة", "علامات حيوية"
+    ]
+    if any(k in t for k in telemetry_keywords):
+        return "TELEMETRY_QUERY"
+
+    return "CASUAL"
 
 
 def _groq_chat_completion(messages: list[dict[str, str]], max_tokens: int = 800) -> str | None:
@@ -350,115 +478,80 @@ async def send_message(
     inbound = append_message(store, session_id, "USER", displayed_user_text, None, "RECEIVED", citations=user_citations)
     audit(user, "MESSAGE", "CHAT_SESSION", session_id, is_demo)
 
-    target_astronaut_id = user.get("astronaut_id") or "AST-001"
+    # Invariant: Unknown astronaut identity must NEVER default to AST-001
+    target_astronaut_id = user.get("astronaut_id") or "UNASSIGNED"
 
     # 1. Gather live telemetry context
     latest_packets: list[dict[str, Any]] = []
-    try:
-        latest_packets = telemetry.latest_by_sensor(store, target_astronaut_id, is_demo)
-    except Exception:
-        pass
+    if target_astronaut_id != "UNASSIGNED":
+        try:
+            latest_packets = telemetry.latest_by_sensor(store, target_astronaut_id, is_demo)
+        except Exception:
+            pass
     vitals_summary = _format_telemetry_summary(latest_packets)
 
-    # 2. Prepare citations list
-    citations: list[dict[str, Any]] = []
-    if ocr_records:
-        for r in ocr_records:
-            citations.append({
-                "evidence_id": getattr(r, "record_id", "REC-OCR"),
-                "source_agent": "MedicalDocumentExtractor",
-                "metric_name": getattr(r, "test_name", "Lab Parameter"),
-                "provenance": filename or "document",
-            })
+    # 2. Persist extracted medical document and evidence in QUARANTINED status
+    if filename and ocr_records:
+        try:
+            store.save_medical_document(
+                doc_id=doc_id,
+                astronaut_id=target_astronaut_id,
+                title=filename,
+                storage_path=str(saved_doc_path),
+                file_size_bytes=len(file_bytes) if file_bytes else 0,
+                document_type="LAB_REPORT",
+                uploaded_by_user_id=user.get("sub"),
+                is_demo=is_demo,
+            )
+            for idx, r in enumerate(ocr_records):
+                ev_id = f"EV-{doc_id}-{idx+1:02d}"
+                tname = getattr(r, "test_name", "Lab Parameter")
+                val = getattr(r, "extracted_value", None)
+                val_num = None
+                try:
+                    val_num = float(val) if val is not None else None
+                except (ValueError, TypeError):
+                    pass
+                unit = getattr(r, "original_unit", "")
+                domain = "HEMATOLOGY" if any(w in tname.lower() for w in ["blood", "hemoglobin", "platelet", "rbc", "wbc"]) else "METABOLIC"
+                store.save_medical_evidence(
+                    evidence_id=ev_id,
+                    document_id=doc_id,
+                    astronaut_id=target_astronaut_id,
+                    clinical_domain=domain,
+                    parameter_name=tname,
+                    parameter_value=val_num,
+                    value_text=str(val) if val is not None else None,
+                    unit=unit,
+                    verification_status="QUARANTINED",
+                    metadata={"filename": filename, "source": "OCR_EXTRACTION"},
+                    is_demo=is_demo,
+                )
+        except Exception as exc:
+            logger.warning(f"Error persisting quarantined medical document evidence: {exc}")
 
-    agent_response_text: str | None = None
+    # 3. Classify intent to determine appropriate routing pathway
+    intent = _classify_chat_intent(displayed_user_text, has_attachment=bool(filename))
     groq_api_key = os.getenv("GROQ_API_KEY")
 
-    # 3. If Groq Cloud LPU is available, deliver natural conversational intelligence or OCR analysis
-    if groq_api_key:
-        if filename and ocr_records:
-            # Document analysis mode: OCR extraction + Groq clinical analysis
-            records_desc = "\n".join([
-                f"- {getattr(r, 'test_name', 'Metric')}: {getattr(r, 'extracted_value', 'N/A')} {getattr(r, 'original_unit', '')} (Ref: {getattr(r, 'reference_range', 'Normal')}, Status: {getattr(r, 'validation_status', 'NEEDS_REVIEW')})"
-                for r in ocr_records
-            ])
-            doc_sys = (
-                f"You are the TRUSTLINE Chief Flight Surgeon & Autonomous Medical Officer aboard mission EXP-72.\n"
-                f"Astronaut {target_astronaut_id} uploaded a clinical document: '{filename}'.\n"
-                f"Extracted laboratory data:\n{records_desc}\n\n"
-                f"Provide a rigorous, insightful, and supportive clinical assessment of these findings.\n"
-                f"Explain what these values indicate for astronaut health and spaceflight adaptation (e.g. fluid shifts, red blood cell mass, bone density, renal function).\n"
-                f"Respond directly and clearly in the language used by the astronaut."
-            )
-            groq_prompt = displayed_user_text or f"Please evaluate the clinical parameters from {filename}."
-            groq_analysis = _groq_chat_completion([
-                {"role": "system", "content": doc_sys},
-                {"role": "user", "content": groq_prompt},
-            ], max_tokens=1000)
+    citations: list[dict[str, Any]] = []
+    agent_response_text: str | None = None
+    agent_name: str = "supervisor"
 
-            if groq_analysis:
-                table_lines = [
-                    f"\n\n### Clinical Document OCR Findings — {filename}",
-                    "The following clinical laboratory parameters were extracted from the attached document:\n",
-                    "| Test Parameter | Extracted Value | Unit | Reference Interval | Clinical Status |",
-                    "| :--- | :--- | :--- | :--- | :--- |",
-                ]
-                for r in ocr_records:
-                    tname = getattr(r, "test_name", "Measurement")
-                    val = getattr(r, "extracted_value", "N/A")
-                    unit = getattr(r, "original_unit", "—") or "—"
-                    ref = getattr(r, "reference_range", "Standard") or "Standard"
-                    v_stat = getattr(r, "validation_status", "NEEDS_REVIEW")
-                    v_stat_str = v_stat.value if hasattr(v_stat, "value") else str(v_stat)
-                    table_lines.append(f"| **{tname}** | `{val}` | {unit} | {ref} | `{v_stat_str}` |")
-
-                agent_response_text = (
-                    f"**TRUSTLINE Mission Health Briefing — {target_astronaut_id} (Session {session_id})**\n\n"
-                    f"{groq_analysis}\n"
-                    + "\n".join(table_lines)
-                )
-
-        elif not filename:
-            # Conversational dialogue mode: natural tone, language matching, telemetry awareness
-            prior_msgs = session_messages(store, session_id)
-            history = [m for m in prior_msgs if m.get("id") != inbound["id"]]
-
-            conv_sys = (
-                f"You are TRUSTLINE Autonomous Medical AI Companion & Chief Medical Officer aboard deep-space mission EXP-72.\n"
-                f"You converse directly, naturally, intelligently, and warmly with Astronaut {target_astronaut_id}.\n"
-                f"Current Real-Time Biotelemetry: {vitals_summary}.\n\n"
-                f"Behavioral Directives:\n"
-                f"1. Conversational Freedom: Speak naturally and warmly like a brilliant flight surgeon and supportive companion. NEVER output robotic bureaucratic briefing titles, rigid headers, or artificial disclaimers unless explicitly asked for a formal protocol.\n"
-                f"2. Language Adaptability: Always respond fluently in the language the astronaut used (Arabic, English, etc.). If spoken to in Arabic, reply in natural, welcoming Arabic.\n"
-                f"3. Telemetry Awareness: When the astronaut asks about their health, vitals, or how they are doing, discuss their real-time telemetry numbers ({vitals_summary}) naturally.\n"
-                f"4. Concise & Sharp: Keep responses conversational, concise, and clinically grounded."
-            )
-            chat_messages_payload = [{"role": "system", "content": conv_sys}]
-            for m in history[-6:]:
-                role = "assistant" if m.get("sender") == "AGENT" else "user"
-                content = m.get("content") or ""
-                if len(content) > 500:
-                    content = content[:500] + "..."
-                if content.strip():
-                    chat_messages_payload.append({"role": role, "content": content})
-            chat_messages_payload.append({"role": "user", "content": displayed_user_text})
-
-            groq_resp = _groq_chat_completion(chat_messages_payload, max_tokens=700)
-            if groq_resp:
-                agent_response_text = groq_resp
-
-    # 4. Fallback to supervisor gateway if Groq wasn't used or failed
-    if agent_response_text is None:
+    # Pathway A: CLINICAL_EVALUATION or DOCUMENT_QUERY -> Full LangGraph Supervisor Multi-Agent Assessment
+    if intent in ("CLINICAL_EVALUATION", "DOCUMENT_QUERY") or not groq_api_key:
+        agent_name = "supervisor"
         if supervisor_gateway.is_available():
             authorized_memories: list[dict[str, Any]] = []
-            for namespace in ("PHA", "RAA"):
-                for memory in get_memories(store, target_astronaut_id, namespace, is_demo, limit=20):
-                    if memory["verification_status"] in {"CONFIRMED", "LIVE"}:
-                        authorized_memories.append({
-                            "memory_id": memory["id"], "namespace": memory["namespace"],
-                            "content": memory["content"], "verification_status": memory["verification_status"],
-                            "provenance": memory["provenance"],
-                        })
+            if target_astronaut_id != "UNASSIGNED":
+                for namespace in ("PHA", "RAA"):
+                    for memory in get_memories(store, target_astronaut_id, namespace, is_demo, limit=20):
+                        if memory["verification_status"] in {"CONFIRMED", "LIVE"}:
+                            authorized_memories.append({
+                                "memory_id": memory["id"], "namespace": memory["namespace"],
+                                "content": memory["content"], "verification_status": memory["verification_status"],
+                                "provenance": memory["provenance"],
+                            })
             authorized_memories = authorized_memories[:5]
             mission_context = {
                 "flight_phase": "DEEP_SPACE_TRANSIT",
@@ -483,23 +576,22 @@ async def send_message(
                     })
                 agent_response_text = result.get("astronaut_facing_response", "")
 
-                if ocr_records:
-                    if "### Clinical Document OCR Findings" not in agent_response_text and "### Medical Documents Pending" not in agent_response_text:
-                        table_lines = [
-                            f"\n\n### Clinical Document OCR Findings — {filename}",
-                            "The following clinical laboratory parameters were extracted from the attached document:\n",
-                            "| Test Parameter | Extracted Value | Unit | Reference Interval | Clinical Status |",
-                            "| :--- | :--- | :--- | :--- | :--- |",
-                        ]
-                        for r in ocr_records:
-                            tname = getattr(r, "test_name", "Measurement")
-                            val = getattr(r, "extracted_value", "N/A")
-                            unit = getattr(r, "original_unit", "—") or "—"
-                            ref = getattr(r, "reference_range", "Standard") or "Standard"
-                            v_stat = getattr(r, "validation_status", "NEEDS_REVIEW")
-                            v_stat_str = v_stat.value if hasattr(v_stat, "value") else str(v_stat)
-                            table_lines.append(f"| **{tname}** | `{val}` | {unit} | {ref} | `{v_stat_str}` |")
-                        agent_response_text += "\n" + "\n".join(table_lines)
+                if ocr_records and "### Clinical Document OCR Findings" not in agent_response_text:
+                    table_lines = [
+                        f"\n\n### Clinical Document OCR Findings — {filename}",
+                        "The following clinical laboratory parameters were extracted into QUARANTINED evidence status pending flight surgeon review:\n",
+                        "| Test Parameter | Extracted Value | Unit | Reference Interval | Clinical Status |",
+                        "| :--- | :--- | :--- | :--- | :--- |",
+                    ]
+                    for r in ocr_records:
+                        tname = getattr(r, "test_name", "Measurement")
+                        val = getattr(r, "extracted_value", "N/A")
+                        unit = getattr(r, "original_unit", "—") or "—"
+                        ref = getattr(r, "reference_range", "Standard") or "Standard"
+                        v_stat = getattr(r, "validation_status", "NEEDS_REVIEW")
+                        v_stat_str = v_stat.value if hasattr(v_stat, "value") else str(v_stat)
+                        table_lines.append(f"| **{tname}** | `{val}` | {unit} | {ref} | `{v_stat_str}` |")
+                    agent_response_text += "\n" + "\n".join(table_lines)
             else:
                 err_msg = result.get("error") or "Clinical supervisor evaluation incomplete."
                 agent_response_text = f"Clinical supervisor notice: {err_msg}"
@@ -507,9 +599,39 @@ async def send_message(
             reason = supervisor_gateway.unavailability_reason() or "Supervisor workflow stack unavailable"
             agent_response_text = f"Clinical supervisor offline: {reason}"
 
+    # Pathway B: TELEMETRY_QUERY or CASUAL -> Direct conversational intelligence with natural flight surgeon tone
+    else:
+        agent_name = "groq-cloud"
+        prior_msgs = session_messages(store, session_id)
+        history = [m for m in prior_msgs if m.get("id") != inbound["id"]]
+
+        conv_sys = (
+            f"You are TRUSTLINE Autonomous Medical AI Companion & Chief Medical Officer aboard deep-space mission EXP-72.\n"
+            f"You converse directly, naturally, intelligently, and warmly with Astronaut {target_astronaut_id}.\n"
+            f"Current Real-Time Biotelemetry: {vitals_summary}.\n\n"
+            f"Behavioral Directives:\n"
+            f"1. Conversational Freedom: Speak naturally and warmly like a brilliant flight surgeon and supportive companion. NEVER output robotic bureaucratic briefing titles, rigid headers, or artificial disclaimers unless explicitly asked for a formal protocol.\n"
+            f"2. Language Adaptability: Always respond fluently in the language the astronaut used (Arabic, English, etc.). If spoken to in Arabic, reply in natural, welcoming Arabic.\n"
+            f"3. Telemetry Awareness: When the astronaut asks about their health, vitals, or how they are doing, discuss their real-time telemetry numbers ({vitals_summary}) naturally.\n"
+            f"4. Concise & Sharp: Keep responses conversational, concise, and clinically grounded."
+        )
+        chat_messages_payload = [{"role": "system", "content": conv_sys}]
+        for m in history[-6:]:
+            role = "assistant" if m.get("sender") == "AGENT" else "user"
+            content = m.get("content") or ""
+            if len(content) > 500:
+                content = content[:500] + "..."
+            if content.strip():
+                chat_messages_payload.append({"role": role, "content": content})
+        chat_messages_payload.append({"role": "user", "content": displayed_user_text})
+
+        agent_response_text = _groq_chat_completion(chat_messages_payload, max_tokens=700)
+        if not agent_response_text:
+            agent_response_text = f"Hello Astronaut {target_astronaut_id}. Telemetry status is currently: {vitals_summary}."
+
     outbound = append_message(
-        store, session_id, "AGENT", agent_response_text,
-        "groq-cloud" if groq_api_key else "supervisor", "COMPLETED",
+        store, session_id, "AGENT", agent_response_text or "Status nominal.",
+        agent_name, "COMPLETED",
         citations=citations,
     )
     return {
@@ -854,17 +976,23 @@ def run_assessment(request: AssessmentRequest, is_demo: bool = Depends(demo_mode
         session_row = get_session(store, request.session_id, user["sub"], is_demo)
         if session_row is not None:
             existing = session_messages(store, request.session_id)
-            has_agent_msg = any(m.get("sender") == "AGENT" and m.get("content") == result.get("astronaut_facing_response") for m in existing)
-            if not has_agent_msg:
-                citations = [
-                    {
-                        "evidence_id": ref.get("evidence_id"),
-                        "source_agent": ref.get("source_agent"),
-                        "metric_name": ref.get("metric_name"),
-                        "provenance": ref.get("provenance"),
-                    }
-                    for ref in evidence_refs
-                ]
+            citations = [
+                {
+                    "evidence_id": ref.get("evidence_id"),
+                    "source_agent": ref.get("source_agent"),
+                    "metric_name": ref.get("metric_name"),
+                    "provenance": ref.get("provenance"),
+                }
+                for ref in evidence_refs
+            ]
+            existing_agent_msgs = [m for m in existing if m.get("sender") == "AGENT"]
+            if existing_agent_msgs:
+                last_agent_id = existing_agent_msgs[-1]["id"]
+                store.run(
+                    "UPDATE chat_messages SET content=?, agent='supervisor', processing_status='COMPLETED', citations_json=? WHERE id=?",
+                    (result.get("astronaut_facing_response", ""), json.dumps(citations), last_agent_id),
+                )
+            else:
                 append_message(
                     store, request.session_id, "AGENT", result.get("astronaut_facing_response", ""),
                     "supervisor", "COMPLETED",

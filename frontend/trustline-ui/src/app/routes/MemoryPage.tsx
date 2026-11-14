@@ -17,7 +17,7 @@ export default function MemoryPage() {
     async function load() {
       setIsLoading(true);
       try {
-        const data = await api.getMemories(astronautId, activeNamespace);
+        const data = await api.getMemories(astronautId || 'UNASSIGNED', activeNamespace);
         setMemories(data);
       } catch {
         setMemories([]);
