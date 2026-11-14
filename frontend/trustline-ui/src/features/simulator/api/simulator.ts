@@ -16,7 +16,24 @@ export async function fetchSimulatorScenarios(): Promise<Array<{ id: string; val
   }
 }
 
-export async function startSimulator(scenario = 'SCENARIO_A_REST', astronautId = 'AST-001'): Promise<boolean> {
+export async function configureSimulator(
+  scenario: string,
+  astronautId?: string,
+  randomSeed?: number
+): Promise<boolean> {
+  try {
+    const res = await fetch('/simulator/configure', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scenario, astronaut_id: astronautId, random_seed: randomSeed }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+export async function startSimulator(scenario = 'SCENARIO_A_REST', astronautId?: string): Promise<boolean> {
   try {
     const res = await fetch('/simulator/start', {
       method: 'POST',
@@ -38,9 +55,31 @@ export async function stopSimulator(): Promise<boolean> {
   }
 }
 
-export async function generateSimulatorStep(seed?: number): Promise<Record<string, unknown> | null> {
+export async function generateSimulatorStep(
+  seed?: number,
+  scenario?: string,
+  astronautId?: string
+): Promise<Record<string, unknown> | null> {
   try {
-    const url = seed ? `/simulator/step?seed=${seed}` : '/simulator/step';
+    const params = new URLSearchParams();
+    if (seed !== undefined) params.set('seed', String(seed));
+    if (scenario) params.set('scenario', scenario);
+    if (astronautId) params.set('astronaut_id', astronautId);
+    const qs = params.toString();
+    const url = qs ? `/simulator/step?${qs}` : '/simulator/step';
+    const res = await fetch(url, { method: 'POST' });
+    return res.ok ? await res.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function randomizeSimulator(astronautId?: string): Promise<Record<string, unknown> | null> {
+  try {
+    const params = new URLSearchParams();
+    if (astronautId) params.set('astronaut_id', astronautId);
+    const qs = params.toString();
+    const url = qs ? `/simulator/random-state?${qs}` : '/simulator/random-state';
     const res = await fetch(url, { method: 'POST' });
     return res.ok ? await res.json() : null;
   } catch {

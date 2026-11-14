@@ -107,7 +107,7 @@ def run_text_assessment(
     return {
         "provider_status": "SUPERVISOR_COMPLETED",
         "duration_ms": round((time.perf_counter() - started) * 1000, 1),
-        "router_mode": os.environ.get("AI_ROUTER_MODE", "LOCAL_ONLY"),
+        "router_mode": "LOCAL_ONLY",
         "workflow_id": assessment.get("workflow_id"),
         "completion_status": str(assessment.get("workflow_completion_status", "")),
         "overall_risk": assessment.get("overall_risk"),

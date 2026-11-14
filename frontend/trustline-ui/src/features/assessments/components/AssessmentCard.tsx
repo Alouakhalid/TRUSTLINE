@@ -23,7 +23,7 @@ export function AssessmentCard({ className = '' }: { className?: string }) {
   useEffect(() => {
     async function load() {
       try {
-        const data = await listAssessments(astronautId, 5);
+        const data = await listAssessments(astronautId || undefined, 5);
         setAssessments(data as unknown as Assessment[]);
       } catch {
         /* ignore */
@@ -32,6 +32,17 @@ export function AssessmentCard({ className = '' }: { className?: string }) {
       }
     }
     load();
+
+    const handleUpdate = () => {
+      load();
+    };
+    window.addEventListener('trustline:assessment-updated', handleUpdate);
+    const interval = setInterval(load, 4000);
+
+    return () => {
+      window.removeEventListener('trustline:assessment-updated', handleUpdate);
+      clearInterval(interval);
+    };
   }, [astronautId]);
 
   const riskVariant = (risk: string) => {

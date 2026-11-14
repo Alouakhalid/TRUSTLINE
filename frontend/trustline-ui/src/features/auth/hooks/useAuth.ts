@@ -3,7 +3,19 @@ import { useAuthStore } from '../stores/auth-store';
 import { api } from '@/shared/lib/api-client';
 
 export function useAuth() {
-  const { token, username, role, astronautId, isDemo, setCredentials, logout: clearAuth, setDemo } = useAuthStore();
+  const {
+    token,
+    username,
+    role,
+    astronautId,
+    displayName,
+    isDemo,
+    setCredentials,
+    initDirectEntry,
+    switchRole,
+    logout: clearAuth,
+    setDemo,
+  } = useAuthStore();
 
   const login = useCallback(async (uname: string, password: string) => {
     const result = await api.login({ username: uname, password });
@@ -28,12 +40,15 @@ export function useAuth() {
     username,
     role,
     astronautId,
+    displayName,
     isDemo,
     isAuthenticated,
     isPrivileged,
     isAdmin,
     login,
     register,
+    initDirectEntry,
+    switchRole,
     logout,
     setDemo,
   };

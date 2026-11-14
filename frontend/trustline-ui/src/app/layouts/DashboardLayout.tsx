@@ -32,7 +32,7 @@ const NAV_ITEMS = [
 ];
 
 export default function DashboardLayout() {
-  const { username, role, isDemo, logout, setDemo } = useAuth();
+  const { username, role, isDemo, logout, setDemo, switchRole } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [clock, setClock] = useState('');
@@ -44,7 +44,13 @@ export default function DashboardLayout() {
     return () => clearInterval(id);
   }, []);
 
-  const handleLogout = () => { logout(); navigate('/login'); };
+  const handleLogout = () => { logout(); navigate('/'); };
+
+  const handleRoleSwitch = async (newRole: 'ASTRONAUT' | 'MEDICAL_OFFICER' | 'ADMINISTRATOR') => {
+    if (newRole === role) return;
+    await switchRole(newRole);
+    navigate('/portal');
+  };
 
   return (
     <div className="dashboard-layout">
@@ -78,7 +84,7 @@ export default function DashboardLayout() {
         <div className="sidebar-footer">
           <button className="sidebar-link" onClick={handleLogout} type="button">
             <LogOut size={16} />
-            Sign Out
+            Exit Mission
           </button>
         </div>
       </aside>
@@ -93,6 +99,76 @@ export default function DashboardLayout() {
             <StatusDot status="nominal" label="CONNECTED" pulse />
           </div>
           <div className="topbar-right">
+            {/* Mission Role Switcher */}
+            <div
+              className="role-switcher"
+              title="Switch Mission Access Role (Server-Verified RBAC)"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: 'var(--color-surface, #14171A)',
+                border: '1px solid var(--color-hairline, rgba(255,255,255,0.08))',
+                borderRadius: '4px',
+                padding: '2px',
+                gap: '2px',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => handleRoleSwitch('ASTRONAUT')}
+                style={{
+                  background: role === 'ASTRONAUT' ? 'var(--color-teal, #2E6B72)' : 'transparent',
+                  color: role === 'ASTRONAUT' ? '#FFFFFF' : 'var(--color-muted, #8A929B)',
+                  border: 'none',
+                  padding: '4px 8px',
+                  borderRadius: '3px',
+                  fontSize: '11px',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                CREW
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRoleSwitch('MEDICAL_OFFICER')}
+                style={{
+                  background: role === 'MEDICAL_OFFICER' ? 'var(--color-teal, #2E6B72)' : 'transparent',
+                  color: role === 'MEDICAL_OFFICER' ? '#FFFFFF' : 'var(--color-muted, #8A929B)',
+                  border: 'none',
+                  padding: '4px 8px',
+                  borderRadius: '3px',
+                  fontSize: '11px',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                SURGEON
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRoleSwitch('ADMINISTRATOR')}
+                style={{
+                  background: role === 'ADMINISTRATOR' ? 'var(--color-amber, #E8913C)' : 'transparent',
+                  color: role === 'ADMINISTRATOR' ? '#000000' : 'var(--color-muted, #8A929B)',
+                  border: 'none',
+                  padding: '4px 8px',
+                  borderRadius: '3px',
+                  fontSize: '11px',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                DIRECTOR
+              </button>
+            </div>
+
             <Button
               variant={isDemo ? 'danger' : 'ghost'}
               size="sm"
