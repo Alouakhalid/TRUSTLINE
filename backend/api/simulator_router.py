@@ -92,14 +92,26 @@ def configure_simulator(req: SimulatorConfigureRequest) -> Dict[str, Any]:
 
 
 @router.post("/start")
-async def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Dict[str, Any]:
+async def start_simulator(
+    req: Optional[SimulatorConfigureRequest] = None,
+    scenario: Optional[str] = None,
+    astronaut_id: Optional[str] = None,
+) -> Dict[str, Any]:
     global _is_running, _sim_task
+    target_astro = (req.astronaut_id if req and req.astronaut_id else None) or astronaut_id
+    target_scen = (req.scenario if req and req.scenario else None) or scenario
+
     with _LOCK:
-        if req:
-            if req.astronaut_id:
-                _engine.astronaut_id = req.astronaut_id
+        if target_astro:
+            _engine.astronaut_id = target_astro
+        if target_scen:
             for s in ScenarioType:
-                if s.name == req.scenario or s.value == req.scenario:
+                if (
+                    s.name == target_scen
+                    or s.value == target_scen
+                    or s.name.lower() == target_scen.lower()
+                    or s.value.lower() == target_scen.lower()
+                ):
                     _engine.set_scenario(s)
                     break
         _is_running = True
@@ -120,15 +132,17 @@ async def stop_simulator() -> Dict[str, Any]:
 
 @router.post("/step")
 async def generate_step(
-    seed: Optional[int] = Query(default=None),
-    scenario: Optional[str] = Query(default=None),
-    astronaut_id: Optional[str] = Query(default=None),
-    duration_sec: float = Query(default=1.0),
+    seed: Optional[int] = None,
+    scenario: Optional[str] = None,
+    astronaut_id: Optional[str] = None,
+    duration_sec: float = 1.0,
 ) -> Dict[str, Any]:
     """Execute a step in the simulation engine, persist telemetry, evaluate with AI agents, and broadcast via WS."""
     import json
     import numpy as np
     from backend.services import radiation_gateway
+
+    actual_seed = seed if isinstance(seed, int) else None
 
     with _LOCK:
         if astronaut_id:
@@ -145,7 +159,7 @@ async def generate_step(
                     _engine.set_scenario(s)
                     break
 
-        packets, space_packet = _engine.generate_step(duration_sec=duration_sec, seed=seed)
+        packets, space_packet = _engine.generate_step(duration_sec=duration_sec, seed=actual_seed)
         active_faults = [c.fault_type.value for c in _engine.fault_injector.configs]
 
     # Convert to backend format

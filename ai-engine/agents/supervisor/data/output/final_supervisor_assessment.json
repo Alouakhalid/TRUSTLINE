@@ -1,22 +1,22 @@
 {
-  "assessment_id": "SUP-6C0B98CC",
+  "assessment_id": "SUP-F360DD4F",
   "astronaut_id": "AST-003",
-  "session_id": "CHAT-247ADA84EEB1",
-  "workflow_id": "WF-51F94906",
-  "generation_timestamp": "2026-11-14 16:35:14.416541",
+  "session_id": "CHAT-E811B6779EBA",
+  "workflow_id": "WF-686E1B1C",
+  "generation_timestamp": "2026-11-14 17:13:10.032864",
   "workflow_completion_status": "PARTIALLY_COMPLETED",
   "agent_execution_statuses": {
     "supervisor": {
       "agent_name": "supervisor_orchestrator",
       "status": "SUCCESS",
-      "execution_time_ms": 6.89,
+      "execution_time_ms": 14.65,
       "error_message": null,
       "warnings": []
     },
     "sensor_quality_agent": {
       "agent_name": "sensor_quality_agent",
       "status": "SKIPPED",
-      "execution_time_ms": 0.07,
+      "execution_time_ms": 0.1,
       "error_message": null,
       "warnings": [
         "No sensor manifest supplied; skipping sensor quality inspection."
@@ -25,7 +25,7 @@
     "personal_health_agent": {
       "agent_name": "personal_health_agent",
       "status": "PARTIAL",
-      "execution_time_ms": 11585.38,
+      "execution_time_ms": 11681.22,
       "error_message": null,
       "warnings": [
         "Individualized personal baseline is not yet established; population reference norms utilized.",
@@ -35,14 +35,14 @@
     "medical_rag_agent": {
       "agent_name": "medical_knowledge_rag_service",
       "status": "SUCCESS",
-      "execution_time_ms": 5934.376,
+      "execution_time_ms": 5865.973,
       "error_message": null,
       "warnings": []
     },
     "risk_assessment_agent": {
       "agent_name": "risk_assessment_agent",
       "status": "SUCCESS",
-      "execution_time_ms": 5301.17,
+      "execution_time_ms": 5563.66,
       "error_message": null,
       "warnings": [
         "Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms",
@@ -60,16 +60,16 @@
     }
   },
   "timing_breakdown": {
-    "workflow_total_execution_time_ms": 22839.12,
-    "supervisor_overhead_time_ms": 18.12,
-    "sensor_quality_execution_time_ms": 0.07,
-    "personal_health_execution_time_ms": 11585.38,
-    "medical_rag_execution_time_ms": 5934.38,
-    "risk_assessment_execution_time_ms": 5301.17,
-    "evidence_validation_time_ms": 0.17,
-    "final_synthesis_time_ms": 0.25,
-    "persistence_time_ms": 9.44,
-    "measured_supervisor_overhead_ms": 12.6
+    "workflow_total_execution_time_ms": 23138.63,
+    "supervisor_overhead_time_ms": 27.68,
+    "sensor_quality_execution_time_ms": 0.1,
+    "personal_health_execution_time_ms": 11681.22,
+    "medical_rag_execution_time_ms": 5865.97,
+    "risk_assessment_execution_time_ms": 5563.66,
+    "evidence_validation_time_ms": 0.28,
+    "final_synthesis_time_ms": 0.45,
+    "persistence_time_ms": 10.48,
+    "measured_supervisor_overhead_ms": 14.42
   },
   "overall_assessment_status": "PARTIALLY_COMPLETED",
   "overall_risk": "INSUFFICIENT_DATA",
@@ -99,10 +99,10 @@
   },
   "sensor_quality_summary": {},
   "personal_health_summary": {
-    "assessment_id": "PHA-17E20235",
+    "assessment_id": "PHA-4C7D76F7",
     "astronaut_id": "AST-003",
-    "session_id": "CHAT-247ADA84EEB1",
-    "execution_timestamp": "2026-11-14 16:35:03.174310",
+    "session_id": "CHAT-E811B6779EBA",
+    "execution_timestamp": "2026-11-14 17:12:58.589187",
     "assessment_status": "INSUFFICIENT_EVIDENCE",
     "baseline_status": "not_available",
     "personal_baseline_deviation": null,
@@ -113,9 +113,9 @@
     "ml_findings": [],
     "symptom_findings": [
       {
-        "event_id": "SYM-C028C0D2",
+        "event_id": "SYM-E22FDAFA",
         "astronaut_id": "AST-003",
-        "session_id": "CHAT-247ADA84EEB1",
+        "session_id": "CHAT-E811B6779EBA",
         "symptom_category": "NEUROLOGICAL",
         "symptom_type": "headache",
         "description": "mild headache after exercise, otherwise feeling fine",
@@ -129,7 +129,7 @@
         "input_channel": "CHAT_TEXT",
         "original_text_or_transcript": "mild headache after exercise, otherwise feeling fine",
         "confirmation_status": "confirmed",
-        "event_timestamp": "2026-11-14 16:34:56.933486",
+        "event_timestamp": "2026-11-14 17:12:52.510114",
         "data_provenance": "astronaut_self_report"
       }
     ],
@@ -171,7 +171,7 @@
         "excerpt": "[Space Health Research | Spaceflight Cardiovascular Physiology > Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity]\nTitle: Cephalad Fluid Redistribution and Cardiovascular Deconditioning in Microgravity\nDomain: Spaceflight Cardiovascular Physiology\nCitation: NASA-HRP-CARDIO-2024-08\n\nWithin hours of orbital insertion, microgravity causes a cephalad redistribution of approximately 1.5 to 2.0 liters of venous blood and interstitial fluid. This central hypervolemia stimulates baroreceptors and atrial natriuretic peptide secretion, causing early plasma volume contraction. Resting heart rate may increase by 5-12 bpm during initial adaptation, and transient subjective head fullness and nasal congestion are standard adaptation symptoms.",
         "relevance_score": 0.8686,
         "citation_reference": "NASA-HRP-CARDIO-2024-08",
-        "retrieval_timestamp": "2026-11-14 16:34:57.560978"
+        "retrieval_timestamp": "2026-11-14 17:12:53.186160"
       },
       {
         "doc_id": "KNOW-MISSION_MEDICAL_PROTOCOLS-3AF1A95E",
@@ -189,7 +189,7 @@
         "excerpt": "[Mission Medical Protocols | Operational Behavioral Medicine > Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions]\nTitle: Operational Guidelines for In-Flight Acute Stress and Fatigue Interventions\nDomain: Operational Behavioral Medicine\nCitation: NASA-BHO-STRESS-2024-V2.0\n\nWhen sensor telemetry detects confirmed acute stress activation (elevated HR, suppressed RMSSD, elevated phasic EDA) accompanied by self-reported cognitive fatigue or anxiety, operational protocol mandates: (1) Immediate verification of sensor integrity, (2) Scheduling a 15-minute tactical respiratory reset (resonant breathing at 0.1 Hz / 6 breaths/min), and (3) Workload throttling during critical operational tasks.",
         "relevance_score": 0.7356,
         "citation_reference": "NASA-BHO-STRESS-2024-V2.0",
-        "retrieval_timestamp": "2026-11-14 16:34:57.561006"
+        "retrieval_timestamp": "2026-11-14 17:12:53.186189"
       }
     ],
     "possible_explanations": [],
@@ -224,7 +224,7 @@
       ]
     },
     "next_agent": "risk_assessment_agent",
-    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-003 (Session CHAT-247ADA84EEB1) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
+    "llm_executive_synthesis": "Objective physiological telemetry for Astronaut AST-003 (Session CHAT-E811B6779EBA) recorded a mean heart rate of 0.0 bpm and mean skin conductance of 0.00 uS. The computed cardiac HRV RMSSD is 0.0 ms. Constant RR intervals and zero variability were observed in this input. The signal is unsuitable for meaningful HRV interpretation. This observation alone does not establish the physiological cause.\n\nThe WESAD-trained HistGradientBoosting classifier produced an acute stress probability of 0.0000 (verdict: N/A). This model is validated strictly within experimental laboratory stress induction benchmarks and does not assess general medical fitness, organic pathology, or long-term psychological adaptation. Subjective symptom records contain 1 entries for clinical evaluation.\n\nIndividualized personal baseline status is 'not_available'; comparative baseline deviation analysis was not performed. This session represents an isolated observation and must not be registered as an established personal baseline. Emergency escalation status is INSUFFICIENT_DATA due to missing or unvalidated physiological telemetry; physiological emergency cannot be conclusively ruled out and close telemetry monitoring is advised."
   },
   "medical_rag_summary": {
     "retrieval_status": "SUCCESS",
@@ -238,10 +238,10 @@
     "passages_count": 3
   },
   "risk_assessment_summary": {
-    "assessment_id": "RA-D82E93DA",
+    "assessment_id": "RA-133F52A8",
     "astronaut_id": "AST-003",
-    "session_id": "CHAT-247ADA84EEB1",
-    "assessment_timestamp": "2026-11-14 16:35:14.414403",
+    "session_id": "CHAT-E811B6779EBA",
+    "assessment_timestamp": "2026-11-14 17:13:10.030094",
     "assessment_status": "PARTIALLY_COMPLETED",
     "evaluated_domains_risk": "LOW",
     "overall_risk": "INSUFFICIENT_DATA",
@@ -598,7 +598,7 @@
       "correlations": [],
       "coverage_status": "PARTIAL"
     },
-    "llm_explanation": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-247ADA84EEB1) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
+    "llm_explanation": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-E811B6779EBA) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
     "llm_status": "LLM_API_ERROR"
   },
   "detected_concerns": [],
@@ -729,6 +729,6 @@
       "status": "SUCCESS"
     }
   ],
-  "executive_synthesis": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-247ADA84EEB1) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
-  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-003 (Session CHAT-247ADA84EEB1)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Response to Your Query\nRegarding your query: *\"mild headache after exercise, otherwise feeling fine\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.\n\n### Reported Symptoms\n- headache (Severity: MILD)\n\n### Monitored Systems Summary\n- **Coverage:** 10% of configured monitoring domains evaluated (1/10 domains).\n- **Active Monitored Streams:** NEUROLOGICAL.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm [clinical adult reference; resting conditions unconfirmed in this session]) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: CARDIOVASCULAR, RESPIRATORY, SLEEP_AND_FATIGUE, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL, DATA_QUALITY_RELATED.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
+  "executive_synthesis": "Objective multi-agent risk assessment for Astronaut AST-003 (Session CHAT-E811B6779EBA) yields assessment status of PARTIALLY_COMPLETED (domain coverage: 0.10) with a composite risk classification of INSUFFICIENT_DATA and MODERATE evidential confidence. Escalation status is evaluated as NO_TRIGGER_DETECTED (No configured escalation rule triggered using available valid evidence. Notice: This finding indicates no configured emergency rule was met; it does not confirm clinical absence of disease, complete assessment coverage, or nominal physiological status across unassessed domains.).\n\nDomain-specific evaluation reflects validated telemetry and subjective inputs. No active alert rules were triggered across evaluated domains. No explicit protective factors documented.\n\nOperational handling and limitations: Unevaluated physiological domains (CARDIOVASCULAR, RESPIRATORY, SLEEP AND FATIGUE, PSYCHOLOGICAL AND COGNITIVE, THERMOREGULATORY, HYDRATION AND FLUID BALANCE, MUSCULOSKELETAL, GENERAL PHYSIOLOGICAL, DATA QUALITY RELATED) remain unmonitored and cannot be assumed nominal. Observational caveats and uncertainties: Domain CARDIOVASCULAR is unevaluated: Telemetry unavailable for Heart rate (ECG/BVP), HRV (RMSSD/SDNN), blood pressure, or cardiovascular symptoms; Domain RESPIRATORY is unevaluated: Telemetry unavailable for Respiration rate, RIP breathing waveform, cabin atmospheric CO2/O2, or dyspnea symptoms; Domain SLEEP_AND_FATIGUE is unevaluated: Telemetry unavailable for Sleep duration telemetry/log (actual_sleep_hours), circadian markers, or actigraphy; Domain PSYCHOLOGICAL_AND_COGNITIVE is unevaluated: Telemetry unavailable for Electrodermal activity (EDA), validated cognitive performance tests, or acute stress indicators; Domain THERMOREGULATORY is unevaluated: Telemetry unavailable for Core body temperature or continuous skin temperature telemetry; Domain HYDRATION_AND_FLUID_BALANCE is unevaluated: Telemetry unavailable for Fluid intake/output logs, continuous body mass tracking, or hydration biomarkers; Domain MUSCULOSKELETAL is unevaluated: Telemetry unavailable for Electromyography (EMG), daily exercise logs, or musculoskeletal complaint telemetry; Domain GENERAL_PHYSIOLOGICAL is unevaluated: Telemetry unavailable for Multisystem lab panels, metabolic indicators, or general medical findings; Domain DATA_QUALITY_RELATED is unevaluated: Telemetry unavailable for Sensor Quality Agent report covering active physiological sensors; Sensor Quality Agent report not provided; underlying sensor fidelity cannot be verified; Overall evidential confidence is capped at MODERATE due to partial assessment coverage (1/10 domains evaluated). All findings represent automated deterministic evaluations for Supervisor Agent review and do not constitute independent medical diagnoses.",
+  "astronaut_facing_response": "**TRUSTLINE Mission Health Briefing \u2014 AST-003 (Session CHAT-E811B6779EBA)**\n\n### Current Monitoring Status: Nominal Telemetry Acquisition\nNo active emergency triggers or critical threshold violations were detected during this evaluation session.\n\n### Response to Your Query\nRegarding your query: *\"mild headache after exercise, otherwise feeling fine\"*\nYour physiological parameters from current biosensors have been analyzed in relation to this session.\n\n### Reported Symptoms\n- headache (Severity: MILD)\n\n### Monitored Systems Summary\n- **Coverage:** 10% of configured monitoring domains evaluated (1/10 domains).\n- **Active Monitored Streams:** NEUROLOGICAL.\n- **Overall Risk State:** `INSUFFICIENT_DATA` (Assessment Status: PARTIALLY_COMPLETED).\n- **Cardiac & Respiration:** Heart rate is 72.0 bpm (EV-PHY-HR-MEAN, VALID, reference interval 50.0\u2013100.0 bpm [clinical adult reference; resting conditions unconfirmed in this session]) and respiration rate is 15.0 breaths/min (EV-PHY-RESP-RATE, VALID, reference interval 10.0\u201322.0 breaths/min), indicating nominal cardiac and respiratory rates for this acquisition window.\n- **Cardiovascular Note:** Heart rate variability (RMSSD: 0.0 ms, EV-PHY-HRV-RMSSD) is classified as INVALID due to zero variability (ZERO_VARIABILITY) and is quarantined from autonomic cardiovascular evaluation.\n- **Thermal Note:** Temperature telemetry (34.27 \u00b0C, EV-PHY-TEMP-MEAN) reflects peripheral skin surface temperature, not core body temperature, and is classified as DEGRADED for core thermoregulatory assessment.\n\n### Unmonitored Health Areas\nThe following areas were not monitored during this session: CARDIOVASCULAR, RESPIRATORY, SLEEP_AND_FATIGUE, PSYCHOLOGICAL_AND_COGNITIVE, THERMOREGULATORY, HYDRATION_AND_FLUID_BALANCE, MUSCULOSKELETAL, GENERAL_PHYSIOLOGICAL, DATA_QUALITY_RELATED.\nNote: The absence of telemetry from these areas means their status is unknown, not that health is confirmed nominal.\n\n### Recommended Next Steps\n- **[ACT-NOM-001]**: Continue routine health telemetry acquisition for monitored parameters.\n\n---\n*Notice: TRUSTLINE is an investigational health-monitoring research prototype, not a clinically certified diagnostic device or certified flight software. It does not replace independent Flight Surgeon clinical evaluation or mission medical protocols. If you experience acute symptoms or feel unwell, alert the Flight Surgeon immediately.*"
 }

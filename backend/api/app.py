@@ -383,23 +383,34 @@ def _classify_chat_intent(text: str, has_attachment: bool) -> str:
     return "CASUAL"
 
 
-def _groq_chat_completion(messages: list[dict[str, str]], max_tokens: int = 800) -> str | None:
+def _groq_chat_completion(messages: list[dict[str, str]], max_tokens: int = 350) -> str | None:
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         return None
     try:
         from groq import Groq
-        model = os.getenv("GROQ_CHAT_MODEL") or os.getenv("GROQ_MODEL") or "qwen/qwen3.8-27b"
-        client = Groq(api_key=api_key, timeout=25.0)
-        resp = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            temperature=0.6,
-            max_tokens=max_tokens,
-        )
-        return resp.choices[0].message.content.strip()
+        primary_model = os.getenv("GROQ_CHAT_MODEL") or os.getenv("GROQ_MODEL") or "qwen/qwen3.8-27b"
+        candidates = [primary_model, "allam-2-7b", "openai/gpt-oss-20b"]
+        seen: set[str] = set()
+        model_list = [m for m in candidates if m and not (m in seen or seen.add(m))]
+
+        client = Groq(api_key=api_key, timeout=18.0)
+        for model_name in model_list:
+            try:
+                resp = client.chat.completions.create(
+                    model=model_name,
+                    messages=messages,
+                    temperature=0.6,
+                    max_tokens=max_tokens,
+                )
+                text = resp.choices[0].message.content
+                if text and text.strip():
+                    return text.strip()
+            except Exception as model_err:
+                logger.warning(f"Groq model '{model_name}' inference failed: {model_err}; falling back to next candidate...")
+        return None
     except Exception as exc:
-        logger.warning(f"Groq conversational inference fallback triggered: {exc}")
+        logger.warning(f"Groq conversational inference client initialization error: {exc}")
         return None
 
 
@@ -538,7 +549,7 @@ async def send_message(
     agent_response_text: str | None = None
     agent_name: str = "supervisor"
 
-    # Pathway A: CLINICAL_EVALUATION or DOCUMENT_QUERY -> Full LangGraph Supervisor Multi-Agent Assessment
+    # Pathway A: CLINICAL_EVALUATION or DOCUMENT_QUERY -> Multi-Agent Evaluation + Medical Memory + Natural Flight Surgeon Synthesis
     if intent in ("CLINICAL_EVALUATION", "DOCUMENT_QUERY") or not groq_api_key:
         agent_name = "supervisor"
         if supervisor_gateway.is_available():
@@ -574,7 +585,76 @@ async def send_message(
                         "metric_name": ref.get("metric_name"),
                         "provenance": ref.get("provenance"),
                     })
-                agent_response_text = result.get("astronaut_facing_response", "")
+
+                # Automatically record reported symptom into astronaut's PHA medical memory
+                if target_astronaut_id != "UNASSIGNED" and not filename:
+                    try:
+                        put_memory(
+                            store,
+                            target_astronaut_id,
+                            "PHA",
+                            json.dumps({
+                                "symptom_report": displayed_user_text,
+                                "reported_at": utc_now(),
+                                "vitals_at_report": vitals_summary,
+                                "supervisor_risk": result.get("overall_risk", "NOMINAL"),
+                            }),
+                            verification_status="LIVE",
+                            provenance={"source": "Astronaut In-Chat Self-Report", "session_id": session_id},
+                            long_term=False,
+                            is_demo=is_demo,
+                        )
+                    except Exception as exc:
+                        logger.warning(f"Error persisting symptom memory: {exc}")
+
+                # If this is a clinical symptom query and Groq is available, generate a natural, empathetic, context-aware response
+                if groq_api_key and not filename:
+                    prior_msgs = session_messages(store, session_id)
+                    history = [m for m in prior_msgs if m.get("id") != inbound["id"]]
+                    clinical_sys = (
+                        f"You are TRUSTLINE Autonomous Medical AI & Chief Medical Officer aboard deep-space mission EXP-72.\n"
+                        f"You are directly attending to Astronaut {target_astronaut_id}.\n"
+                        f"Current Real-Time Biotelemetry: {vitals_summary}.\n"
+                        f"Multi-Agent Evaluation Findings: Overall Risk = {result.get('overall_risk', 'NOMINAL')}, "
+                        f"Confidence = {result.get('overall_confidence', '0.95')}.\n\n"
+                        f"Behavioral Directives:\n"
+                        f"1. Conversational Freedom & Empathy: Speak naturally, warmly, intelligently, and empathetically like an experienced flight surgeon. NEVER output robotic bureaucratic briefing titles (such as 'TRUSTLINE Mission Health Briefing'), rigid section headers, or artificial legal disclaimers.\n"
+                        f"2. Strict Language Matching: If the astronaut wrote in Arabic, respond in fluent, warm, professional Arabic (مثلاً: أهلاً بك يا كابتن... تم تسجيل هذا العرض في سجلك الطبي الحركي...). If in English, reply in English.\n"
+                        f"3. Situational Awareness & Memory: Acknowledge what the astronaut reported immediately. Explicitly confirm that you have recorded this symptom into their flight health record (PHA short-term memory). Connect their symptom to their live biotelemetry numbers ({vitals_summary}).\n"
+                        f"4. Actionable Clinical Advice: Offer spaceflight countermeasure advice (controlled breathing, hydration, resting in quarters, checking suit seal/pressure) and ask clarifying questions.\n"
+                        f"5. Concise: 2 to 3 focused, reassuring paragraphs."
+                    )
+                    chat_messages_payload = [{"role": "system", "content": clinical_sys}]
+                    for m in history[-6:]:
+                        role = "assistant" if m.get("sender") == "AGENT" else "user"
+                        c_text = m.get("content") or ""
+                        if len(c_text) > 400:
+                            c_text = c_text[:400] + "..."
+                        if c_text.strip():
+                            chat_messages_payload.append({"role": role, "content": c_text})
+                    chat_messages_payload.append({"role": "user", "content": displayed_user_text})
+                    groq_reply = _groq_chat_completion(chat_messages_payload, max_tokens=350)
+                    if groq_reply:
+                        agent_response_text = groq_reply
+
+                is_arabic = any("\u0600" <= c <= "\u06FF" for c in displayed_user_text)
+                if not filename and (not agent_response_text or "TRUSTLINE Mission Health Briefing" in agent_response_text):
+                    if is_arabic:
+                        agent_response_text = (
+                            f"أهلاً بك رائد الفضاء {target_astronaut_id}. لقد قمتُ بتسجيل تقريرك الطبي حول '{displayed_user_text}' مباشرة في سجلك الصحي الحركي (PHA).\n\n"
+                            f"بمراجعة بياناتك الحيوية المباشرة ({vitals_summary})، مؤشراتك الفسيولوجية قيد المراقبة المستمرة. "
+                            f"يُرجى أخذ قسط من الراحة في مقصورتك، ممارسة التنفس الهادئ والعميق، وشرب رشفات منتظمة من الماء.\n\n"
+                            f"هل تشعر بأي أعراض إضافية مصاحبة (مثل دوار، ضيق تنفس، أو صداع)؟ سأظل متصلاً بك لمتابعة أي تطور في قياساتك."
+                        )
+                    else:
+                        agent_response_text = (
+                            f"Hello Astronaut {target_astronaut_id}. I have logged your symptom report ('{displayed_user_text}') directly into your active health record (PHA).\n\n"
+                            f"Based on your real-time biotelemetry ({vitals_summary}), your physiological parameters are under continuous monitoring. "
+                            f"Please take a few moments to rest in your quarters, focus on calm, deep diaphragmatic breathing, and take slow sips of water.\n\n"
+                            f"Are you noticing any secondary sensations such as lightheadedness, headache, or chest tightness? I am staying active on your telemetry feed."
+                        )
+                elif not agent_response_text:
+                    agent_response_text = result.get("astronaut_facing_response", "")
 
                 if ocr_records and "### Clinical Document OCR Findings" not in agent_response_text:
                     table_lines = [
@@ -625,9 +705,13 @@ async def send_message(
                 chat_messages_payload.append({"role": role, "content": content})
         chat_messages_payload.append({"role": "user", "content": displayed_user_text})
 
-        agent_response_text = _groq_chat_completion(chat_messages_payload, max_tokens=700)
+        agent_response_text = _groq_chat_completion(chat_messages_payload, max_tokens=350)
         if not agent_response_text:
-            agent_response_text = f"Hello Astronaut {target_astronaut_id}. Telemetry status is currently: {vitals_summary}."
+            is_arabic = any("\u0600" <= c <= "\u06FF" for c in displayed_user_text)
+            if is_arabic:
+                agent_response_text = f"أهلاً بك رائد الفضاء {target_astronaut_id}. أنا أتابع حالتك وقياساتك الحيوية لحظة بلحظة ({vitals_summary}). كيف يمكنني مساعدتك الآن؟"
+            else:
+                agent_response_text = f"Hello Astronaut {target_astronaut_id}. I am actively monitoring your biotelemetry ({vitals_summary}). How can I assist you right now?"
 
     outbound = append_message(
         store, session_id, "AGENT", agent_response_text or "Status nominal.",

@@ -45,14 +45,30 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
     fetchSimulatorScenarios().then((list) => {
       if (list.length > 0) {
         setScenarios(list);
-        setSelectedScenario(list[0].id);
       }
     });
     fetchSimulatorStatus().then((st) => {
       if (st) {
-        setIsRunning(Boolean(st.is_running));
+        const isRun = Boolean(st.is_running);
+        setIsRunning(isRun);
+        if (st.current_scenario) setSelectedScenario(st.current_scenario as string);
+        if (isRun) {
+          setStatusMessage(`Simulation streaming in background (${st.current_scenario})`);
+        }
       }
     });
+
+    const statusPoller = setInterval(() => {
+      fetchSimulatorStatus().then((st) => {
+        if (st) {
+          setIsRunning(Boolean(st.is_running));
+        }
+      });
+    }, 3000);
+
+    return () => {
+      clearInterval(statusPoller);
+    };
   }, []);
 
   const runStep = useCallback(async (seedVal?: number, scenVal?: string) => {
@@ -78,31 +94,25 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
     if (ok) {
       setIsRunning(true);
       setIsPaused(false);
-      setStatusMessage(`Running: ${selectedScenario}`);
+      setStatusMessage(`Running in background: ${selectedScenario}`);
       await runStep(randomSeed, selectedScenario);
-      if (timerRef.current) clearInterval(timerRef.current);
-      timerRef.current = setInterval(() => {
-        runStep(undefined, selectedScenario);
-      }, 1200);
     }
   };
 
-  const handlePause = () => {
-    setIsPaused((p) => {
-      const next = !p;
-      if (next && timerRef.current) {
-        clearInterval(timerRef.current);
-      } else if (!next) {
-        timerRef.current = setInterval(() => runStep(undefined, selectedScenario), 1200);
-      }
-      setStatusMessage(next ? 'Simulation Paused' : 'Simulation Resumed');
-      return next;
-    });
+  const handlePause = async () => {
+    if (isRunning) {
+      await stopSimulator();
+      setIsRunning(false);
+      setIsPaused(true);
+      setStatusMessage('Simulation Paused');
+    } else {
+      await handleStart();
+      setIsPaused(false);
+    }
   };
 
   const handleStop = async () => {
     await stopSimulator();
-    if (timerRef.current) clearInterval(timerRef.current);
     setIsRunning(false);
     setIsPaused(false);
     setActiveFaults(new Set());
