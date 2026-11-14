@@ -1,0 +1,226 @@
+flowchart TD
+    %% =========================================================================
+    %% TRUSTLINE SYSTEM ARCHITECTURE & END-TO-END DATA FLOW DIAGRAM
+    %% Codebase: TRUSTLINE (Ali branch)
+    %% Implementation: Python 3.11+, LangGraph, SQLite, SciPy, Scikit-learn
+    %% Corrected: Verified component relationships, lifecycles, and data directions
+    %% =========================================================================
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 1: DATA SOURCES & MULTIMODAL INPUTS
+    %% -------------------------------------------------------------------------
+    subgraph S1_Inputs ["1. Data Sources & Inputs"]
+        In_Manifest["Biosensor Manifest JSON\n(ai-engine/agents/sensor_quality/data/input/astronaut_health_data.json)"]
+        In_Npy["Continuous Waveform Binary Files (.npy)\n(ECG 700Hz, EDA 4Hz, RESP 700Hz, EMG 700Hz, ACC 700Hz, TEMP 700Hz)"]
+        In_Text["Symptom Questionnaire Text\n(--query_text CLI argument)"]
+        In_Voice["Astronaut Voice Audio (.wav / .mp3)\n[Separate Capability: Requires External Groq Whisper Cloud API; Not in Active Offline DAG]"]
+        In_Docs["Medical Documents (.pdf, .docx, .png, .jpg, .jpeg, .webp)\n[Independent Upload API Input]"]
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 2: CLI CONTROLLER & EXECUTION LIFECYCLE
+    %% -------------------------------------------------------------------------
+    subgraph S2_Controller ["2. CLI Execution Lifecycle (ai-engine/agents/supervisor/main.py)"]
+        CLI_Start["CLI Workflow Invocation: run_supervisor_cli()\n(Builds SupervisorRequest & Runner)\n[supervisor/main.py:26]"]
+        CLI_Result["CLI Result Handler: run_supervisor_cli()\n(Receives result_state from runner)\n[supervisor/main.py:70]"]
+        CLI_Out["Terminal Display Output (sys.stdout)\n(Renders ASCII Summary & Astronaut Advisory)\n[supervisor/main.py:73]"]
+
+        In_Manifest -->|Path parameter| CLI_Start
+        In_Text -->|String argument| CLI_Start
+        CLI_Start -->|Invokes runner.run_workflow()| START_NODE
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 3: LANGGRAPH 10-NODE STATEGRAPH WORKFLOW
+    %% -------------------------------------------------------------------------
+    subgraph S3_Supervisor ["3. Supervisor Workflow DAG (ai-engine/agents/supervisor/workflow/graph.py)"]
+        direction TB
+        START_NODE((START))
+        N1["1. intake_node\n(Assign WF-ID, Record Timers)\n[workflow/nodes.py:25]"]
+        N2["2. input_validation_node\n(Sanitize Paths, Validate IDs)\n[workflow/nodes.py:57]"]
+        Cond_Val{"route_after_validation\n(Errors Detected?)\n[workflow/router.py:4]"}
+        N3["3. sensor_quality_node\n(Telemetry Inspection Adapter)\n[workflow/nodes.py:115]"]
+        N4["4. personal_health_node\n(Biometrics & ML Stress Adapter)\n[workflow/nodes.py:144]"]
+        N5["5. medical_rag_node\n(Aerospace RAG Service Node)\n[workflow/nodes.py:173]"]
+        N6["6. risk_assessment_node\n(10 Health Domains Risk Adapter)\n[workflow/nodes.py:280]"]
+        N7["7. evidence_validation_node\n(Cross-Agent Quarantine Audit)\n[workflow/nodes.py:309]"]
+        N8["8. final_synthesis_node\n(Contract Assembly & Timings)\n[workflow/nodes.py:330]"]
+        N9["9. persistence_node\n(SQLite Save & JSON Export)\n[workflow/nodes.py:568]"]
+        N10["10. final_response_node\n(Workflow State Seal)\n[workflow/nodes.py:603]"]
+        END_NODE((END))
+
+        START_NODE --> N1
+        N1 --> N2
+        N2 --> Cond_Val
+        Cond_Val -->|Nominal: Valid Data| N3
+        Cond_Val -.->|Fast-Fail: Validation Error| N7
+        N3 --> N4
+        N4 --> N5
+        N5 --> N6
+        N6 --> N7
+        N7 --> N8
+        N8 --> N9
+        N9 --> N10
+        N10 --> END_NODE
+    end
+
+    END_NODE -->|Returns result_state dictionary| CLI_Result
+    CLI_Result -->|Formats ASCII summary & advisory| CLI_Out
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 4: INTERNAL PROCESSING ENGINES & GENERATION/VALIDATION FLOWS
+    %% -------------------------------------------------------------------------
+    subgraph S4_Engines ["4. Internal Processing Engines & Generation/Validation Flows"]
+        direction TB
+        SigLoader["SignalLoader\n(Reads .npy via mmap np.load)\n[sensor_quality/ingestion/signal_loader.py:25]"]
+        QEngine["QualityEngine (DSP)\n(FFT SNR, Flatline, Saturation, Artifacts)\n[sensor_quality/core/quality_engine.py:30]"]
+        
+        SensorInteg["SensorIntegrationService\n(Session Ingestion & Stream Validation)\n[personal_health/services/sensor_integration_service.py:12]"]
+        EmergEsc["EmergencyEscalationService\n(Immediate Red-Line Threshold FSM)\n[personal_health/services/escalation_service.py:17]"]
+        FeatExtract["FeatureExtractionService\n(SciPy R-Peak, HRV RMSSD, SDNN, Resp)\n[personal_health/services/feature_extraction_service.py:21]"]
+        BaseInter["PersonalBaselineInterface\n(Z-Score Deviation Engine)\n[personal_health/services/baseline_interface.py:60]"]
+        MLService["MLInferenceService\n(HistGradientBoosting Stress Classifier)\n[personal_health/services/ml_inference_service.py:30]"]
+        
+        PH_Gen["generate_flight_surgeon_synthesis()\n(Flight Surgeon Text Request)\n[personal_health/agent/agent.py:80]"]
+        PH_Val["ClinicalSynthesisValidator\n(Pattern & Ground-Truth Bounds Audit)\n[personal_health/services/synthesis_validator.py:26]"]
+        
+        RAG_Retriever["HybridMedicalRetriever\n(BM25 + Dense Cosine & Embedded Privacy Guard)\n[personal_health/rag/retrievers.py:35]"]
+        RAG_Gen["GroundedMedicalGenerator\n(5-Part Protocol Text Request)\n[personal_health/rag/generation.py:96]"]
+        RAG_Val["RAGClaimValidator\n(Structure & Citation Support Audit)\n[personal_health/rag/validators.py:15]"]
+        
+        RiskEngine["RiskEngine\n(Deterministic Rules for 10 Domains)\n[risk_assessment/services/risk_engine.py:44]"]
+        RiskEscService["RiskEscalationService\n(Multi-Domain Escalation FSM)\n[risk_assessment/services/escalation_service.py:15]"]
+        LLMInterp["LLMInterpretationService\n(Builds Prompt & Deterministic Fallback)\n[risk_assessment/services/llm_interpretation_service.py:13]"]
+        ClaimVal["ClaimGroundingValidator\n(Regex Diagnosis & Domain Grounding Audit)\n[risk_assessment/services/claim_grounding_validator.py:6]"]
+
+        EvidRegistry["EvidenceRegistryService\n(Enforces Scientific Quarantine)\n[supervisor/services/evidence_registry_service.py:5]"]
+        AstroComm["AstronautCommunicationService\n(Actionable Advisory Text)\n[supervisor/services/astronaut_communication_service.py]"]
+
+        In_Npy -->|Raw binary arrays| SigLoader
+        In_Manifest -->|File paths & sampling rates| SigLoader
+        SigLoader -->|SensorStreamData objects| QEngine
+        N3 <-->|SensorQualityAdapter| QEngine
+        
+        N4 <-->|PersonalHealthAdapter| SensorInteg
+        SensorInteg -->|Validated streams| FeatExtract
+        FeatExtract --> BaseInter
+        FeatExtract --> MLService
+        N4 --> EmergEsc
+        N4 --> PH_Gen
+        PH_Gen -->|Generates prompt & calls| Router
+        Router -.->|Raw generated text| PH_Val
+        PH_Val -->|Sanitized synthesis or fallback| N4
+        
+        N5 <-->|MedicalKnowledgeRAGService| RAG_Retriever
+        RAG_Retriever -->|Retrieved passages| RAG_Gen
+        RAG_Gen -->|Generates prompt & calls| Router
+        Router -.->|Raw generated text| RAG_Val
+        RAG_Val -->|Audited response or fallback| N5
+        
+        N6 <-->|RiskAssessmentAdapter| RiskEngine
+        RiskEngine --> RiskEscService
+        RiskEngine --> LLMInterp
+        LLMInterp -->|Generates prompt & calls| Router
+        Router -.->|Raw generated text| ClaimVal
+        ClaimVal -->|Sanitized explanation or fallback| LLMInterp
+        LLMInterp --> N6
+        
+        N7 <--> EvidRegistry
+        N8 <--> AstroComm
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 5: HYBRID AI ROUTER & MODEL FALLBACK CASCADE
+    %% -------------------------------------------------------------------------
+    subgraph S5_HybridAI ["5. Hybrid AI Router & Safety Layer (ai-engine/hybrid_ai/)"]
+        Router["HybridAIRouter Core\n(Capability Matrix & Policy Gate)\n[hybrid_ai/router.py:28]"]
+        PolicyGate{"Routing Policy Gate\n(CapabilityRegistry)\n[hybrid_ai/router.py:53]"}
+        DetOffline["Deterministic Rule Engine\n(Offline Safe Template for DETERMINISTIC_OFFLINE)\n[hybrid_ai/router.py:60]"]
+        ModeCheck{"Router Mode?\n(AI_ROUTER_MODE)\n[hybrid_ai/router.py:84]"}
+        CB{"Circuit Breaker Check\n(Threshold = 3 Failures, Timeout = 30s)\n[hybrid_ai/circuit_breaker.py:13]"}
+        HF_Provider["Hugging Face Provider (Optional Text)\n(meta-llama/Llama-3.1-8B-Instruct via HTTPS)\n[hybrid_ai/huggingface_provider.py:26]"]
+        GroqCloud["Groq Cloud Provider\n(llama-3.3-70b-versatile via HTTPS)\n[hybrid_ai/groq_provider.py:29]"]
+        LocalEligible{"Is Task Local-Eligible?\n(CapabilityRegistry.is_local_eligible)\n[hybrid_ai/router.py:139]"}
+        OllamaLocal["Ollama Local Provider (Spacecraft Edge)\n(qwen2.5:7b-instruct on localhost:11434)\n[hybrid_ai/ollama_provider.py:25]"]
+        TaskReject["Raise TaskNotEligibleError\n(Task UNAVAILABLE or CLOUD_ONLY without local)\n[hybrid_ai/router.py:79, 154]"]
+        ProviderFail["Raise ProviderUnavailableError\n(Both Cloud and Local Failed)\n[hybrid_ai/router.py:192]"]
+
+        Router --> PolicyGate
+        PolicyGate -->|DETERMINISTIC_OFFLINE| DetOffline
+        DetOffline -->|Returns ProviderResponse to caller| Router
+        PolicyGate -->|UNAVAILABLE| TaskReject
+        PolicyGate -->|LOCAL_ELIGIBLE or CLOUD_ONLY| ModeCheck
+
+        ModeCheck -->|LOCAL_ONLY| LocalEligible
+        ModeCheck -->|HYBRID / CLOUD| CB
+
+        CB -->|CLOSED / HALF_OPEN: Attempt Cloud| HF_Provider
+        HF_Provider -.->|If configured & text task| GroqCloud
+        HF_Provider -->|On HF success: CB.record_success()| Router
+        HF_Provider -.->|If unconfigured or fails| GroqCloud
+        GroqCloud -->|On Groq success: CB.record_success()| Router
+        GroqCloud -.->|On Groq failure: CB.record_failure()| LocalEligible
+
+        CB -->|OPEN / Timeout / 429: Cloud Bypassed| LocalEligible
+        LocalEligible -->|Local Eligible| OllamaLocal
+        LocalEligible -->|Cloud-Only Task: OCR/Voice| TaskReject
+        OllamaLocal -->|On Ollama success: is_fallback=True| Router
+        OllamaLocal -.->|On Ollama failure| ProviderFail
+
+        ProviderFail -.->|Caught by Calling Service| CallingFallback["Calling Service Deterministic Fallback\n(PH_Val.generate_grounded_fallback / RAG Excerpts / LLMInterp._build_deterministic_fallback)"]
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 6: INDEPENDENT DOCUMENT UPLOAD API (STANDALONE SERVICE)
+    %% -------------------------------------------------------------------------
+    subgraph S6_DocAPI ["6. Independent Document Ingestion API (Not in Supervisor DAG)"]
+        API_Upload["FastAPI Router: POST /api/documents/upload\n[personal_health/api/document_router.py:29]"]
+        DocIngest["DocumentIngestionService\n(PyMuPDF Native Text / Groq Vision OCR)\n[personal_health/services/document_ingestion_service.py:25]"]
+        
+        In_Docs -->|HTTP Multipart File| API_Upload
+        API_Upload --> DocIngest
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 7: STORAGE & PERSISTENCE ARCHITECTURE
+    %% -------------------------------------------------------------------------
+    subgraph S7_Storage ["7. Storage & Persistence Layer (Actual Implementation)"]
+        EdgeDB[("Supervisor Edge SQLite Database\ndata/trustline_edge.db\n(Table: supervisor_assessments)")]
+        DocDB[("Personal Health SQLite Database\ndata/personal_health.db\n(Tables: medical_documents,\npending_medical_records,\nastronaut_health_profiles,\nhealth_events, symptom_records,\nastronaut_personal_baselines,\nastronaut_baseline_history,\nastronaut_baseline_audit_logs)")]
+        FeedbackDB[("RLHF Expert Review SQLite Database (INDEPENDENT STORE)\ndata/rlhf_feedback.db\n(Table: rlhf_feedback)")]
+        DiskJSON["Disk JSON Output Artifact\ndata/output/\n(final_supervisor_assessment.json)"]
+        RAGCorpus[("Curated Aerospace Knowledge JSON\nai-engine/agents/personal_health/rag/knowledge_base/\n(mission_medical_protocols.json,\nspace_health_research.json,\nbiomedical_knowledge.json)")]
+
+        N9 -->|sqlite3 INSERT| EdgeDB
+        N9 -->|json.dump| DiskJSON
+        DocIngest -->|SQLAlchemy| DocDB
+        RAG_Retriever -.->|BM25 & Cosine Search| RAGCorpus
+    end
+
+    %% -------------------------------------------------------------------------
+    %% SUBGRAPH 8: UNIMPLEMENTED EXTERNAL SERVICES (EXPLICIT AUDIT GAPS)
+    %% -------------------------------------------------------------------------
+    subgraph S8_Unimplemented ["8. Unimplemented External Components (Documented Gaps)"]
+        UI_Twin["3D Digital Twin & Mission Dashboard\n(frontend/ — ONLY .gitkeep files)"]
+        GW_Backend["Backend Gateway & WebSockets\n(backend/ — ONLY .gitkeep files)"]
+        ETL_Pipelines["Data Engineering ETL Streaming\n(data-engineering/ — ONLY .gitkeep files)"]
+        Cloud_Sync["Supabase Cloud Repository\n(infrastructure/ — ONLY .gitkeep files)"]
+        
+        GW_Backend -.->|UNIMPLEMENTED| UI_Twin
+        ETL_Pipelines -.->|UNIMPLEMENTED| N1
+        EdgeDB -.->|UNIMPLEMENTED GHOST SPEC| Cloud_Sync
+    end
+
+    %% Styling
+    classDef default fill:#1E293B,stroke:#475569,stroke-width:1px,color:#F8FAFC;
+    classDef nodeClass fill:#0F172A,stroke:#38BDF8,stroke-width:2px,color:#38BDF8;
+    classDef engineClass fill:#064E3B,stroke:#34D399,stroke-width:1px,color:#ECFDF5;
+    classDef safetyClass fill:#701A75,stroke:#F472B6,stroke-width:1px,color:#FDF2F8;
+    classDef storageClass fill:#312E81,stroke:#818CF8,stroke-width:1px,color:#E0E7FF;
+    classDef gapClass fill:#3F3F46,stroke:#71717A,stroke-width:1px,stroke-dasharray: 5 5,color:#A1A1AA;
+
+    class N1,N2,N3,N4,N5,N6,N7,N8,N9,N10 nodeClass;
+    class SigLoader,QEngine,SensorInteg,EmergEsc,FeatExtract,BaseInter,MLService,PH_Gen,RAG_Retriever,RAG_Gen,RiskEngine,RiskEscService,LLMInterp engineClass;
+    class PH_Val,RAG_Val,ClaimVal,EvidRegistry,CB,PolicyGate,ModeCheck,LocalEligible,CallingFallback safetyClass;
+    class EdgeDB,DocDB,FeedbackDB,DiskJSON,RAGCorpus storageClass;
+    class UI_Twin,GW_Backend,ETL_Pipelines,Cloud_Sync gapClass;
