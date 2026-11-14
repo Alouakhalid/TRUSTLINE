@@ -3,12 +3,15 @@ import { Play, Pause, Square, AlertTriangle, RefreshCw, Dice5, ShieldCheck, Zap 
 import { Button } from '@/shared/components/Button';
 import { Card, CardHeader, CardContent } from '@/shared/components/Card';
 import { Badge } from '@/shared/components/Badge';
+import { useAuthStore } from '@/features/auth/stores/auth-store';
 import {
   fetchSimulatorScenarios,
   fetchSimulatorStatus,
+  configureSimulator,
   startSimulator,
   stopSimulator,
   generateSimulatorStep,
+  randomizeSimulator,
   injectSimulatorFault,
 } from '../api/simulator';
 
@@ -25,6 +28,8 @@ interface SimulatorPanelProps {
 }
 
 export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
+  const { astronautId } = useAuthStore();
+  const effectiveAstronautId = astronautId || 'AST-002';
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [scenarios, setScenarios] = useState<Array<{ id: string; value: string; label: string }>>([]);
@@ -50,25 +55,35 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
     });
   }, []);
 
-  const runStep = useCallback(async (seedVal?: number) => {
-    const res = await generateSimulatorStep(seedVal);
+  const runStep = useCallback(async (seedVal?: number, scenVal?: string) => {
+    const targetScen = scenVal || selectedScenario;
+    const res = await generateSimulatorStep(seedVal, targetScen, effectiveAstronautId);
     if (res) {
       setStepCount((c) => c + 1);
       setLastPacketInfo(`${res.packets_generated} packets synthesized via coupled ODE models.`);
+      const scen = (res.scenario as string) || targetScen;
+      setStatusMessage(`Active State: ${scen.replace('SCENARIO_', '')} (Propagated to 3D & Vitals)`);
     }
-  }, []);
+  }, [selectedScenario, effectiveAstronautId]);
+
+  const handleScenarioChange = async (newScen: string) => {
+    setSelectedScenario(newScen);
+    setStatusMessage(`Configuring: ${newScen.replace('SCENARIO_', '')}...`);
+    await configureSimulator(newScen, effectiveAstronautId, randomSeed);
+    await runStep(randomSeed, newScen);
+  };
 
   const handleStart = async () => {
-    const ok = await startSimulator(selectedScenario);
+    const ok = await startSimulator(selectedScenario, effectiveAstronautId);
     if (ok) {
       setIsRunning(true);
       setIsPaused(false);
       setStatusMessage(`Running: ${selectedScenario}`);
-      await runStep(randomSeed);
+      await runStep(randomSeed, selectedScenario);
       if (timerRef.current) clearInterval(timerRef.current);
       timerRef.current = setInterval(() => {
-        runStep();
-      }, 1500);
+        runStep(undefined, selectedScenario);
+      }, 1200);
     }
   };
 
@@ -78,7 +93,7 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
       if (next && timerRef.current) {
         clearInterval(timerRef.current);
       } else if (!next) {
-        timerRef.current = setInterval(() => runStep(), 1500);
+        timerRef.current = setInterval(() => runStep(undefined, selectedScenario), 1200);
       }
       setStatusMessage(next ? 'Simulation Paused' : 'Simulation Resumed');
       return next;
@@ -94,10 +109,18 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
     setStatusMessage('Simulation stopped');
   };
 
-  const handleRandomize = () => {
+  const handleRandomize = async () => {
     const newSeed = Math.floor(Math.random() * 900000) + 100000;
     setRandomSeed(newSeed);
-    setStatusMessage(`Random seed set to ${newSeed}. Reproducible ODE run initialized.`);
+    setStatusMessage(`Randomizing physiological state (Seed: ${newSeed})...`);
+    const res = await randomizeSimulator(effectiveAstronautId);
+    if (res) {
+      setStepCount((c) => c + 1);
+      const scen = (res.scenario as string) || selectedScenario;
+      setSelectedScenario(scen);
+      setStatusMessage(`Randomized to ${scen.replace('SCENARIO_', '')} (Seed: ${newSeed})`);
+      setLastPacketInfo(`${res.packets_generated} packets synthesized via coupled ODE models.`);
+    }
   };
 
   const toggleFault = async (faultId: string) => {
@@ -109,6 +132,7 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
       await injectSimulatorFault(faultId, undefined, 1.0);
     }
     setActiveFaults(next);
+    await runStep(randomSeed, selectedScenario);
   };
 
   useEffect(() => {
@@ -153,7 +177,7 @@ export function SimulatorPanel({ className = '' }: SimulatorPanelProps) {
               id="scenario-select"
               className="input-field"
               value={selectedScenario}
-              onChange={(e) => setSelectedScenario(e.target.value)}
+              onChange={(e) => handleScenarioChange(e.target.value)}
               disabled={isRunning}
             >
               {scenarios.map((s) => (

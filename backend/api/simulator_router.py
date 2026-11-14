@@ -78,7 +78,8 @@ def list_scenarios() -> List[Dict[str, str]]:
 def configure_simulator(req: SimulatorConfigureRequest) -> Dict[str, Any]:
     global _engine
     with _LOCK:
-        _engine.astronaut_id = req.astronaut_id
+        if req.astronaut_id:
+            _engine.astronaut_id = req.astronaut_id
         for s in ScenarioType:
             if s.name == req.scenario or s.value == req.scenario:
                 _engine.set_scenario(s)
@@ -95,7 +96,8 @@ async def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Di
     global _is_running, _sim_task
     with _LOCK:
         if req:
-            _engine.astronaut_id = req.astronaut_id
+            if req.astronaut_id:
+                _engine.astronaut_id = req.astronaut_id
             for s in ScenarioType:
                 if s.name == req.scenario or s.value == req.scenario:
                     _engine.set_scenario(s)
@@ -103,7 +105,7 @@ async def start_simulator(req: Optional[SimulatorConfigureRequest] = None) -> Di
         _is_running = True
     if _sim_task is None or _sim_task.done():
         _sim_task = asyncio.create_task(_autonomous_stream())
-    return {"status": "started", "scenario": _engine.current_scenario.value}
+    return {"status": "started", "scenario": _engine.current_scenario.value, "astronaut_id": _engine.astronaut_id}
 
 
 @router.post("/stop")
@@ -117,12 +119,32 @@ async def stop_simulator() -> Dict[str, Any]:
 
 
 @router.post("/step")
-async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -> Dict[str, Any]:
+async def generate_step(
+    seed: Optional[int] = Query(default=None),
+    scenario: Optional[str] = Query(default=None),
+    astronaut_id: Optional[str] = Query(default=None),
+    duration_sec: float = Query(default=1.0),
+) -> Dict[str, Any]:
     """Execute a step in the simulation engine, persist telemetry, evaluate with AI agents, and broadcast via WS."""
+    import json
     import numpy as np
     from backend.services import radiation_gateway
 
     with _LOCK:
+        if astronaut_id:
+            _engine.astronaut_id = astronaut_id
+        elif telemetry.broadcaster._subscribers:
+            # Sync to active connected astronaut if none explicitly passed
+            active_ids = list(telemetry.broadcaster._subscribers.keys())
+            if active_ids and _engine.astronaut_id not in active_ids:
+                _engine.astronaut_id = active_ids[0]
+
+        if scenario:
+            for s in ScenarioType:
+                if s.name == scenario or s.value == scenario:
+                    _engine.set_scenario(s)
+                    break
+
         packets, space_packet = _engine.generate_step(duration_sec=duration_sec, seed=seed)
         active_faults = [c.fault_type.value for c in _engine.fault_injector.configs]
 
@@ -166,7 +188,7 @@ async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -
 
         backend_packets.append({
             "packet_id": d["packet_id"],
-            "astronaut_id": d["astronaut_id"],
+            "astronaut_id": _engine.astronaut_id,
             "session_id": d["session_id"],
             "sensor_type": st_clean,
             "sequence_number": int(d["sequence_number"]),
@@ -213,6 +235,14 @@ async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -
         overall_risk = "warning"
         quality_status = "nominal"
         decision_note = "PHA/RAA Assessment: Autonomic sympathetic activation detected (elevated EDA tonic response)."
+    elif _engine.current_scenario.value == "SCENARIO_D_SLEEP_RECOVERY":
+        overall_risk = "nominal"
+        quality_status = "nominal"
+        decision_note = "PHA Assessment: Sleep recovery cycle active. Parasympathetic tone dominant (bradycardic baseline nominal)."
+    elif _engine.current_scenario.value == "SCENARIO_F_RADIATION_COMPOSITE":
+        overall_risk = "critical"
+        quality_status = "nominal"
+        decision_note = "RAA Urgent Alert: SPE solar particle event flux exceeded threshold. Safe haven protocol advised."
     else:
         overall_risk = "nominal"
         quality_status = "nominal"
@@ -228,10 +258,53 @@ async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -
         "timestamp_epoch_ms": int(time.time() * 1000),
     }
 
-    # Broadcast individual packets to WebSockets
+    # Record assessment in database so Dashboard AssessmentCard and /assessments reflect it immediately
+    try:
+        assessment_id = store.new_id("ASM")
+        risk_level = overall_risk.upper()
+        confidence = "HIGH" if not active_faults else "MODERATE"
+        now_ts = store.utc_now() if hasattr(store, "utc_now") else time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime())
+        store.run(
+            "INSERT INTO assessments(id,astronaut_id,session_id,workflow_id,completion_status,overall_risk,overall_confidence,astronaut_response,assessment_json,evidence_count,created_at,is_demo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            (
+                assessment_id,
+                _engine.astronaut_id,
+                f"SIM-{_engine.current_scenario.value}",
+                f"WF-SIM-{int(time.time())}",
+                "COMPLETED",
+                risk_level,
+                confidence,
+                decision_note,
+                json.dumps(agent_decision, default=str),
+                len(active_faults),
+                now_ts,
+                0,
+            ),
+        )
+        store.run(
+            "INSERT INTO assessments(id,astronaut_id,session_id,workflow_id,completion_status,overall_risk,overall_confidence,astronaut_response,assessment_json,evidence_count,created_at,is_demo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
+            (
+                store.new_id("ASM"),
+                _engine.astronaut_id,
+                f"SIM-{_engine.current_scenario.value}",
+                f"WF-SIM-{int(time.time())}",
+                "COMPLETED",
+                risk_level,
+                confidence,
+                decision_note,
+                json.dumps(agent_decision, default=str),
+                len(active_faults),
+                now_ts,
+                1,
+            ),
+        )
+    except Exception:
+        pass
+
+    # Broadcast individual packets to all connected WebSockets
     for p in backend_packets:
         last_val = p["channels_data"][0][-1] if p["channels_data"] and p["channels_data"][0] else 0.0
-        await telemetry.broadcaster.broadcast(p["astronaut_id"], {
+        await telemetry.broadcaster.broadcast_all({
             "type": "telemetry_packet",
             "astronaut_id": p["astronaut_id"],
             "packet_id": p["packet_id"],
@@ -244,8 +317,8 @@ async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -
             "agent_decision": agent_decision,
         })
 
-    # Broadcast aggregated snapshot for instant multi-sensor & 3D twin update
-    await telemetry.broadcaster.broadcast(_engine.astronaut_id, {
+    # Broadcast aggregated snapshot to all connected WebSockets for instant multi-sensor & 3D twin update
+    await telemetry.broadcaster.broadcast_all({
         "type": "telemetry_snapshot",
         "astronaut_id": _engine.astronaut_id,
         "scenario": _engine.current_scenario.value,
@@ -259,12 +332,30 @@ async def generate_step(seed: Optional[int] = None, duration_sec: float = 1.0) -
     return {
         "status": "step_generated",
         "scenario": _engine.current_scenario.value,
+        "astronaut_id": _engine.astronaut_id,
         "packets_generated": len(packets),
         "ingest_report": report_op,
         "readings": readings_map,
         "agent_decision": agent_decision,
         "space_environment": space_packet.model_dump() if space_packet else None,
     }
+
+
+@router.post("/random-state")
+async def randomize_state(
+    astronaut_id: Optional[str] = Query(default=None),
+) -> Dict[str, Any]:
+    """Randomize the physiological scenario, seed, and hardware parameters, immediately executing a coupled simulation step."""
+    import random
+    scenarios = [s for s in ScenarioType]
+    chosen_scenario = random.choice(scenarios)
+    random_seed = random.randint(100000, 999999)
+    return await generate_step(
+        seed=random_seed,
+        scenario=chosen_scenario.name,
+        astronaut_id=astronaut_id,
+        duration_sec=1.0,
+    )
 
 
 @router.post("/fault")

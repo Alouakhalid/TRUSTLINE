@@ -32,6 +32,17 @@ export function AssessmentCard({ className = '' }: { className?: string }) {
       }
     }
     load();
+
+    const handleUpdate = () => {
+      load();
+    };
+    window.addEventListener('trustline:assessment-updated', handleUpdate);
+    const interval = setInterval(load, 4000);
+
+    return () => {
+      window.removeEventListener('trustline:assessment-updated', handleUpdate);
+      clearInterval(interval);
+    };
   }, [astronautId]);
 
   const riskVariant = (risk: string) => {

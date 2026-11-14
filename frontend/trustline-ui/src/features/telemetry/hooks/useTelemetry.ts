@@ -221,6 +221,11 @@ export function useTelemetry(enabled = true) {
       }
       if (data.agent_decision) {
         setMultiAgentDecision(data.agent_decision as MultiAgentDecision);
+        try {
+          window.dispatchEvent(new CustomEvent('trustline:assessment-updated'));
+        } catch {
+          /* ignore */
+        }
       }
 
       setLastPacketTime(Date.now());

@@ -58,6 +58,7 @@ export function AstronautModel({
   const groupRef = useRef<THREE.Group>(null);
   const scanlineRef = useRef<THREE.Mesh>(null);
   const chestRef = useRef<THREE.Group>(null);
+  const cardiacNodeRef = useRef<THREE.Mesh>(null);
   const [pulseScale, setPulseScale] = useState(1.0);
   const reducedMotion = useReducedMotion();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -66,8 +67,8 @@ export function AstronautModel({
   const isTelemetry = diagnosticMode === 'telemetry';
 
   // Live physiological rates from readings
-  const liveHr = readings?.get('heart_rate')?.value || readings?.get('HR')?.value || 72;
-  const liveResp = readings?.get('respiration')?.value || 16;
+  const liveHr = readings?.get('heart_rate')?.value || readings?.get('hr')?.value || readings?.get('HR')?.value || 72;
+  const liveResp = readings?.get('respiration')?.value || readings?.get('resp')?.value || 16;
 
   // Telemetry node pulse
   useFrame(({ clock }) => {
@@ -82,11 +83,19 @@ export function AstronautModel({
       scanlineRef.current.position.y = 0.5 + Math.sin(t * 1.2) * 1.1;
     }
 
-    // Dynamic Thoracic Respiration breathing expansion
+    // Dynamic Thoracic Respiration breathing expansion (Speed coupled to liveResp)
     if (chestRef.current) {
       const respBreath = Math.sin(t * (liveResp / 60) * Math.PI * 2);
-      const breathScale = 1.0 + respBreath * 0.025;
-      chestRef.current.scale.set(breathScale, 1.0 + respBreath * 0.015, breathScale);
+      const breathScale = 1.0 + respBreath * 0.028;
+      chestRef.current.scale.set(breathScale, 1.0 + respBreath * 0.016, breathScale);
+    }
+
+    // Dynamic Cardiac Rhythm Pulse (Speed coupled to liveHr)
+    if (cardiacNodeRef.current) {
+      const isCrit = healthStatus === 'critical';
+      const cardiacFreq = isCrit ? 0.0 : (liveHr / 60) * Math.PI * 2;
+      const pulse = cardiacFreq > 0 ? (Math.sin(t * cardiacFreq) > 0.5 ? 1.35 : 1.0) : 1.0;
+      cardiacNodeRef.current.scale.set(pulse, pulse, pulse);
     }
   });
 
@@ -158,6 +167,11 @@ export function AstronautModel({
         <Cylinder args={[0.004, 0.004, 0.42, 8]} position={[0, 1.20, 0.198]}>
           <meshBasicMaterial color={healthStatus === 'critical' ? PALETTE.alert : healthStatus === 'warning' ? PALETTE.amber : PALETTE.teal} />
         </Cylinder>
+
+        {/* Live Cardiac Rhythm Pulsator Node */}
+        <Sphere ref={cardiacNodeRef} args={[0.016, 16, 16]} position={[-0.08, 1.20, 0.205]}>
+          <meshBasicMaterial color={healthStatus === 'critical' ? PALETTE.alert : healthStatus === 'warning' ? PALETTE.amber : PALETTE.teal} />
+        </Sphere>
 
         {/* Bilateral Clavicle Harness Straps */}
         <RoundedBox args={[0.10, 0.36, 0.04]} radius={0.01} position={[-0.22, 1.34, 0.17]} rotation={[0, 0, -0.1]} material={trimMaterial} />

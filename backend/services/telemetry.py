@@ -189,5 +189,20 @@ class TelemetryBroadcaster:
             self.unsubscribe(astronaut_id, websocket)
             self.dropped_connections += 1
 
+    async def broadcast_all(self, payload: dict[str, Any], timeout: float = 2.0) -> None:
+        """Broadcast payload to all active subscribers across all registered astronaut streams."""
+        message = json.dumps(payload)
+        for astro_id, connections in list(self._subscribers.items()):
+            dead = []
+            for websocket in list(connections):
+                try:
+                    await asyncio.wait_for(websocket.send_text(message), timeout=timeout)
+                    self.broadcast_packets += 1
+                except Exception:
+                    dead.append(websocket)
+            for websocket in dead:
+                self.unsubscribe(astro_id, websocket)
+                self.dropped_connections += 1
+
 
 broadcaster = TelemetryBroadcaster()
