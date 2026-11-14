@@ -617,10 +617,20 @@ def radiation_limits() -> dict[str, Any]:
 
 @app.get("/ai/providers/status")
 def get_providers_status() -> dict[str, Any]:
-    """Inspect configured AI model providers (Ollama Edge AI, Deterministic Protocol Engine)."""
+    """Inspect configured AI model providers (Groq Cloud LPU, Ollama Edge AI, Deterministic Protocol Engine)."""
+    has_groq = bool(os.getenv("GROQ_API_KEY"))
     return {
-        "router_mode": "LOCAL_ONLY (AIR-GAPPED / FLIGHT SAFE)",
+        "router_mode": "HYBRID (EDGE OLLAMA + CLOUD GROQ LPU)" if has_groq else "LOCAL_ONLY (AIR-GAPPED / FLIGHT SAFE)",
         "providers": [
+            {
+                "name": "Groq Cloud LPU",
+                "tier": "cloud",
+                "modelId": os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"),
+                "status": "active" if has_groq else "standby",
+                "statusLabel": "ACTIVE / OPERATIONAL" if has_groq else "STANDBY (KEY REQUIRED)",
+                "details": "Cloud high-throughput LPU inference (qwen/qwen3.8-27b) & Groq Vision OCR. Connected via DSN ground-link.",
+                "lastCheck": "Live (Cloud LPU)" if has_groq else "Standby",
+            },
             {
                 "name": "Ollama Edge AI",
                 "tier": "local",

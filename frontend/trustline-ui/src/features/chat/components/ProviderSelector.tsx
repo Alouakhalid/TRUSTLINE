@@ -16,6 +16,15 @@ interface ProviderInfo {
 
 const PROVIDERS: ProviderInfo[] = [
   {
+    name: 'Groq Cloud LPU',
+    tier: 'cloud',
+    modelId: 'qwen/qwen3.8-27b',
+    status: 'active',
+    statusLabel: 'ACTIVE / OPERATIONAL',
+    details: 'Cloud high-throughput LPU inference (qwen/qwen3.8-27b) & Groq Vision OCR. Connected via DSN ground-link.',
+    lastCheck: 'Live (Cloud LPU)',
+  },
+  {
     name: 'Ollama Edge AI',
     tier: 'local',
     modelId: 'qwen2.5:7b-instruct',
@@ -92,10 +101,10 @@ export function ProviderSelector({ trace }: ExecutionTraceProps) {
           </span>
           <Badge variant="info" size="sm">
             <span className="dot-indicator dot-teal" style={{ marginRight: '4px' }} />
-            {trace?.router_mode || 'LOCAL_ONLY (FLIGHT SAFE)'}
+            {trace?.router_mode || 'HYBRID (EDGE OLLAMA + CLOUD GROQ LPU)'}
           </Badge>
           <span className="dark-label" style={{ fontSize: '11px', textTransform: 'none', letterSpacing: 'normal' }}>
-            Active: <strong style={{ color: 'var(--color-teal)' }}>Ollama (qwen2.5:7b-instruct)</strong>
+            Active: <strong style={{ color: 'var(--color-teal)' }}>Groq LPU (qwen/qwen3.8-27b) + Ollama Edge</strong>
           </span>
         </div>
 
