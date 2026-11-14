@@ -1,0 +1,13 @@
+:root {
+  --motion-enter: 300ms var(--ease-out);
+  --motion-exit: 200ms var(--ease-in-out);
+  --motion-micro: 150ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-enter: 0ms;
+    --motion-exit: 0ms;
+    --motion-micro: 0ms;
+  }
+}

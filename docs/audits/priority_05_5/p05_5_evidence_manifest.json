@@ -1,0 +1,221 @@
+{
+  "manifest_id": "TRUSTLINE-P05.5-EVIDENCE-MANIFEST-20261114",
+  "generated_at_utc": "2026-11-13T23:53:28.945061Z",
+  "deliverables_count": 11,
+  "code_files_count": 23,
+  "regression_summary": {
+    "collected": 531,
+    "passed": 530,
+    "skipped": 1,
+    "failed": 0,
+    "errors": 0,
+    "duration_seconds": 462.63
+  },
+  "ast_comment_hygiene": "PASSED_ZERO_HASH_COMMENTS",
+  "entries": {
+    "PRIORITY_05_5_INITIAL_AUDIT.md": {
+      "sha256": "26f6337d75e8230c36984328d90be8b6d937fb544fe94d362429d43fb374fa67",
+      "bytes": 2813,
+      "lines": 20,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_SENSOR_REGISTRY_SPECIFICATION.md": {
+      "sha256": "229cebe837677918c3965a23c71437bf40bb23e6dd178f3925ffe6ef3a6c6793",
+      "bytes": 1641,
+      "lines": 25,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_PHYSIOLOGICAL_MODELS.md": {
+      "sha256": "e4be0284002c73428afd887cb1d625dda4971e42ea1493408f0a51d110a9ba7c",
+      "bytes": 2452,
+      "lines": 32,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_SPACE_ENVIRONMENT_MODELING.md": {
+      "sha256": "8f12c087f98f0a165a2d593bde47f23215e25421ae2ffda7f94e86f7c445300f",
+      "bytes": 1949,
+      "lines": 30,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_TRANSPORT_AND_INGESTION.md": {
+      "sha256": "ba728b6180457318f5d2ecbeb38e4d6618e7f5600df527e471a88a978fa8b023",
+      "bytes": 1463,
+      "lines": 28,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_BENCHMARKING_SUITE.md": {
+      "sha256": "d42c0857df8b4a82a991fbc0f01ac3d65e20940f1895da67d633856378ba0ebc",
+      "bytes": 1109,
+      "lines": 15,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_LOCAL_VS_CLOUD_REPORT.md": {
+      "sha256": "43634a9b7b8e46d610f4c2cd1e9be27d34ca52ebd3e7ae05e17bc75b839b5e53",
+      "bytes": 2181,
+      "lines": 27,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_OBSERVABILITY_DASHBOARD.md": {
+      "sha256": "bf5e57944a97e6c01d1204be25294a8cdf6042e5585bbb327b454ef53927d1b0",
+      "bytes": 1495,
+      "lines": 28,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_SECURITY_AND_DATA_INTEGRITY.md": {
+      "sha256": "c80e891bfac175a4c5a7d1cfafac41f3b9e559e89af83b75e7ea9b807c59c37b",
+      "bytes": 1069,
+      "lines": 17,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_TEST_REPORT.md": {
+      "sha256": "82865c2fc29c4afde2b6e9742301f60a7ca85fb0f523d45dc43fe9defcf0ebd2",
+      "bytes": 1396,
+      "lines": 21,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "PRIORITY_05_5_FINAL_REPORT.md": {
+      "sha256": "6f78fe683af229cc8ff4b0c682b6138b1a81c15e825c134d6dc4fb15c4d33e3d",
+      "bytes": 2201,
+      "lines": 28,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/schemas.py": {
+      "sha256": "b27eeb3ed079055a000e5bfb3b2648f5ca5e418516e9e7d2f194a781d3072934",
+      "bytes": 5578,
+      "lines": 138,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/registry.py": {
+      "sha256": "2fc55c5572c5c3fb7316fe941e5d08c863df180d524da647b25c7f8f9397aba2",
+      "bytes": 6944,
+      "lines": 164,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/physiological_models/cardiac.py": {
+      "sha256": "09345a132da3c09182eb2180f22f2791605a2dfbd6addbf1f9d2236eae233ee9",
+      "bytes": 5473,
+      "lines": 133,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/physiological_models/respiratory.py": {
+      "sha256": "176be868e0b84491605dc39efeab6f900d23f7e4be34bb86eaed8b41125d9a4a",
+      "bytes": 2709,
+      "lines": 66,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/physiological_models/autonomic.py": {
+      "sha256": "3c659d7d0972dcc70219ef7c968d27a9054731b9dc7eda3c3cb502c5f68a1c51",
+      "bytes": 3218,
+      "lines": 79,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/physiological_models/thermal.py": {
+      "sha256": "84f0310a6dd74323856c74f674e27c6e30bfb604390111c22f3ad11e4b3ff235",
+      "bytes": 2909,
+      "lines": 74,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/physiological_models/biomechanical.py": {
+      "sha256": "fa2e1dba10627a31bdd4cc7002eb944002924c8d659f8c0ae162f9ea413e45b6",
+      "bytes": 4288,
+      "lines": 99,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/scenarios/engine.py": {
+      "sha256": "efa2be10cf54c63f576071e8ac9bb9ef1d0d3f585c400ad16f5726f358cd7537",
+      "bytes": 10680,
+      "lines": 246,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/fault_injector.py": {
+      "sha256": "4ea5cfdce1152a8bcf1cf1861b7730c0727822e61b75c90d13cb2bcf2b4c6c6d",
+      "bytes": 4055,
+      "lines": 102,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/space_environment/radiation_model.py": {
+      "sha256": "66b927829fd6464a9ad75be947930d660347e5483469f8484f5cdf376a6cb94e",
+      "bytes": 3886,
+      "lines": 95,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/space_environment/nasa_standards.py": {
+      "sha256": "9d1cb7e182ce715a16937eae3a17a748ae3aa359724330fd3555087e9824cd95",
+      "bytes": 747,
+      "lines": 23,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/space_environment/space_assessment_bridge.py": {
+      "sha256": "41d57f1a44049c5f74246f2776d846974d65ae66fa1903059f875dcab4327a55",
+      "bytes": 4894,
+      "lines": 114,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/transport/packet_protocol.py": {
+      "sha256": "40c0250f1f379794a59679e08e95c829d9e54c5d53b546f37c19e82517704409",
+      "bytes": 1484,
+      "lines": 37,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/transport/rest_api.py": {
+      "sha256": "f411fc39d13cb19ee15b6fe3c99dc17327bac948efe373ce3fb6114311208ba5",
+      "bytes": 4578,
+      "lines": 132,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/transport/websocket_server.py": {
+      "sha256": "d06f401ad536b4ee77935a58a9aea091c7da31c58e344952c3ef324db20d4b01",
+      "bytes": 2004,
+      "lines": 53,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/transport/client.py": {
+      "sha256": "5da9fe215ee053a31bd83e85a79ffa758b787c05844f2b8c0591bca17a7915de",
+      "bytes": 1451,
+      "lines": 32,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/ingestion_bridge.py": {
+      "sha256": "71f7e6331f344ac4ddae7dae954addd95d3440c81ef9fa1963d568479a2be3ff",
+      "bytes": 7151,
+      "lines": 182,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/benchmarks/ml_benchmark.py": {
+      "sha256": "98acd7df922928b44a4336441b5c7377980e2a66ea287139947f791346935ac0",
+      "bytes": 10822,
+      "lines": 248,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/benchmarks/llm_benchmark.py": {
+      "sha256": "0b365ce74acb9bf98c8dd6a7d2eeca2d838e3876b492ac0a83fe8e59cd74d361",
+      "bytes": 6462,
+      "lines": 163,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/benchmarks/benchmark_runner.py": {
+      "sha256": "3c6645107d1ff8c34c7d77b53639adfa032d85b6f5d9b5bd3d306e56ba52d02e",
+      "bytes": 1849,
+      "lines": 57,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "data-engineering/simulator/dashboard/dashboard_app.py": {
+      "sha256": "18daee63d0a35e6500e02e49f79e8102e61a665dff09e7a4831e667f16b8366d",
+      "bytes": 12563,
+      "lines": 218,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "frontend/dashboard/simulator_dashboard.py": {
+      "sha256": "c365d6f4790c7b30cddce658926540ea4a7d125bbc2facf0ccaa20d15d370957",
+      "bytes": 917,
+      "lines": 28,
+      "status": "VERIFIED_WRITTEN"
+    },
+    "ai-engine/agents/risk_assessment/services/rule_registry.py": {
+      "sha256": "0ae568febe4a66c0955a6659e49fe064769a16df8d8c5844de86a58bd84b4dad",
+      "bytes": 23857,
+      "lines": 397,
+      "status": "VERIFIED_WRITTEN"
+    }
+  }
+}

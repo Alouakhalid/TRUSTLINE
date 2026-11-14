@@ -1,0 +1,89 @@
+{
+  "version": 2,
+  "skills": {
+    "3d-web-experience": {
+      "source": "liuchiawei/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/3d/3d-web-experience/SKILL.md",
+      "computedHash": "57186cdc90df9909b5e191d09fb542d4b5c4a0b01f3dde8044eb40a5b0e13dfa"
+    },
+    "api-design": {
+      "source": "Emmraan/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backend-apis/api-design/SKILL.md",
+      "computedHash": "f3fe556a5caf4f7784b2959c8c970c131aba39f370b333d39fe3618a48a3f130"
+    },
+    "database-architecture": {
+      "source": "Emmraan/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/databases-data/database-architecture/SKILL.md",
+      "computedHash": "4b10d492b173f7b039fa93d3cf461b294bb9622983f40ab94232c54729386214"
+    },
+    "fastapi-expert": {
+      "source": "Emmraan/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ai-ml/fastapi-expert/SKILL.md",
+      "computedHash": "fd6a0ce92d5c8e76de15299ecc78ba528eccc669f9f62b2b3d5536ed5498a7d3"
+    },
+    "feature-arch": {
+      "source": "PyModel/react-frontend-skills",
+      "sourceType": "github",
+      "skillPath": "skills/feature-arch/SKILL.md",
+      "computedHash": "6ed5c4b692b628d9d11298b5dabc69b6d957a2e702d1dac7b3cec7f608241f66"
+    },
+    "frontend-atlas": {
+      "source": "flash-hero/GOATED-UI-SKILL",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-atlas/SKILL.md",
+      "computedHash": "154285ee546b873bde0edcd0b1f850a09462506e156f0c74010faadb1f99ff4e"
+    },
+    "gsap-core": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-core/SKILL.md",
+      "computedHash": "dfc8ba849fa8b81c8cc60964ee2a5fa8db4b2a2611801cf549a5b267b8284fa5"
+    },
+    "gsap-react": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-react/SKILL.md",
+      "computedHash": "35fd08f2cbfc945f1a8cdd39e232882a19e27781a4043ee1bc71f65432f03389"
+    },
+    "gsap-scrolltrigger": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-scrolltrigger/SKILL.md",
+      "computedHash": "c29c5a0fb1506a7f577fe68282eafc6df14b8d2b8ecd24f1f05836f5a0957b67"
+    },
+    "rag": {
+      "source": "Emmraan/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/databases-data/rag/SKILL.md",
+      "computedHash": "2707300c42f8d296a9067fbd09bcf3ec5d36c8dd8a199b4edc5577d23b68c0c2"
+    },
+    "threejs-skills": {
+      "source": "liuchiawei/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/3d/threejs-skills/SKILL.md",
+      "computedHash": "0e759cd721b02be74b957eb362df91d18477257b1b22f6c46eb9562e3e2c2f79"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "ff6863fc7c1be035b294703b2e7c90b2197548985ca4cb98f58740a7e84dc0cc"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "7991ed4fbecdac23f47c1a40c243e00a212a9e7f3604db93959b3ae11dffe299"
+    },
+    "websocket-engineer": {
+      "source": "Emmraan/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/backend-apis/websocket-engineer/SKILL.md",
+      "computedHash": "973c088338a75d3cbf8b0789d6fa615994ee0e98ab6034ba230f82186da4551d"
+    }
+  }
+}

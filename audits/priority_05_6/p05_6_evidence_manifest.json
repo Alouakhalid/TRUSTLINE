@@ -1,0 +1,87 @@
+{
+  "manifest_version": "1.0.0",
+  "phase": "PRIORITY_05_6_INDEPENDENT_SIMULATOR_AND_BENCHMARK_VALIDATION",
+  "generated_at_utc": "2026-11-14T00:29:09.353853Z",
+  "auditor": "Independent AI Systems Auditor & Senior Biomedical Signal-Processing Engineer",
+  "total_artifacts_verified": 13,
+  "artifacts": {
+    "PRIORITY_05_6_FINAL_REPORT.md": {
+      "file_size_bytes": 7047,
+      "sha256": "5a8be6d6cad5230be44159a2d3522162d69bae038f00e09ed74d9c10795e07b7",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_FINAL_REPORT.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350939Z"
+    },
+    "PRIORITY_05_6_INITIAL_AUDIT.md": {
+      "file_size_bytes": 6411,
+      "sha256": "8e75d1165bfadadd6b40d416e3c6bb1a6c4a8d135be5c70c2520fb7d9590a7b8",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_INITIAL_AUDIT.md",
+      "last_modified_utc": "2026-11-14T00:29:09.349507Z"
+    },
+    "PRIORITY_05_6_LLM_BENCHMARK_VALIDATION.md": {
+      "file_size_bytes": 4637,
+      "sha256": "ce8da90d78b110e25c690cd2c9ad3c67aeca51e29853d46f5753cf878743d722",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_LLM_BENCHMARK_VALIDATION.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350420Z"
+    },
+    "PRIORITY_05_6_ML_BENCHMARK_VALIDATION.md": {
+      "file_size_bytes": 8833,
+      "sha256": "8ee8e47e2627837204a1cbcc40640a11a7f255ccd9b91dd3e716fdd2c0dc3d75",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_ML_BENCHMARK_VALIDATION.md",
+      "last_modified_utc": "2026-11-14T00:29:09.349850Z"
+    },
+    "PRIORITY_05_6_RADIATION_AUDIT.md": {
+      "file_size_bytes": 6026,
+      "sha256": "11070655c6fb65863ce446a737f3bcdbf32e060c5e720c439698f482a00601e9",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_RADIATION_AUDIT.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350689Z"
+    },
+    "PRIORITY_05_6_RUNTIME_PROFILING.md": {
+      "file_size_bytes": 4871,
+      "sha256": "e8b89f39a196af72fc0303a03e64c9948fb83c4b205c7f46533b85d770a1bc50",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_RUNTIME_PROFILING.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350561Z"
+    },
+    "PRIORITY_05_6_SENSOR_REGISTRY_AUDIT.md": {
+      "file_size_bytes": 5991,
+      "sha256": "a51dd833b23de42d3a88bdcdf352736cd5ca0c3f63e3369cb66f05c65a1f46e3",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_SENSOR_REGISTRY_AUDIT.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350292Z"
+    },
+    "PRIORITY_05_6_SIMULATOR_PHYSIOLOGICAL_VALIDATION.md": {
+      "file_size_bytes": 6185,
+      "sha256": "4e0fb233c76fcb6f5c6253566b004f2a307aea5c4bd87bc6af6171be614cf026",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_SIMULATOR_PHYSIOLOGICAL_VALIDATION.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350027Z"
+    },
+    "PRIORITY_05_6_TEST_REPORT.md": {
+      "file_size_bytes": 4229,
+      "sha256": "9d46b185d816f700ea6e7f8286495c7ebee6aa276028de797d000b908f655725",
+      "relative_path": "artifacts/audits/priority_05_6/PRIORITY_05_6_TEST_REPORT.md",
+      "last_modified_utc": "2026-11-14T00:29:09.350812Z"
+    },
+    "llm_benchmark_validation_results.json": {
+      "file_size_bytes": 6552,
+      "sha256": "ca8b12c03ca2e5a31ad71669b2c6a1cd2a69d550835170b82b72418a629384a8",
+      "relative_path": "artifacts/audits/priority_05_6/llm_benchmark_validation_results.json",
+      "last_modified_utc": "2026-11-14T00:26:05.296572Z"
+    },
+    "ml_benchmark_validation_results.json": {
+      "file_size_bytes": 3275,
+      "sha256": "b772bbac724462555efa3436b5f8d6dcf3a2d446f1ef8cdb506d13f6596de0ce",
+      "relative_path": "artifacts/audits/priority_05_6/ml_benchmark_validation_results.json",
+      "last_modified_utc": "2026-11-14T00:18:47.433510Z"
+    },
+    "physiological_validation_results.json": {
+      "file_size_bytes": 20416,
+      "sha256": "eedd188c8fa7ea13ad1f1a1e21a4107fee8ec3943a19f0cb8ab955b0d42a7ac0",
+      "relative_path": "artifacts/audits/priority_05_6/physiological_validation_results.json",
+      "last_modified_utc": "2026-11-14T00:21:07.352227Z"
+    },
+    "runtime_profile_results.json": {
+      "file_size_bytes": 3931,
+      "sha256": "565661acdd6d88840d8ffa8916138ae3e60875da1e9b1d9e805b2710bea24a8f",
+      "relative_path": "artifacts/audits/priority_05_6/runtime_profile_results.json",
+      "last_modified_utc": "2026-11-14T00:21:46.755823Z"
+    }
+  }
+}

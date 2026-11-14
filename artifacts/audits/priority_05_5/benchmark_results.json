@@ -1,0 +1,250 @@
+{
+  "benchmark_suite": "TRUSTLINE_P05_5_BENCHMARK",
+  "system_telemetry": {
+    "initial_ram_mb": 516.88,
+    "final_ram_mb": 502.17,
+    "net_ram_delta_mb": 0.0,
+    "cpu_logical_cores": 8
+  },
+  "ml_benchmark": {
+    "benchmark_timestamp_utc": "2026-11-13T23:52:08Z",
+    "radiation_isolated": true,
+    "feature_count": 14,
+    "dataset_sizes": {
+      "real_wesad_windows": 694,
+      "synthetic_simulator_windows": 694
+    },
+    "real_wesad_benchmark": {
+      "random_forest": {
+        "model_name": "RandomForest",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 10.781,
+          "median": 9.581,
+          "p95": 14.932,
+          "min": 8.194,
+          "max": 53.205
+        },
+        "throughput_windows_per_sec": 59675.6,
+        "memory_footprint_mb": 0.45,
+        "metrics": {
+          "accuracy": 0.4063,
+          "f1_macro": 0.1157,
+          "f1_weighted": 0.2359,
+          "precision_macro": 0.0815,
+          "recall_macro": 0.1993
+        }
+      },
+      "hist_gradient_boosting": {
+        "model_name": "HistGradientBoosting",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 29.732,
+          "median": 17.728,
+          "p95": 77.675,
+          "min": 11.862,
+          "max": 338.156
+        },
+        "throughput_windows_per_sec": 47492.5,
+        "memory_footprint_mb": 0.0,
+        "metrics": {
+          "accuracy": 0.4078,
+          "f1_macro": 0.1448,
+          "f1_weighted": 0.2362,
+          "precision_macro": 0.1019,
+          "recall_macro": 0.25
+        }
+      },
+      "isolation_forest": {
+        "model_name": "IsolationForest",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 15.141,
+          "median": 13.068,
+          "p95": 20.708,
+          "min": 12.476,
+          "max": 56.472
+        },
+        "throughput_windows_per_sec": 41020.6,
+        "memory_footprint_mb": 0.0,
+        "metrics": {
+          "anomaly_detection_rate": 1.0,
+          "inlier_count": 0,
+          "outlier_count": 694
+        }
+      }
+    },
+    "synthetic_simulator_benchmark": {
+      "random_forest": {
+        "model_name": "RandomForest",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 9.724,
+          "median": 9.211,
+          "p95": 10.027,
+          "min": 7.186,
+          "max": 49.434
+        },
+        "throughput_windows_per_sec": 48137.6,
+        "memory_footprint_mb": 0.23,
+        "metrics": {
+          "accuracy": 0.1844,
+          "f1_macro": 0.0936,
+          "f1_weighted": 0.1251,
+          "precision_macro": 0.0708,
+          "recall_macro": 0.1379
+        }
+      },
+      "hist_gradient_boosting": {
+        "model_name": "HistGradientBoosting",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 17.243,
+          "median": 14.298,
+          "p95": 26.736,
+          "min": 11.545,
+          "max": 66.861
+        },
+        "throughput_windows_per_sec": 44265.6,
+        "memory_footprint_mb": 0.0,
+        "metrics": {
+          "accuracy": 0.2795,
+          "f1_macro": 0.1171,
+          "f1_weighted": 0.1566,
+          "precision_macro": 0.0814,
+          "recall_macro": 0.2091
+        }
+      },
+      "isolation_forest": {
+        "model_name": "IsolationForest",
+        "sample_count": 694,
+        "feature_count": 14,
+        "latency_ms": {
+          "mean": 17.598,
+          "median": 15.68,
+          "p95": 22.506,
+          "min": 12.156,
+          "max": 67.574
+        },
+        "throughput_windows_per_sec": 35112.6,
+        "memory_footprint_mb": 0.12,
+        "metrics": {
+          "anomaly_detection_rate": 1.0,
+          "inlier_count": 0,
+          "outlier_count": 694
+        }
+      }
+    }
+  },
+  "llm_benchmark": {
+    "benchmark_timestamp_utc": "2026-11-13T23:52:20Z",
+    "system_hardware": {
+      "cpu_count": 8,
+      "total_ram_gb": 8.0,
+      "available_ram_gb": 2.02
+    },
+    "evaluations": {
+      "sensor_quality_briefing": {
+        "local_ollama": {
+          "task_name": "sensor_quality_briefing_local",
+          "category": "sensor_quality_briefing",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.001,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.22,
+          "safety_compliant": true,
+          "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        },
+        "hybrid_cloud": {
+          "task_name": "sensor_quality_briefing_hybrid",
+          "category": "sensor_quality_briefing",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.05,
+          "safety_compliant": true,
+          "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        }
+      },
+      "personal_health_synthesis": {
+        "local_ollama": {
+          "task_name": "personal_health_synthesis_local",
+          "category": "personal_health_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.05,
+          "safety_compliant": true,
+          "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        },
+        "hybrid_cloud": {
+          "task_name": "personal_health_synthesis_hybrid",
+          "category": "personal_health_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.001,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.0,
+          "safety_compliant": true,
+          "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        }
+      },
+      "risk_assessment_explanation": {
+        "local_ollama": {
+          "task_name": "risk_assessment_explanation_local",
+          "category": "risk_assessment_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.02,
+          "safety_compliant": true,
+          "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        },
+        "hybrid_cloud": {
+          "task_name": "risk_assessment_explanation_hybrid",
+          "category": "risk_assessment_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.0,
+          "safety_compliant": true,
+          "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        }
+      },
+      "medical_rag_synthesis": {
+        "local_ollama": {
+          "task_name": "medical_rag_synthesis_local",
+          "category": "medical_rag_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.0,
+          "safety_compliant": true,
+          "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        },
+        "hybrid_cloud": {
+          "task_name": "medical_rag_synthesis_hybrid",
+          "category": "medical_rag_synthesis",
+          "provider_used": "ERROR",
+          "success": false,
+          "latency_seconds": 0.0,
+          "tokens_per_second": 0.0,
+          "memory_delta_mb": 0.0,
+          "safety_compliant": true,
+          "error": "Both cloud (Circuit breaker OPEN (OPEN); Cloud bypassed) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+        }
+      }
+    }
+  }
+}

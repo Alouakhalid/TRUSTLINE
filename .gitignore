@@ -31,3 +31,10 @@ Thumbs.db
 # Datasets
 ai-engine/ml/data/raw/
 data/raw/
+
+# Temporary test artifacts and runtime state
+:memory:
+ai-engine/agents/personal_health/data/uploads/DOC-*
+data/
+.manus/
+

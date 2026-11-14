@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRUSTLINE — Autonomous Space Health & 3D Astronaut Digital Twin</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <!-- Three.js & OrbitControls from CDN with graceful fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <!-- Top Mission Control Header -->
+  <header class="mission-header">
+    <div class="mission-logo">
+      <img src="assets/nebuvita_team_logo.jpg" alt="NEBUVITA">
+      <span>TRUSTLINE</span>
+      <span class="badge-tag badge-cyan">NASA Artemis</span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="portal-nav-bar">
+      <button class="nav-tab-btn active" data-portal="astronaut">🚀 Astronaut Portal</button>
+      <button class="nav-tab-btn" data-portal="medical">🩺 Medical Officer Portal</button>
+      <button class="nav-tab-btn" data-portal="admin">🛰️ Administrator Mission Control</button>
+    </nav>
+
+    <!-- Top Right Status & Controls -->
+    <div style="display:flex; align-items:center; gap:12px;">
+      <!-- Clock -->
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--color-cyan); font-weight:600;" id="mission-clock">
+        00:00:00 UTC
+      </div>
+
+      <!-- Connection Status Indicator -->
+      <div style="display:flex; align-items:center; gap:6px; font-size:11px; background:rgba(0,0,0,0.3); padding:4px 8px; border-radius:4px; border:1px solid var(--color-border-subtle);">
+        <span class="status-dot nominal" id="conn-status-dot"></span>
+        <span id="conn-status-text" style="font-family:var(--font-mono); font-size:10px;">WEBSOCKET</span>
+      </div>
+
+      <!-- Demo Mode Switcher Button -->
+      <button id="demo-toggle-btn" class="badge-tag badge-prod" style="cursor:pointer;" title="Click to toggle Demo Mode">
+        MODE: OPERATIONAL
+      </button>
+
+      <!-- Active User & Role Switcher -->
+      <select id="role-select" class="input-aerospace" style="width:auto; padding:3px 6px; font-size:11px;">
+        <option value="ASTRONAUT">Astronaut (AST-001)</option>
+        <option value="MEDICAL_OFFICER">Flight Surgeon (Lead)</option>
+        <option value="ADMINISTRATOR">Mission Admin (Chief)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Primary Portal Mount Container -->
+  <main id="portal-view-container"></main>
+
+  <!-- Modular Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/telemetry.js"></script>
+  <script src="js/oscilloscope.js"></script>
+  <script src="js/twin3d.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/astronaut_portal.js"></script>
+  <script src="js/medical_portal.js"></script>
+  <script src="js/admin_portal.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+{
+  "audit_meta": {
+    "timestamp_utc": "2026-11-14T02:20:00Z",
+    "auditor_role": "Independent ML Evaluation Researcher & AI Systems Auditor",
+    "python_version": "3.10.0rc2 (v3.10.0rc2:839d789394, Sep  7 2021, 11:16:15) [Clang 12.0.5 (clang-1205.0.22.11)]",
+    "data_source": "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/ml/data/processed/wesad_window_features.csv",
+    "model_dir": "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/ml/artifacts/final_models",
+    "scaler_path": "/Users/alikhalidalikhalid/TRUSTLINE/ai-engine/ml/artifacts/scalers/final_robust_scaler.pkl",
+    "selected_features": [
+      "hr_mean_bpm",
+      "hr_std_bpm",
+      "hrv_rmssd_ms",
+      "hrv_sdnn_ms",
+      "eda_mean",
+      "eda_std",
+      "eda_iqr",
+      "resp_rate_bpm",
+      "resp_std",
+      "temp_mean",
+      "temp_std",
+      "emg_rms",
+      "acc_magnitude_mean",
+      "acc_magnitude_std"
+    ],
+    "calibrated_threshold": 0.4748828593671834,
+    "train_subjects": [
+      "S11",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S2",
+      "S3",
+      "S5",
+      "S7",
+      "S9"
+    ],
+    "test_subjects": [
+      "S10",
+      "S4",
+      "S6",
+      "S8"
+    ]
+  },
+  "pipeline_a_p05_5_reproduction": {
+    "protocol_description": "Raw unscaled features, unmapped multiclass labels (1..4), all 15 subjects (694 windows), uncalibrated IF",
+    "random_forest": {
+      "accuracy": 0.4063,
+      "prediction_distribution": {
+        "0": 2,
+        "1": 692
+      }
+    },
+    "hist_gradient_boosting": {
+      "accuracy": 0.4078,
+      "prediction_distribution": {
+        "1": 694
+      }
+    },
+    "isolation_forest": {
+      "outlier_percentage": 100.0,
+      "outlier_count": 694,
+      "inlier_count": 0
+    },
+    "synthetic_random_forest": {
+      "accuracy": 0.2118
+    }
+  },
+  "pipeline_b_p03_canonical_reproduction": {
+    "protocol_description": "Subject-independent held-out test cohort (S10, S4, S6, S8; 117 samples: 76 baseline, 41 stress), RobustScaler applied, binary mapping {1->0, 2->1}, calibrated IF threshold tau=0.47488",
+    "random_forest": {
+      "accuracy": 0.9402,
+      "precision": 0.9048,
+      "recall": 0.9268,
+      "f1_score": 0.9157,
+      "roc_auc": 0.9868,
+      "confusion_matrix": {
+        "tn": 72,
+        "fp": 4,
+        "fn": 3,
+        "tp": 38
+      }
+    },
+    "hist_gradient_boosting": {
+      "accuracy": 0.9658,
+      "precision": 0.9302,
+      "recall": 0.9756,
+      "f1_score": 0.9524,
+      "roc_auc": 0.991,
+      "confusion_matrix": {
+        "tn": 73,
+        "fp": 3,
+        "fn": 1,
+        "tp": 40
+      }
+    },
+    "calibrated_isolation_forest": {
+      "threshold_tau": 0.4748828593671834,
+      "accuracy": 0.8291,
+      "precision": 0.6981,
+      "recall": 0.9024,
+      "f1_score": 0.7872,
+      "roc_auc": 0.904,
+      "confusion_matrix": {
+        "tn": 60,
+        "fp": 16,
+        "fn": 4,
+        "tp": 37
+      }
+    }
+  },
+  "ablation_mechanics": {
+    "unscaled_vs_scaled_heldout_rf_acc": {
+      "raw_unscaled": 0.359,
+      "robust_scaled": 0.9402,
+      "delta": 0.5812
+    },
+    "isolation_forest_pathology": {
+      "raw_unscaled_outlier_pct": 100.0,
+      "scaled_default_outlier_pct": 27.35,
+      "calibrated_threshold_stress_recall": 0.9024
+    }
+  }
+}

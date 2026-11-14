@@ -346,3 +346,52 @@ class RuleRegistry:
                 return True, f"Logged sleep duration {ev.observed_value:.1f} hours indicates acute curtailment (< 5.0h).", [ev.evidence_id]
             return False, "Logged sleep duration is not below 5.0 hours.", []
         self._evaluators[rule_sleep.rule_id] = _eval_sleep
+
+        rule_rad_acute = RiskRule(
+            rule_id="RR-ENV-RADIATION-ACUTE",
+            rule_name="Acute Space Radiation Exposure Exceeding SPE Action Threshold",
+            domain=RiskDomain.GENERAL_PHYSIOLOGICAL,
+            required_variables=["radiation_dose_rate_microgy_h"],
+            threshold_condition="Absorbed space radiation dose rate > 500.0 µGy/h per NASA-STD-3001 SPE threshold",
+            risk_level=RiskLevel.HIGH,
+            rule_source="NASA-STD-3001-VOL-1 Rev C / NASA-STD-3001-VOL-2",
+            source_version="Revision C",
+            intended_scope="Spacecraft environmental radiation protection and storm shelter ingress",
+            limitations="Dosimeter sensor must be calibrated and operational",
+            last_verification_date="2026-11-14",
+            suggested_escalation=EscalationState.ESCALATION_RECOMMENDED,
+            suggested_destination=EscalationDestination.FLIGHT_SURGEON,
+            recommended_action="Immediately terminate EVA; ingress to designated storm shelter and align protective shielding."
+        )
+        self._rules[rule_rad_acute.rule_id] = rule_rad_acute
+        def _eval_rad_acute(evs: Dict[str, NormalizedEvidenceItem]) -> Tuple[bool, str, List[str]]:
+            ev = evs.get("radiation_dose_rate_microgy_h")
+            if ev and ev.validity_status == EvidenceValidity.VALID and float(ev.observed_value) > 500.0:
+                return True, f"Space radiation dose rate {ev.observed_value:.1f} µGy/h exceeds NASA-STD-3001 action threshold 500.0 µGy/h.", [ev.evidence_id]
+            return False, "Space radiation dose rate does not exceed 500.0 µGy/h.", []
+        self._evaluators[rule_rad_acute.rule_id] = _eval_rad_acute
+
+        rule_rad_cum = RiskRule(
+            rule_id="RR-ENV-RADIATION-CUMULATIVE",
+            rule_name="Cumulative 30-Day Mission Radiation Exposure Limit Reached",
+            domain=RiskDomain.GENERAL_PHYSIOLOGICAL,
+            required_variables=["radiation_cumulative_dose_msv"],
+            threshold_condition="Cumulative equivalent radiation dose > 250.0 mSv per NASA-STD-3001 Table 2",
+            risk_level=RiskLevel.HIGH,
+            rule_source="NASA-STD-3001-VOL-1 Rev C Table 2",
+            source_version="Revision C",
+            intended_scope="Mission cumulative radiation budget monitoring",
+            limitations="Cumulative calculation depends on continuous mission dosimetry logging",
+            last_verification_date="2026-11-14",
+            suggested_escalation=EscalationState.REVIEW_REQUIRED,
+            suggested_destination=EscalationDestination.FLIGHT_SURGEON,
+            recommended_action="Review remaining mission career exposure; evaluate crew rotation or EVA activity curtailment."
+        )
+        self._rules[rule_rad_cum.rule_id] = rule_rad_cum
+        def _eval_rad_cum(evs: Dict[str, NormalizedEvidenceItem]) -> Tuple[bool, str, List[str]]:
+            ev = evs.get("radiation_cumulative_dose_msv")
+            if ev and ev.validity_status == EvidenceValidity.VALID and float(ev.observed_value) > 250.0:
+                return True, f"Cumulative radiation dose {ev.observed_value:.1f} mSv exceeds NASA-STD-3001 30-day limit 250.0 mSv.", [ev.evidence_id]
+            return False, "Cumulative radiation dose does not exceed 250.0 mSv.", []
+        self._evaluators[rule_rad_cum.rule_id] = _eval_rad_cum
+

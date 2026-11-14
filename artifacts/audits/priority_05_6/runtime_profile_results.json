@@ -1,0 +1,142 @@
+{
+  "profiling_metadata": {
+    "timestamp_utc": "2026-11-14T02:24:00Z",
+    "auditor_role": "AI Systems Auditor & Backend Performance Engineer",
+    "hardware_platform": "Apple Silicon (M1/M2 Unified Memory Architecture, 8GB)",
+    "os_environment": "darwin",
+    "python_version": "3.10.0rc2 (v3.10.0rc2:839d789394, Sep  7 2021, 11:16:15) [Clang 12.0.5 (clang-1205.0.22.11)]"
+  },
+  "system_memory_overview": {
+    "total_system_ram_gb": 8.0,
+    "available_system_ram_gb": 1.29,
+    "percent_used": 83.9,
+    "initial_swap_used_mb": 4701.06,
+    "final_swap_used_mb": 4800.44,
+    "swap_delta_mb": 99.38
+  },
+  "process_memory_lifecycle": {
+    "initial_baseline_rss_mb": 83.58,
+    "post_load_rss_mb": 164.91,
+    "final_rss_mb": 88.17,
+    "os_reported_peak_maxrss_mb": 164.95
+  },
+  "per_model_footprints": {
+    "RandomForest": {
+      "disk_file_size_mb": 0.635,
+      "ram_delta_mb": 65.62,
+      "process_rss_after_load_mb": 149.2
+    },
+    "HistGradientBoosting": {
+      "disk_file_size_mb": 0.163,
+      "ram_delta_mb": 0.0,
+      "process_rss_after_load_mb": 150.06
+    },
+    "IsolationForest": {
+      "disk_file_size_mb": 2.823,
+      "ram_delta_mb": 5.92,
+      "process_rss_after_load_mb": 155.98
+    }
+  },
+  "inference_profiles": {
+    "RandomForest": {
+      "streaming_single_window": {
+        "mean_latency_ms": 18.384,
+        "p50_latency_ms": 10.246,
+        "p95_latency_ms": 31.646,
+        "p99_latency_ms": 189.542,
+        "min_latency_ms": 7.396,
+        "max_latency_ms": 378.059,
+        "rss_overhead_mb": 0.0
+      },
+      "batch_inference": {
+        "batch_size_windows": 694,
+        "mean_batch_duration_sec": 0.0166,
+        "throughput_windows_sec": 41861.7,
+        "peak_batch_rss_mb": 72.69,
+        "rss_delta_mb": 1.02
+      }
+    },
+    "HistGradientBoosting": {
+      "streaming_single_window": {
+        "mean_latency_ms": 10.476,
+        "p50_latency_ms": 9.314,
+        "p95_latency_ms": 14.698,
+        "p99_latency_ms": 19.277,
+        "min_latency_ms": 3.984,
+        "max_latency_ms": 134.299,
+        "rss_overhead_mb": 6.92
+      },
+      "batch_inference": {
+        "batch_size_windows": 694,
+        "mean_batch_duration_sec": 0.007,
+        "throughput_windows_sec": 99436.6,
+        "peak_batch_rss_mb": 81.48,
+        "rss_delta_mb": 0.12
+      }
+    },
+    "IsolationForest": {
+      "streaming_single_window": {
+        "mean_latency_ms": 10.318,
+        "p50_latency_ms": 8.915,
+        "p95_latency_ms": 16.823,
+        "p99_latency_ms": 18.411,
+        "min_latency_ms": 8.397,
+        "max_latency_ms": 21.127,
+        "rss_overhead_mb": 6.36
+      },
+      "batch_inference": {
+        "batch_size_windows": 694,
+        "mean_batch_duration_sec": 0.0191,
+        "throughput_windows_sec": 36326.5,
+        "peak_batch_rss_mb": 87.89,
+        "rss_delta_mb": 0.03
+      }
+    }
+  },
+  "repeated_run_stability": {
+    "cycles": [
+      {
+        "cycle": 1,
+        "duration_ms": 39.28,
+        "start_rss_mb": 87.95,
+        "end_rss_mb": 88.0,
+        "delta_rss_mb": 0.05,
+        "swap_used_mb": 4800.44
+      },
+      {
+        "cycle": 2,
+        "duration_ms": 36.48,
+        "start_rss_mb": 88.11,
+        "end_rss_mb": 88.14,
+        "delta_rss_mb": 0.03,
+        "swap_used_mb": 4800.44
+      },
+      {
+        "cycle": 3,
+        "duration_ms": 37.46,
+        "start_rss_mb": 88.14,
+        "end_rss_mb": 88.14,
+        "delta_rss_mb": 0.0,
+        "swap_used_mb": 4800.44
+      },
+      {
+        "cycle": 4,
+        "duration_ms": 39.11,
+        "start_rss_mb": 88.14,
+        "end_rss_mb": 88.2,
+        "delta_rss_mb": 0.06,
+        "swap_used_mb": 4800.44
+      },
+      {
+        "cycle": 5,
+        "duration_ms": 90.94,
+        "start_rss_mb": 88.2,
+        "end_rss_mb": 88.17,
+        "delta_rss_mb": -0.03,
+        "swap_used_mb": 4800.44
+      }
+    ],
+    "stability_verdict": "STABLE",
+    "rss_drift_across_cycles_mb": 0.22
+  }
+}

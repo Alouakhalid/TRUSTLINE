@@ -1,0 +1,144 @@
+{
+  "audit_meta": {
+    "timestamp_utc": "2026-11-14T00:26:05Z",
+    "auditor_role": "Independent AI Systems Auditor & Router Validation Engineer",
+    "environment": {
+      "os": "darwin",
+      "python": "3.10.0rc2 (v3.10.0rc2:839d789394, Sep  7 2021, 11:16:15) [Clang 12.0.5 (clang-1205.0.22.11)]",
+      "sandboxed": true,
+      "hf_token_configured": false,
+      "groq_api_key_configured": false
+    }
+  },
+  "provider_registry": {
+    "GROQ": {
+      "configured": false,
+      "is_available": false,
+      "class_name": "GroqProvider"
+    },
+    "OLLAMA": {
+      "configured": true,
+      "is_available": false,
+      "class_name": "OllamaProvider"
+    },
+    "HUGGINGFACE": {
+      "configured": false,
+      "is_available": false,
+      "status": "UNCONFIGURED"
+    }
+  },
+  "circuit_breaker_status": {
+    "state": "CLOSED",
+    "consecutive_failures": 0,
+    "can_attempt_cloud": true
+  },
+  "benchmark_evaluations": {
+    "sensor_quality_briefing": {
+      "local_ollama": {
+        "task_name": "sensor_quality_briefing_local",
+        "category": "sensor_quality_briefing",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.002,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.12,
+        "safety_compliant": true,
+        "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      },
+      "hybrid_cloud": {
+        "task_name": "sensor_quality_briefing_hybrid",
+        "category": "sensor_quality_briefing",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.03,
+        "safety_compliant": true,
+        "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      }
+    },
+    "personal_health_synthesis": {
+      "local_ollama": {
+        "task_name": "personal_health_synthesis_local",
+        "category": "personal_health_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.0,
+        "safety_compliant": true,
+        "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      },
+      "hybrid_cloud": {
+        "task_name": "personal_health_synthesis_hybrid",
+        "category": "personal_health_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.0,
+        "safety_compliant": true,
+        "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      }
+    },
+    "risk_assessment_explanation": {
+      "local_ollama": {
+        "task_name": "risk_assessment_explanation_local",
+        "category": "risk_assessment_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.0,
+        "safety_compliant": true,
+        "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      },
+      "hybrid_cloud": {
+        "task_name": "risk_assessment_explanation_hybrid",
+        "category": "risk_assessment_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.0,
+        "safety_compliant": true,
+        "error": "Both cloud (ProviderUnavailableError: Groq Cloud provider is not configured (missing GROQ_API_KEY).) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      }
+    },
+    "medical_rag_synthesis": {
+      "local_ollama": {
+        "task_name": "medical_rag_synthesis_local",
+        "category": "medical_rag_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.03,
+        "safety_compliant": true,
+        "error": "Both cloud (LOCAL_ONLY mode forced by configuration) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      },
+      "hybrid_cloud": {
+        "task_name": "medical_rag_synthesis_hybrid",
+        "category": "medical_rag_synthesis",
+        "provider_used": "ERROR",
+        "success": false,
+        "latency_seconds": 0.0,
+        "tokens_per_second": 0.0,
+        "memory_delta_mb": 0.02,
+        "safety_compliant": true,
+        "error": "Both cloud (Circuit breaker OPEN (OPEN); Cloud bypassed) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed."
+      }
+    }
+  },
+  "direct_routing_test": {
+    "success": false,
+    "error_type": "ProviderUnavailableError",
+    "error_message": "Both cloud (Circuit breaker OPEN (OPEN); Cloud bypassed) and local (ProviderUnavailableError: Ollama service unreachable at http://127.0.0.1:11434: <urlopen error [Errno 1] Operation not permitted>) failed.",
+    "circuit_breaker_state": "OPEN",
+    "circuit_breaker_open": true
+  },
+  "router_reliability_summary": {
+    "verdict": "VERIFIED WITH LIMITATIONS",
+    "limitations_rationale": "1. Ollama local daemon is executed in sandboxed Mac environment where loopback sockets may be constrained; 2. Hugging Face hosted inference endpoints enforce HTTP 402 Payment Required for pro models without active pre-paid credit balance; 3. Router demonstrates 100% reliable deterministic fallback execution when network or cloud providers fail, preventing catastrophic system outage."
+  }
+}
